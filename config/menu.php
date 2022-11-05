@@ -23,7 +23,7 @@ return [
     'main-menu' => [
         [
             'label' => 'Dashboard',
-            'link'  =>  '/dashboard',
+            'link'  =>  '/dashboard/home',
             'active-segments' => [''],
             'icon'  => '<svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-house-door"
                             fill="currentColor" xmlns="http://www.w3.org/2000/svg">

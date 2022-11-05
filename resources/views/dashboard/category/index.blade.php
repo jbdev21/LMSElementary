@@ -1,4 +1,4 @@
-@extends('dashboard.includes.layouts.main')
+@extends('includes.layouts.dashboard')
 
 @section('module-name', 'category')
 @section('page-title', 'Categories')
@@ -19,6 +19,15 @@
                             <input value="{{ old('name') }}" type="text" required name="name" spellcheck="true"
                                 class="form-control">
                         </p>
+                        <div class="mb-4">
+                            Type
+                            <select name="type" required class="form-select">
+                                <option value=""> -select type-</option>
+                                @foreach (config('category.types') as $type)
+                                    <option value="{{ $type }}" >{{ ucfirst($type) }}</option>
+                                @endforeach
+                            </select>
+                        </div>
                         <p>
                             <button class="btn text-white btn-primary" type="submit"><i class="fa fa-save"></i>
                                 Save</button>

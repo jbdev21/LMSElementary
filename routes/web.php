@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Dashboard\CategoryController;
 use App\Http\Controllers\Dashboard\HomeController as DashboardHomeController;
 use App\Http\Controllers\Student\HomeController;
 use App\Http\Middleware\Authenticate;
@@ -23,11 +24,12 @@ Route::group([
         'prefix' => 'dashboard',
         'as' => 'dashboard.',
         'middleware' => [
-                Authenticate::class,
-                DashboardMiddleware::class,
+                // Authenticate::class,
+                // DashboardMiddleware::class,
             ]
     ], function(){
 
     Route::get("/home", [DashboardHomeController::class, 'index'])->name("dashboard");
+    Route::resource("category", CategoryController::class);
     
 });

@@ -65,8 +65,10 @@ class ModuleController extends Controller
         $file->path = $request->file->store('file', 'public'); 
         $file->filable_type = Module::class; 
         $file->filable_id = $module->id; 
-        
+
         $file->save();
+
+        flash()->success("Module added successfuly");
 
         return back();
     }
@@ -113,6 +115,8 @@ class ModuleController extends Controller
      */
     public function destroy(Module $module)
     {
-        //
+        $module->delete();
+
+        return back();
     }
 }

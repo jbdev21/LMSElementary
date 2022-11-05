@@ -23,7 +23,9 @@ class RedirectIfAuthenticated
 
         foreach ($guards as $guard) {
             if (Auth::guard($guard)->check()) {
-                return redirect(RouteServiceProvider::HOME);
+                return $request->user()->type == "student" 
+                    ? redirect()->intended(RouteServiceProvider::STUDENTHOME)
+                    : redirect()->intended(RouteServiceProvider::DASHBOARDHOME);
             }
         }
 

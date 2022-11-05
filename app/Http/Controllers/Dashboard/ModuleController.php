@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers\Dashboard;
 
-use App\Http\Controllers\Controller;
+use App\Models\File;
+use App\Models\Module;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
-class CategoryController extends Controller
+class ModuleController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,13 +17,17 @@ class CategoryController extends Controller
      */
     public function index(Request $request)
     {
-        $categories = Category::query()
-                        ->when($request->q, function($query) use ($request){
-                            $query->where("name", "LIKE", $request->q . "%");
-                        })
-                        ->paginate();
+        $modules = Module::query()
+            ->when($request->q, function ($query) use ($request) {
+                $query->where("name", "LIKE", $request->q . "%");
+            })
+            ->paginate();
 
-        return view("dashboard.category.index", [
+
+        $categories = Category::all();
+
+        return view("dashboard.module.index", [
+            'modules' => $modules,
             'categories' => $categories
         ]);
     }
@@ -46,11 +52,21 @@ class CategoryController extends Controller
     {
         $this->validate($request, [
             'name' => ['required'],
-            'type' => ['required']
         ]);
 
-        Category::create($request->except("_token"));
-        flash()->success("Category added successfuly");
+        $module = new Module;
+        $module->name = $request->name;
+        $module->user_id = $request->user()->id;
+        $module->category_id = $request->category_id;
+        $module->save();
+
+        $file = new File;
+        $file->name = $request->file('file')->getClientOriginalName();;
+        $file->path = $request->file->store('file', 'public'); 
+        $file->filable_type = Module::class; 
+        $file->filable_id = $module->id; 
+        
+        $file->save();
 
         return back();
     }
@@ -58,10 +74,10 @@ class CategoryController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Category  $category
+     * @param  \App\Models\Module  $module
      * @return \Illuminate\Http\Response
      */
-    public function show(Category $category)
+    public function show(Module $module)
     {
         //
     }
@@ -69,46 +85,34 @@ class CategoryController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Category  $category
+     * @param  \App\Models\Module  $module
      * @return \Illuminate\Http\Response
      */
-    public function edit(Category $category)
+    public function edit(Module $module)
     {
-        
-        return view('dashboard.category.edit', [
-            'category' =>$category,
-        ]);
+        //
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Category  $category
+     * @param  \App\Models\Module  $module
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Category $category)
+    public function update(Request $request, Module $module)
     {
-        $category->name = $request->name;
-        $category->type = $request->type;
-        $category->save();
-
-        flash()->success("Category updated successfuly");
-
-        return redirect()->route('dashboard.category.index');
+        //
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Category  $category
+     * @param  \App\Models\Module  $module
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Category $category)
+    public function destroy(Module $module)
     {
-        $category->delete();
-        flash()->danger("Category deleted successfuly");
-
-        return back();
+        //
     }
 }

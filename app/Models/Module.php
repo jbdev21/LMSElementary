@@ -13,4 +13,9 @@ class Module extends Model
     {
         return $this->morphMany(File::class, 'filable');
     }
+
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
 }

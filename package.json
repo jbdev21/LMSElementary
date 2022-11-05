@@ -13,5 +13,13 @@
         "postcss": "^8.1.14",
         "sass": "^1.32.11",
         "vite": "^3.0.0"
+    },
+    "dependencies": {
+        "@vitejs/plugin-vue": "^3.2.0",
+        "animate.css": "^4.1.1",
+        "font-awesome": "^4.7.0",
+        "vue": "^3.2.41",
+        "vue-loader": "^17.0.1",
+        "vue-template-compiler": "^2.7.13"
     }
 }

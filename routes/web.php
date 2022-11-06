@@ -8,6 +8,7 @@ use App\Http\Controllers\Student\HomeController;
 use App\Http\Controllers\Dashboard\ModuleController;
 use App\Http\Controllers\Dashboard\CategoryController;
 use App\Http\Controllers\Dashboard\HomeController as DashboardHomeController;
+use App\Http\Controllers\Dashboard\StudentController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -33,5 +34,6 @@ Route::group([
     Route::get("/home", [DashboardHomeController::class, 'index'])->name("dashboard");
     Route::resource("category", CategoryController::class);
     Route::resource("module", ModuleController::class);
+    Route::resource("student", StudentController::class);
     
 });

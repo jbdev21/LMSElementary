@@ -1,7 +1,7 @@
 @extends('includes.layouts.dashboard')
 
-@section('module-name', 'module')
-@section('page-title', 'modules')
+@section('module-name', 'Module')
+@section('page-title', 'Modules')
 =
 
 @section('content')

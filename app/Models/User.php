@@ -6,6 +6,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Storage;
 use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
@@ -32,6 +33,16 @@ class User extends Authenticatable
         'password',
         'remember_token',
     ];
+
+    function getFullNameAttribute(){
+        return $this->last_name . "," . $this->first_name . " " . $this->middle_name;
+    }
+
+    function thumbnailUrl(){
+        return $this->thumbnail 
+                ? Storage::url($this->thumbnail) 
+                : asset("/images/placeholder.png");
+    }
 
     /**
      * The attributes that should be cast.

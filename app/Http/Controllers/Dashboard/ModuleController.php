@@ -24,6 +24,7 @@ class ModuleController extends Controller
             ->when($request->category, function ($query) use ($request) {
                 $query->where("category_id", $request->category);
             })
+            ->withCount("users")
             ->paginate(25);
 
         $categories = Category::whereType("module")->get();

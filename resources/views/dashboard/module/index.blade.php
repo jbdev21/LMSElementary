@@ -60,9 +60,9 @@
                                         </a>
                                     </td>
                                     <td>
-                                        
+                                        {{ $module->userss_count }}
                                     </td>
-                                    <td>{{ ucfirst($module->category->name) }}</td>
+                                    <td>{{ ucfirst(optional($module->category)->name) }}</td>
                                     <td>
                                         
                                     </td>

@@ -29,6 +29,7 @@
                             <th>Full Name</th>
                             <th>Address</th>
                             <th>Contact</th>
+                            <th>Section</th>
                             <th>Date Registered</th>
                             <th></th>
                         </tr>
@@ -42,6 +43,7 @@
                                 <td>{{ $student->full_name }}</td>
                                 <td>{{ $student->address }}</td>
                                 <td>{{ $student->contact_number }}</td>
+                                <td>{{ optional($student->section)->name }}</td>
                                 <td>{{ $student->created_at->format('M d, Y') }}</td>
                                 <td class="text-end">
                                     <a class="btn btn-primary btn-sm text-white" href="{{ route('dashboard.student.show', $student->id) }}"><i

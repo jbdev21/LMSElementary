@@ -55,10 +55,6 @@
                                 <div class="app-card-body p-4">
                                    <label> <h4>Account Detail</h4></label>
                                         <div class="mb-3">
-                                            <label for="">Position</label>
-                                            <input type="text" class="form-control mb-2" value="{{ $user->position }}" readonly>
-                                        </div>
-                                        <div class="mb-3">
                                             <label for="">Address</label>
                                             <input type="text" class="form-control mb-2" value="{{ $user->address }}" readonly>
                                         </div>

@@ -34,5 +34,9 @@ class ProfileController extends Controller
             $user->clearMediaCollection('thumbnail');
             $user->addMediaFromRequest('thumbnail')->toMediaCollection('thumbnail');
         }
+
+        flash()->success("Profile update successfuly");
+
+        return back();
     }
 }

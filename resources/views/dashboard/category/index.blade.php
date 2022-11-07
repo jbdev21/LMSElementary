@@ -73,11 +73,11 @@
                                         </td>
                                         <td>{{ ucfirst($category->type) }}</td>
                                         <td class="text-end">
-                                            <a class="btn-sm" href="{{ route('dashboard.category.edit', $category->id) }}"><i
-                                                    class="fa fa-pencil"></i></a>
+                                            <a class="btn btn-primary text-white btn-sm py-1" href="{{ route('dashboard.category.edit', $category->id) }}"><i
+                                                    class="fa fa-pencil"></i> Edit</a>
                                             <a href="#"
                                                 onclick="if(confirm('Are you sure to delete?')){ document.getElementById('delete-{{ $category->id }}').submit() }"
-                                                class="text-danger"><i class="fa fa-trash"></i></a>
+                                                class="btn btn-danger text-white btn-sm py-1"><i class="fa fa-trash"></i> Delete</a>
                                             <form id="delete-{{ $category->id }}"
                                                 action="{{ route('dashboard.category.destroy', $category->id) }}" method="POST">
                                                 @csrf @method('DELETE')</form>

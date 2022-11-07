@@ -75,9 +75,13 @@ class ModuleController extends Controller
      */
     public function show(Request $request, Module $module)
     {
+        $module->load('users');
         $categories = Category::whereType("module")->get();
         $files = $module->getMedia('files');
+        $users = $module->users;
+
         return view("dashboard.module.show",[ 
+            'users' => $users,
             'module' => $module,
             'categories' => $categories,
             'files' => $files,

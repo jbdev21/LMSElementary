@@ -17,7 +17,7 @@
 
 
                 <div class="app-utilities col-auto">
-                    <div class="app-utility-item app-notifications-dropdown dropdown">
+                    {{-- <div class="app-utility-item app-notifications-dropdown dropdown">
                         <a class="dropdown-toggle no-toggle-arrow" id="notifications-dropdown-toggle"
                             data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false"
                             title="Notifications">
@@ -138,7 +138,7 @@
 
                         </div>
                         <!--//dropdown-menu-->
-                    </div>
+                    </div> --}}
                     <!--//app-utility-item-->
                     <div class="app-utility-item app-user-dropdown dropdown">
                         <a class="dropdown-toggle" id="user-dropdown-toggle" data-bs-toggle="dropdown"

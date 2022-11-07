@@ -39,56 +39,58 @@
                         </div>
                     </div>
                 </form>
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Students</th>
-                            <th>Category</th>
-                            <th>Files</th>
-                            <th>Created </th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @forelse ($modules as $module)
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
                             <tr>
-                                <td width="25%">
-                                    <a href="{{ route("dashboard.module.show", $module->id) }}">
-                                        {{ $module->name }}
-                                    </a>
-                                </td>
-                                <td>
-                                    
-                                </td>
-                                <td>{{ ucfirst($module->category->name) }}</td>
-                                <td>
-                                    
-                                </td>
-                                <td>
-                                    {{ $module->created_at->format("M d, Y") }}
-                                </td>
-                                <td class="text-end">
-                                    <a class="btn btn-primary text-white btn-sm py-1" href="{{ route('dashboard.module.show', $module->id) }}"><i
-                                            class="fa fa-eye"></i> More Details</a>
-                                    <a href="#"
-                                        onclick="if(confirm('Are you sure to delete?')){ document.getElementById('delete-{{ $module->id }}').submit() }"
-                                        class="btn btn-danger text-white btn-sm py-1"><i class="fa fa-trash"></i> Delete</a>
-                                    <form id="delete-{{ $module->id }}"
-                                        action="{{ route('dashboard.module.destroy', $module->id) }}" method="POST">
-                                        @csrf @method('DELETE')</form>
-                                </td>
+                                <th>Name</th>
+                                <th>Students</th>
+                                <th>Category</th>
+                                <th>Files</th>
+                                <th>Created </th>
+                                <th></th>
                             </tr>
-                        @empty
-                            <tr>
-                                <td colspan="3" class="text-center">No upload module found</td>
-                            </tr>
-                        @endforelse
-                    </tbody>
-                </table>
-                {{ $modules->appends([
-                    'q' => request()->q,
-                ])->links() }}
+                        </thead>
+                        <tbody>
+                            @forelse ($modules as $module)
+                                <tr>
+                                    <td width="25%">
+                                        <a href="{{ route("dashboard.module.show", $module->id) }}">
+                                            {{ $module->name }}
+                                        </a>
+                                    </td>
+                                    <td>
+                                        
+                                    </td>
+                                    <td>{{ ucfirst($module->category->name) }}</td>
+                                    <td>
+                                        
+                                    </td>
+                                    <td>
+                                        {{ $module->created_at->format("M d, Y") }}
+                                    </td>
+                                    <td class="text-end">
+                                        <a class="btn btn-primary text-white btn-sm py-1" href="{{ route('dashboard.module.show', $module->id) }}"><i
+                                                class="fa fa-eye"></i> More Details</a>
+                                        <a href="#"
+                                            onclick="if(confirm('Are you sure to delete?')){ document.getElementById('delete-{{ $module->id }}').submit() }"
+                                            class="btn btn-danger text-white btn-sm py-1"><i class="fa fa-trash"></i> Delete</a>
+                                        <form id="delete-{{ $module->id }}"
+                                            action="{{ route('dashboard.module.destroy', $module->id) }}" method="POST">
+                                            @csrf @method('DELETE')</form>
+                                    </td>
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td colspan="3" class="text-center">No upload module found</td>
+                                </tr>
+                            @endforelse
+                        </tbody>
+                    </table>
+                    {{ $modules->appends([
+                        'q' => request()->q,
+                    ])->links() }}
+                </div>
             </div>
         </div>
     </div>

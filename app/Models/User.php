@@ -37,6 +37,10 @@ class User extends Authenticatable implements HasMedia
         'remember_token',
     ];
 
+    function accesses(){
+        return $this->hasMany(Access::class);
+    }
+
     function getFullNameAttribute(){
         return $this->last_name . "," . $this->first_name . " " . $this->middle_name;
     }
@@ -62,4 +66,13 @@ class User extends Authenticatable implements HasMedia
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+
+    function modules(){
+        return $this->belongsToMany(Module::class);
+    }
+
+    function section(){
+        return $this->belongsTo(Section::class);
+    }
 }

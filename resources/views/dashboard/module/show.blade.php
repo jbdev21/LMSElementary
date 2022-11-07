@@ -7,25 +7,29 @@
     <div class="app-card shadow-sm mb-4">
         <div class="inner">
             <div class="app-card-body p-4">
-                    <a href="{{ route("dashboard.module.index") }}" class="btn btn-primary text-white mb-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left" viewBox="0 0 16 16">
-                            <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
-                        </svg>
-                        Back
-                    </a>
-                    <h3>{{ $module->name }}</h1>
+                <a href="{{ route('dashboard.module.index') }}" class="btn btn-primary text-white mb-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                        class="bi bi-arrow-left" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd"
+                            d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z" />
+                    </svg>
+                    Back
+                </a>
+                <h3>{{ $module->name }}</h1>
                     <div class="row">
                         <div class="col-sm-4 p-5">
                             <div class="mb-3">
                                 <label for="exampleInputEmail1" class="form-label">Module Name *</label>
-                                <input type="text" required class="form-control" name="name" value="{{ $module->name }}">
+                                <input type="text" required class="form-control" name="name"
+                                    value="{{ $module->name }}">
                             </div>
                             <div class="mb-3">
                                 <label class="form-label">Category *</label>
                                 <select name="category_id" required class="form-select" required>
                                     <option value=""> -select type-</option>
                                     @foreach ($categories as $category)
-                                        <option @if($module->category_id == $category->id) selected @endif value="{{ $category->id }}">{{ ucfirst($category->name) }}</option>
+                                        <option @if ($module->category_id == $category->id) selected @endif
+                                            value="{{ $category->id }}">{{ ucfirst($category->name) }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -44,27 +48,43 @@
                                     <h4>Students</h4>
                                 </div>
                                 <div class="col-6 text-end">
-                                    {{-- <button type="button" class="btn btn-primary text-white btn-lg" data-bs-toggle="modal"
-                                        data-bs-target="#uploaderFormModal">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-paperclip" viewBox="0 0 16 16">
-                                            <path d="M4.5 3a2.5 2.5 0 0 1 5 0v9a1.5 1.5 0 0 1-3 0V5a.5.5 0 0 1 1 0v7a.5.5 0 0 0 1 0V3a1.5 1.5 0 1 0-3 0v9a2.5 2.5 0 0 0 5 0V5a.5.5 0 0 1 1 0v7a3.5 3.5 0 1 1-7 0V3z"/>
+                                    <button type="button" class="btn btn-primary text-white btn-lg" data-bs-toggle="modal"
+                                        data-bs-target="#studentFormModal">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                            fill="currentColor" class="bi bi-paperclip" viewBox="0 0 16 16">
+                                            <path
+                                                d="M4.5 3a2.5 2.5 0 0 1 5 0v9a1.5 1.5 0 0 1-3 0V5a.5.5 0 0 1 1 0v7a.5.5 0 0 0 1 0V3a1.5 1.5 0 1 0-3 0v9a2.5 2.5 0 0 0 5 0V5a.5.5 0 0 1 1 0v7a3.5 3.5 0 1 1-7 0V3z" />
                                         </svg>
-                                        Assign to Student
-                                    </button> --}}
+                                        Attached Student
+                                    </button>
                                 </div>
                             </div>
                             <table class="table">
                                 <thead>
                                     <tr>
-                                        <th>Full Name</th>
-                                        <th>Type</th>
-                                        <th>Size</th>
-                                        <th>Uploaded </th>
+                                        <th>Last Name</th>
+                                        <th>First Name</th>
+                                        <th>Middle Name</th>
+                                        <th>Section</th>
+                                        <th>Date/Time Added </th>
                                         <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
-
+                                    @forelse($users as $user)
+                                        <tr>
+                                            <td>{{ $user->last_name }}</td>
+                                            <td>{{ $user->first_name }}</td>
+                                            <td>{{ $user->middle_name }}</td>
+                                            <td>{{ optional($user->section)->name }}</td>
+                                            <td>{{ $user->pivot->created_at }}</td>
+                                            <td></td>
+                                        </tr>
+                                    @empty
+                                        <tr>
+                                            <td colspan="6" class="text-center">No Student attached</td>
+                                        </tr>
+                                    @endforelse
                                 </tbody>
                             </table>
                             <div class="py-5">
@@ -127,6 +147,26 @@
     </div>
 
     <!-- Modal -->
+    <div class="modal fade" id="studentFormModal" tabindex="-1" aria-labelledby="studentFormModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="studentFormModalLabel">Attach Student</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="search" placeholder="search student.." x-model="search" class="form-control">
+                    <input type="text" x-model="message">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary text-white" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary text-white">Attach</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
     <div class="modal fade" id="uploaderFormModal" tabindex="-1" aria-labelledby="uploaderFormModalLabel"
         aria-hidden="true">
         <div class="modal-dialog">
@@ -135,8 +175,9 @@
                     <h5 class="modal-title" id="uploaderFormModalLabel">New Module</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form action="{{ route('dashboard.file.upload.module.file') }}" method="POST" enctype="multipart/form-data">
-                    @csrf 
+                <form action="{{ route('dashboard.file.upload.module.file') }}" method="POST"
+                    enctype="multipart/form-data">
+                    @csrf
                     <input type="hidden" name="module_id" value="{{ $module->id }}">
                     <div class="modal-body">
                         <div class="mb-3">
@@ -151,7 +192,8 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary text-white" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-secondary text-white"
+                            data-bs-dismiss="modal">Close</button>
                         <button type="submit" class="btn btn-primary text-white">Save Module</button>
                     </div>
                 </form>

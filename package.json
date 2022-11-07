@@ -16,6 +16,7 @@
     },
     "dependencies": {
         "@vitejs/plugin-vue": "^3.2.0",
+        "alpinejs": "^3.10.5",
         "animate.css": "^4.1.1",
         "font-awesome": "^4.7.0",
         "vue": "^3.2.41",

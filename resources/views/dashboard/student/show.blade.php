@@ -23,16 +23,33 @@
                                 <div class="mb-4">
                                     <div class="text-center">
                                         <label for="thumbnail" class="d-block mb-2">
-                                            <img src="{{ $student->getFirstMediaUrl('thumbnail') }}"  alt="user profile" class="img-thumbnail mw-100" alt="">
+                                            <img src="{{ $student->getFirstMediaUrl('thumbnail') }}"  alt="user profile" class="mw-100" alt="">
                                         </label>
                                     </div>
                                 </div>
                                 <div class="mb-3">
-                                    <p><strong>Full Name:</strong> {{ $student->full_name }}</p>
-                                    <p><strong>Gender:</strong> {{ ucfirst($student->gender) }}</p>
-                                    <p><strong>Address:</strong> {{ $student->address }}</p>
-                                    <p><strong>Email Address:</strong> {{ $student->email }}</p>
-                                    <p><strong>Contact Number:</strong> {{ $student->contact_number }}</p>
+                                    <h4>{{ $student->full_name }}</h4>
+                                    <span class="text-dark">Address: {{ $student->address }}</span>
+                                    <br/>
+                                    <span class="text-dark">Date Registered: {{ $student->created_at->format('M d, Y') }}</span>
+                                    <ul class="mt-2"><strong>Gender:</strong> {{ ucfirst($student->gender) }}</ul>
+
+                                    <hr/>
+                                    <h5 class="mb-3">Contact Information</h5>
+                                    <ul><strong>Email Address:</strong> {{ $student->email }}</ul>
+                                    <ul><strong>Contact Number:</strong> {{ $student->contact_number }}</ul>
+
+                                    <hr/>
+                                    <h5 class="mb-3">Latest Assessment Score</h5>
+                                    <ul>
+                                        <strong>Module Name</strong>
+                                        <span class="fa fa-star"></span>
+                                        <span class="fa fa-star"></span>
+                                        <span class="fa fa-star"></span>
+                                        <span class="fa fa-star-o"></span>
+                                        <span class="fa fa-star-o"></span>
+                                    </ul>
+                                       
                                 </div>
                         </div>
                     </div>

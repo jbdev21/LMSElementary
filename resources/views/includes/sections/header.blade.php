@@ -6,8 +6,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="icon" href="/images/logo.png">
 
-    <title>@yield('page-title', 'Dashboard') - {{ config('app.name', 'Woodland') }}</title>
-    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <title>@yield('page-title', 'Dashboard') - {{ config('app.name', 'LMS') }}</title>
     @vite(['resources/sass/dashboard.scss', 'resources/js/dashboard.js'])
     @stack('styles')
 </head>

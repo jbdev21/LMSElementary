@@ -1,11 +1,14 @@
-/**
- * First we will load all of this project's JavaScript dependencies which
- * includes Vue and other libraries. It is a great starting point when
- * building robust, powerful web applications using Vue and Laravel.
- */
-
 import './bootstrap';
- 
+
+const { createApp } = Vue
+
+const vueApp =createApp({}).mount('#app')
+
+import ModuleStudentSelectorComponent from './components/Dashboard/Module/ModuleStudentSelectorComponent.vue'
+vueApp.component('ModuleStudentSelectorComponent', ModuleStudentSelectorComponent)
+
+
+
  
  /**
   * The following block of code may be used to automatically register your
@@ -14,9 +17,6 @@ import './bootstrap';
   *
   * Eg. ./components/ExampleComponent.vue -> <example-component></example-component>
   */
- 
- // const files = require.context('./', true, /\.vue$/i)
- // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
  
  /**

@@ -9,7 +9,7 @@
             <div class="app-card-body p-4">
                 <form>
                     <div class="row mb-2">
-                        <div class="col-4">
+                        <div class="col-3">
                             <div class="input-group mb-4">
                                 <input name="q" type="text" class="form-control"
                                     value="{{ Request::get('q') }}" placeholder="Search for item..." name="q">
@@ -17,13 +17,8 @@
                                         class="fa fa-search"></i></button>
                             </div>
                         </div>
-                        <div class="col-8">
+                        <div class="col-9 text-end">
                             <a href="{{ route('dashboard.student.create') }}" class="btn btn-sm btn-primary pull-right text-white"><i class="fa fa-plus"></i> Add New Student</a>
-                        </div>
-                        <div class="col-8">
-                            {{ $students->appends([
-                                    'q' => request()->q,
-                                ])->links() }}
                         </div>
                     </div>
                 </form>
@@ -42,7 +37,7 @@
                         @forelse ($students as $student)
                             <tr>
                                 <td>
-                                    <img src="{{ $student->getFirstMedia('thumbnail')->getUrl('thumbnail') }}"/>
+                                    <img src="{{ $student->thumbnailUrl() }}"/>
                                 </td>
                                 <td>{{ $student->full_name }}</td>
                                 <td>{{ $student->address }}</td>
@@ -66,11 +61,14 @@
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="3" class="text-center">No upload student found</td>
+                                <td colspan="6" class="text-center">No student found</td>
                             </tr>
                         @endforelse
                     </tbody>
                 </table>
+                {{ $students->appends([
+                    'q' => request()->q,
+                ])->links() }}
             </div>
         </div>
     </div>

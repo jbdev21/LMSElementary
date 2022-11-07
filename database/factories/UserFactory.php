@@ -21,10 +21,10 @@ class UserFactory extends Factory
             'last_name' => fake()->name(),
             'first_name' => fake()->name(),
             'middle_name' => fake()->name(),
-            'contact_number' => '09092555868',
+            'contact_number' => fake()->phoneNumber(),
             'gender' => 'male',
             'address' => fake()->address(),
-            'username' => 'admin',
+            'username' => fake()->userName(),
             'type' => 'teacher',
             'status' => 'ongoing',
             'email' => fake()->unique()->safeEmail(),
@@ -32,6 +32,35 @@ class UserFactory extends Factory
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
             'remember_token' => Str::random(10),
         ];
+    }
+
+
+    /**
+     * Indicate that the user is suspended.
+     *
+     * @return \Illuminate\Database\Eloquent\Factories\Factory
+     */
+    public function student()
+    {
+        return $this->state(function (array $attributes) {
+            return [
+                'type' => 'student',
+            ];
+        });
+    }
+    /**
+     * Indicate that the user is suspended.
+     *
+     * @return \Illuminate\Database\Eloquent\Factories\Factory
+     */
+    public function admin()
+    {
+        return $this->state(function (array $attributes) {
+            return [
+                'type' => 'teacher',
+                'username' => 'admin',
+            ];
+        });
     }
 
     /**

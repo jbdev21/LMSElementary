@@ -147,12 +147,12 @@
     </div>
 
     <!-- Modal -->
-    <div class="modal fade" id="studentFormModal" tabindex="-1" aria-labelledby="studentFormModalLabel" aria-hidden="true">
+    <div class="modal fade" data-bs-backdrop="false" data-bs-keyboard="false" data-bs-focus="true" id="studentFormModal" tabindex="-1" aria-labelledby="studentFormModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="studentFormModalLabel">Attach Student</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    {{-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> --}}
                 </div>
                 <div class="modal-body">
                     <module-student-selector-component></module-student-selector-component>
@@ -160,45 +160,10 @@
                     <input type="text" x-model="message"> --}}
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary text-white" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary text-white">Attach</button>
+                    <button type="button" onclick="window.location.reload()" class="btn btn-primary text-white">Done</button>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Modal -->
-    <div class="modal fade" id="uploaderFormModal" tabindex="-1" aria-labelledby="uploaderFormModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="uploaderFormModalLabel">New Module</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <form action="{{ route('dashboard.file.upload.module.file') }}" method="POST"
-                    enctype="multipart/form-data">
-                    @csrf
-                    <input type="hidden" name="module_id" value="{{ $module->id }}">
-                    <div class="modal-body">
-                        <div class="mb-3">
-                            <label for="exampleInputEmail1" class="form-label">File *</label>
-                            <input type="file" required class="form-control" name="file">
-                        </div>
-                        <div class="mb-3">
-                            <label for="exampleInputEmail1" class="form-label">Name</label>
-                            <input type="text" class="form-control" name="name">
-                            <div id="emailHelp" class="form-text">This is optional, filename will be used if not provided.
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary text-white"
-                            data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary text-white">Save Module</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
 @endsection

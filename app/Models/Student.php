@@ -32,6 +32,11 @@ class Student extends Model implements HasMedia
         return $this->last_name . "," . $this->first_name . " " . $this->middle_name;
     }
 
+    function thumbnailUrl(){
+        return optional($this->getFirstMedia('thumbnail'))->getUrl("thumbnail")
+                ?? asset("/images/placeholder.png");
+    }
+
     public function registerMediaConversions(Media $media = null): void
     {
         $this->addMediaConversion('thumbnail')

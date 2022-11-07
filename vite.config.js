@@ -3,8 +3,20 @@ import laravel from 'laravel-vite-plugin';
 import vue from '@vitejs/plugin-vue'
 
 export default defineConfig({
+    resolve: {
+        alias: {
+            vue: 'vue/dist/vue.esm-bundler'
+        }
+    },
     plugins: [
-        vue(),
+        vue({
+            template: {
+                transformAssetUrls: {
+                    base: null,
+                    includeAbsolute: false,
+                },
+            },
+        }),
         laravel({
             input: [
                 'resources/sass/app.scss',
@@ -14,7 +26,7 @@ export default defineConfig({
             ],
             refresh: true,
         }),
-        
+
         // vue()   
     ],
 });

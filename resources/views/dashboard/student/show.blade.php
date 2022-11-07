@@ -23,7 +23,7 @@
                                 <div class="mb-4">
                                     <div class="text-center">
                                         <label for="thumbnail" class="d-block mb-2">
-                                            <img src="{{ $student->getFirstMediaUrl('thumbnail') }}"  alt="user profile" class="mw-100" alt="">
+                                            <img src="{{ $student->thumbnailUrl() }}"  alt="user profile" class="mw-100" alt="">
                                         </label>
                                     </div>
                                 </div>

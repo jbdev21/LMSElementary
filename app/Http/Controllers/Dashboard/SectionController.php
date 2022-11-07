@@ -15,6 +15,7 @@ class SectionController extends Controller
             ->when($request->q, function ($query) use ($request) {
                 $query->where("name", "LIKE", $request->q . "%");
             })
+            ->orderBy("name")
             ->paginate();
 
         return view("dashboard.section.index", [

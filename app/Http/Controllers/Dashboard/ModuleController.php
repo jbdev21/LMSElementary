@@ -64,7 +64,7 @@ class ModuleController extends Controller
 
         flash()->success("Module added successfuly");
 
-        return back();
+        return redirect()->route("dashboard.module.show", $module->id);
     }
 
     /**

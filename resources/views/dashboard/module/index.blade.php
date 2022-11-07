@@ -82,7 +82,7 @@
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="3" class="text-center">No upload module found</td>
+                                    <td colspan="6" class="text-center">No upload module found</td>
                                 </tr>
                             @endforelse
                         </tbody>
@@ -103,7 +103,7 @@
                     <h5 class="modal-title" id="exampleModalLabel">New Module</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form action="{{ route('dashboard.module.store') }}">
+                <form action="{{ route('dashboard.module.store') }}" method="POST">
                     @csrf
                     <div class="modal-body">
                         <div class="mb-3">

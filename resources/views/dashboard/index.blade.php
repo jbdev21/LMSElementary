@@ -2,7 +2,6 @@
 
 @section('module-name', 'category')
 @section('page-title', 'Categories')
-=
 
 @section('content')
     <div class="row">

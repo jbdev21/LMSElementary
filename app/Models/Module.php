@@ -4,15 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\MediaLibrary\InteractsWithMedia;
+use Spatie\MediaLibrary\HasMedia;
 
-class Module extends Model
+class Module extends Model implements HasMedia
 {
-    use HasFactory;
-
-    public function files()
-    {
-        return $this->morphMany(File::class, 'filable');
-    }
+    use HasFactory, InteractsWithMedia;
 
     public function category()
     {

@@ -21,10 +21,12 @@ class ModuleController extends Controller
             ->when($request->q, function ($query) use ($request) {
                 $query->where("name", "LIKE", $request->q . "%");
             })
-            ->paginate();
+            ->when($request->category, function ($query) use ($request) {
+                $query->where("category_id", $request->category);
+            })
+            ->paginate(25);
 
-
-        $categories = Category::all();
+        $categories = Category::whereType("module")->get();
 
         return view("dashboard.module.index", [
             'modules' => $modules,
@@ -60,14 +62,6 @@ class ModuleController extends Controller
         $module->category_id = $request->category_id;
         $module->save();
 
-        $file = new File;
-        $file->name = $request->file('file')->getClientOriginalName();;
-        $file->path = $request->file->store('file', 'public'); 
-        $file->filable_type = Module::class; 
-        $file->filable_id = $module->id; 
-
-        $file->save();
-
         flash()->success("Module added successfuly");
 
         return back();
@@ -81,7 +75,12 @@ class ModuleController extends Controller
      */
     public function show(Module $module)
     {
-        //
+        $categories = Category::whereType("module")->get();
+        return view("dashboard.module.show",[ 'module' => $module, 'categories' => $categories]);
+    }
+
+    function uploadFile(Module $module){
+        
     }
 
     /**
@@ -116,7 +115,7 @@ class ModuleController extends Controller
     public function destroy(Module $module)
     {
         $module->delete();
-
+        flash()->success("Module deleted!");
         return back();
     }
 }

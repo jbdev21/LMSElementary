@@ -17,7 +17,10 @@ class ModuleFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'name' => $this->faker->catchPhrase(),
+            'user_id' => 1,
+            'category_id' => 1,
+            'details' => $this->faker->text()
         ];
     }
 }

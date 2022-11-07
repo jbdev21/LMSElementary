@@ -2,9 +2,12 @@
 
 namespace App\Providers;
 
+use App\Models\Module;
+use App\Observers\ModuleObserver;
+use Spatie\Flash\Flash;
+use Illuminate\Pagination\Paginator;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\ServiceProvider;
-use Spatie\Flash\Flash;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -32,5 +35,10 @@ class AppServiceProvider extends ServiceProvider
             'warning' => 'alert-warning',
             'error' => 'alert-error',
         ]);
+
+        Paginator::useBootstrapFive();
+
+        //observers
+        Module::observe(ModuleObserver::class);
     }
 }

@@ -4,44 +4,65 @@
 @section('page-title', 'Students')
 
 @section('content')
-        <div class="col-5">
-            <div class="card">
-                <div class="card-header">
-                    <h5 class="card-title">Student Information Details </h5>
+<div class="app-card shadow-sm mb-4 border-left-decoration">
+        <div class="inner">
+            <div class="app-card-body p-4">
+              <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                  <li class="breadcrumb-item"><a href="{{ route('dashboard.dashboard') }}">Dashboard</a></li>
+                  <li class="breadcrumb-item active" aria-current="page"><a href="{{ route('dashboard.student.index') }}">Students</a></li>
+                  <li class="breadcrumb-item active" aria-current="page">{{ $student->full_name }}</li>
+                </ol>
+              </nav>
+                
+            <div class="row gx-5 gy-3">
+                <div class="col-lg-4 col-md-4 col-sm-5 col-12">
+                    <div class="app-card mb-4">
+                        <div class="app-card-body p-4">
+                                <label class="mb-4"><h4>Student Information</h4></label>
+                                <div class="mb-4">
+                                    <div class="text-center">
+                                        <label for="thumbnail" class="d-block mb-2">
+                                            <img src="{{ $student->getFirstMediaUrl('thumbnail') }}"  alt="user profile" class="img-thumbnail mw-100" alt="">
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <p><strong>Full Name:</strong> {{ $student->full_name }}</p>
+                                    <p><strong>Gender:</strong> {{ ucfirst($student->gender) }}</p>
+                                    <p><strong>Address:</strong> {{ $student->address }}</p>
+                                    <p><strong>Email Address:</strong> {{ $student->email }}</p>
+                                    <p><strong>Contact Number:</strong> {{ $student->contact_number }}</p>
+                                </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="card-body">
-                    <img src="{{ $student->getFirstMedia('thumbnail')->getUrl('thumbnail') }}"  class="img-thumbnail mb-4"/>
-                    <div class="row">
-                        <div class="mt-2">
-                            <strong>Student Username: </strong>
-                            <input value="{{ $student->username }}" class="form-control">
+                <!--// new col-->
+                <div class="col-lg-8 col-sm-7">
+                    <div class="app-card mb-4">
+                        <div class="app-card-body p-4">
+                            <label class="mb-4"><h4>Student Modules</h4></label>
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Category</th>
+                                        <th>Uploaded</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>   
                         </div>
-                        <div class="mt-3">
-                            <strong>Full Name: </strong>
-                            <input value="{{ $student->full_name }}" class="form-control">
-                        </div>
-                        <div class="mt-3">
-                            <strong>Address: </strong>
-                            <input value="{{ $student->address }}" class="form-control">
-                        </div>
-                        <div class="mt-3">
-                            <strong>Email Address: </strong>
-                            <input value="{{ $student->email }}" class="form-control">
-                        </div>
-                        <div class="col-6 mt-3">
-                            <strong>Gender: </strong>
-                            <input value="{{ $student->gender }}" class="form-control">
-                        </div>
-                        <div class="col-6 mt-3">
-                            <strong>Contact Number: </strong>
-                            <input value="{{ $student->contact_number }}" class="form-control">
-                        </div>
-                        <p class="mt-4">
-                            <a href="{{ route('dashboard.student.index') }}" class="btn text-white btn-warning"><i class="fa fa-ban"></i> Cancel</a>
-                        </p>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
 @endsection

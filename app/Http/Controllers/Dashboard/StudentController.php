@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers\Dashboard;
 
-use App\Http\Controllers\Controller;
 use App\Models\Student;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Hash;
 
 class StudentController extends Controller
 {
@@ -30,7 +31,7 @@ class StudentController extends Controller
      */
     public function create()
     {
-        //
+        return view("dashboard.student.create");
     }
 
     /**
@@ -41,7 +42,32 @@ class StudentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'username' => 'required|unique:users|max:255',
+            'last_name' => 'required',
+            'first_name' => 'required',
+            'middle_name' => 'required',
+        ]);
+
+        $student = new Student;
+        $student->last_name = $request->last_name;
+        $student->first_name = $request->first_name;
+        $student->middle_name = $request->middle_name;
+        $student->email = $request->email;
+        $student->contact_number = $request->contact_number;
+        $student->address = $request->address;
+        $student->gender = $request->gender;
+        $student->username = $request->username;
+        $student->password = Hash::make($request->password);
+
+        $student->save();
+
+        //upload image using spatie media
+        $student->addMediaFromRequest('photo')->toMediaCollection('thumbnail');
+
+        flash()->success("New Student Added Successfuly");
+
+        return redirect()->route('dashboard.student.index');
     }
 
     /**
@@ -63,7 +89,9 @@ class StudentController extends Controller
      */
     public function edit(Student $student)
     {
-        //
+        return view("dashboard.student.edit", [
+            'student' => $student
+        ]);
     }
 
     /**
@@ -75,7 +103,28 @@ class StudentController extends Controller
      */
     public function update(Request $request, Student $student)
     {
-        //
+        $student->last_name = $request->last_name;
+        $student->first_name = $request->first_name;
+        $student->middle_name = $request->middle_name;
+        $student->email = $request->email;
+        $student->contact_number = $request->contact_number;
+        $student->address = $request->address;
+        $student->gender = $request->gender;
+        $student->username = $request->username;
+        
+        if($request->has('password')){
+            $student->password = Hash::make($request->password);
+        }
+        $student->save();
+
+        if($request->has('photo')){
+            $student->clearMediaCollection('thumbnail');
+            $student->addMediaFromRequest('photo')->toMediaCollection('thumbnail');
+        }
+
+        flash()->success("Student information update successfuly");
+
+        return redirect()->route('dashboard.student.index');
     }
 
     /**
@@ -86,6 +135,10 @@ class StudentController extends Controller
      */
     public function destroy(Student $student)
     {
-        //
+        $student->delete();
+
+        flash()->error("Student deleted successfully");
+
+        return back();
     }
 }

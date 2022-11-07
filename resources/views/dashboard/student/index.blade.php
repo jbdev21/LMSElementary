@@ -19,6 +19,9 @@
                             </div>
                         </div>
                         <div class="col-8">
+                            <a href="{{ route('dashboard.student.create') }}" class="btn btn-sm btn-primary pull-right text-white">Add New Student</a>
+                        </div>
+                        <div class="col-8">
                             {{ $students->appends([
                                     'q' => request()->q,
                                 ])->links() }}
@@ -28,9 +31,11 @@
                 <table class="table">
                     <thead>
                         <tr>
+                            <th>Thumbnail</th>
                             <th>Full Name</th>
-                            <th>Category</th>
-                            <th>Files</th>
+                            <th>Address</th>
+                            <th>Contact</th>
+                            <th>Date Registered</th>
                             <th></th>
                         </tr>
                     </thead>
@@ -38,11 +43,12 @@
                         @forelse ($students as $student)
                             <tr>
                                 <td>
-                                    {{ $student->full_name }}
+                                    <img src="{{ $student->getFirstMedia('thumbnail')->getUrl('thumbnail') }}"/>
                                 </td>
-                                <td>
-
-                                </td>
+                                <td>{{ $student->full_name }}</td>
+                                <td>{{ $student->address }}</td>
+                                <td>{{ $student->contact_number }}</td>
+                                <td>{{ $student->created_at->format('M d, Y') }}</td>
                                 <td class="text-end">
                                     <a class="btn-sm" href="{{ route('dashboard.student.edit', $student->id) }}"><i
                                             class="fa fa-pencil"></i></a>

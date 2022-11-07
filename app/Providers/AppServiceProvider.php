@@ -30,7 +30,7 @@ class AppServiceProvider extends ServiceProvider
         Flash::levels([
             'success' => 'alert-success',
             'warning' => 'alert-warning',
-            'error' => 'alert-error',
+            'error' => 'alert-danger',
         ]);
     }
 }

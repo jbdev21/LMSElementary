@@ -9,6 +9,7 @@ use App\Http\Controllers\Dashboard\ModuleController;
 use App\Http\Controllers\Dashboard\CategoryController;
 use App\Http\Controllers\Dashboard\HomeController as DashboardHomeController;
 use App\Http\Controllers\Dashboard\ProfileController;
+use App\Http\Controllers\Dashboard\SectionController;
 use App\Http\Controllers\Dashboard\StudentController;
 use App\Http\Controllers\FileController;
 
@@ -38,6 +39,8 @@ Route::group([
     Route::post("module/{module}/upload-file", [ModuleController::class, 'uploadFile'])->name("module.upload-file");
     Route::resource("module", ModuleController::class);
     Route::resource("student", StudentController::class);
+    Route::resource("section", SectionController::class);
+
     Route::get('profile', [ProfileController::class, 'index'])->name("profile.index");
     Route::put('profile', [ProfileController::class, 'update'])->name("profile.update");
     

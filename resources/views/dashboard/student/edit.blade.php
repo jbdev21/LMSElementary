@@ -42,9 +42,17 @@
                                 <label>Contact Number</label>
                                 <input type="number" name="contact_number" spellcheck="true" class="form-control" value="{{ $student->contact_number }}">
                             </div>
-                            <div class="col-8 mb-4">
+                            <div class="col-12 mb-4">
                                 <label>Address</label>
                                 <input type="text" name="address" spellcheck="true" class="form-control" value="{{ $student->address }}">
+                            </div>
+                             <div class="col-4 mb-3">
+                                <label>Section</label>
+                                <select name="section_id" class="form-select">
+                                    @foreach ($sections as $section)
+                                        <option value="{{ $section->id }}" @if($student->section_id == $section->id) selected @endif>{{ $section->name }}</option>
+                                    @endforeach
+                                </select>
                             </div>
                             <div class="col-4 mb-4">
                                 <label>Gender</label>

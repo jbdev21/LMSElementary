@@ -40,4 +40,10 @@ class Student extends Model implements HasMedia
             ->performOnCollections('thumbnail');
     }
 
+    function section()
+    {
+        return $this->belongsTo(Section::class);
+    }
+
+
 }

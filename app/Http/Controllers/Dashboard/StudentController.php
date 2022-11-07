@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Dashboard;
 use App\Models\Student;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Section;
 use Illuminate\Support\Facades\Hash;
 
 class StudentController extends Controller
@@ -36,7 +37,11 @@ class StudentController extends Controller
      */
     public function create()
     {
-        return view("dashboard.student.create");
+        $sections = Section::all();
+
+        return view("dashboard.student.create", [
+            'sections' => $sections
+        ]);
     }
 
     /**
@@ -62,6 +67,7 @@ class StudentController extends Controller
         $student->contact_number = $request->contact_number;
         $student->address = $request->address;
         $student->gender = $request->gender;
+        $student->section_id = $request->section_id;
         $student->username = $request->username;
         $student->password = Hash::make($request->password);
 
@@ -96,8 +102,10 @@ class StudentController extends Controller
      */
     public function edit(Student $student)
     {
+        $sections = Section::all();
         return view("dashboard.student.edit", [
-            'student' => $student
+            'student' => $student,
+            'sections' => $sections
         ]);
     }
 
@@ -105,7 +113,7 @@ class StudentController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Student  $student
+     * @param  \App\Models\sections  $student
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Student $student)
@@ -118,6 +126,7 @@ class StudentController extends Controller
         $student->address = $request->address;
         $student->gender = $request->gender;
         $student->username = $request->username;
+        $student->section_id = $request->section_id;
         
         if($request->has('password')){
             $student->password = Hash::make($request->password);

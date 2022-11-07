@@ -41,9 +41,17 @@
                                 <label>Contact Number</label>
                                 <input type="number" name="contact_number" spellcheck="true" class="form-control" required>
                             </div>
-                            <div class="col-8 mb-3">
+                            <div class="col-12 mb-3">
                                 <label>Address</label>
                                 <input type="text" name="address" spellcheck="true" class="form-control" required>
+                            </div>
+                            <div class="col-4 mb-3">
+                                <label>Section</label>
+                                <select name="section_id" class="form-select">
+                                    @foreach ($sections as $section)
+                                        <option value="{{ $section->id }}">{{ $section->name }}</option>
+                                    @endforeach
+                                </select>
                             </div>
                             <div class="col-4 mb-3">
                                 <label>Gender</label>

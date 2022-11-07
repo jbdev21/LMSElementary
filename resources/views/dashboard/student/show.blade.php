@@ -32,6 +32,7 @@
                                     <span class="text-dark">Address: {{ $student->address }}</span>
                                     <br/>
                                     <span class="text-dark">Date Registered: {{ $student->created_at->format('M d, Y') }}</span>
+                                    <ul class="mt-2"><strong>Section:</strong> {{ $student->section->name }}</ul>
                                     <ul class="mt-2"><strong>Gender:</strong> {{ ucfirst($student->gender) }}</ul>
 
                                     <hr/>

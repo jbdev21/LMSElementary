@@ -32,7 +32,8 @@ class ProfileController extends Controller
 
         if ($request->has('thumbnail')) {
             $user->clearMediaCollection('thumbnail');
-            $user->addMediaFromRequest('thumbnail')->toMediaCollection('thumbnail');
+            $user->addMediaFromRequest('thumbnail')
+                ->toMediaCollection('thumbnail');
         }
     }
 }

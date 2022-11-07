@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Storage;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class User extends Authenticatable implements HasMedia
 {
@@ -40,10 +41,17 @@ class User extends Authenticatable implements HasMedia
         return $this->last_name . "," . $this->first_name . " " . $this->middle_name;
     }
 
+    public function registerMediaConversions(Media $media = null): void
+    {
+        $this->addMediaConversion('thumbnail')
+            ->width(150)
+            ->height(150)
+            ->performOnCollections('thumbnail');
+    }
+
     function thumbnailUrl(){
-        return $this->thumbnail 
-                ? Storage::url($this->thumbnail) 
-                : asset("/images/placeholder.png");
+        return $this->getFirstMedia('thumbnail')->getUrl("thumbnail")
+                ?? asset("/images/placeholder.png");
     }
 
     /**

@@ -31,7 +31,7 @@
                                         <label for="">Profile</label>
                                         <div class="text-center">
                                             <label for="thumbnail" class="d-block mb-2">
-                                                <img src="{{ $user->getFirstMediaUrl('thumbnail') }}"  alt="user profile" class="rounded-circle mw-100" alt="">
+                                                <img src="{{ $user->thumbnailUrl() }}"  alt="user profile" class="rounded-circle mw-100" alt="">
                                             </label>
                                         </div>
                                         <input type="file" class="form-control" name="thumbnail">

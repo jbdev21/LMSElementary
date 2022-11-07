@@ -10,6 +10,7 @@ use App\Http\Controllers\Dashboard\CategoryController;
 use App\Http\Controllers\Dashboard\HomeController as DashboardHomeController;
 use App\Http\Controllers\Dashboard\ProfileController;
 use App\Http\Controllers\Dashboard\StudentController;
+use App\Http\Controllers\FileController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -34,9 +35,12 @@ Route::group([
 
     Route::get("/home", [DashboardHomeController::class, 'index'])->name("dashboard");
     Route::resource("category", CategoryController::class);
+    Route::post("module/{module}/upload-file", [ModuleController::class, 'uploadFile'])->name("module.upload-file");
     Route::resource("module", ModuleController::class);
     Route::resource("student", StudentController::class);
     Route::get('profile', [ProfileController::class, 'index'])->name("profile.index");
     Route::put('profile', [ProfileController::class, 'update'])->name("profile.update");
     
+    Route::post("file/upload", [FileController::class, 'upload'])->name("file.upload");
+    Route::post("file/upload-module-file", [FileController::class, 'uploadModuleFile'])->name("file.upload.module.file");
 });

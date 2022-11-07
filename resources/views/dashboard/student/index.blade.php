@@ -2,7 +2,6 @@
 
 @section('student-name', 'student')
 @section('page-title', 'students')
-=
 
 @section('content')
     <div class="app-card shadow-sm mb-4">

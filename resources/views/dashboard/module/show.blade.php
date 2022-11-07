@@ -98,7 +98,26 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-
+                                    @forelse($files as $file)
+                                        <tr>
+                                            <td>{{ $file->file_name }}</td>
+                                            <td>{{ $file->mime_type }}</td>
+                                            <td>{{ $file->human_readable_size }}</td>
+                                            <td>{{ $file->created_at }}</td>
+                                            <td class="text-end">
+                                                <a href="#" class="btn btn-primary text-white py-1">
+                                                    <i class="fa fa-download"></i>
+                                                </a>
+                                                <a href="#" class="btn btn-danger text-white py-1">
+                                                    <i class="fa fa-trash"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    @empty
+                                        <tr>
+                                            <td colspan="5" class="text-center">No Files Uploaded</td>
+                                        </tr>
+                                    @endforelse
                                 </tbody>
                             </table>
                         </div>
@@ -116,8 +135,9 @@
                     <h5 class="modal-title" id="uploaderFormModalLabel">New Module</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form action="{{ route('dashboard.module.store') }}">
-                    @csrf
+                <form action="{{ route('dashboard.file.upload.module.file') }}" method="POST" enctype="multipart/form-data">
+                    @csrf 
+                    <input type="hidden" name="module_id" value="{{ $module->id }}">
                     <div class="modal-body">
                         <div class="mb-3">
                             <label for="exampleInputEmail1" class="form-label">File *</label>
@@ -125,7 +145,7 @@
                         </div>
                         <div class="mb-3">
                             <label for="exampleInputEmail1" class="form-label">Name</label>
-                            <input type="text" required class="form-control" name="name">
+                            <input type="text" class="form-control" name="name">
                             <div id="emailHelp" class="form-text">This is optional, filename will be used if not provided.
                             </div>
                         </div>

@@ -73,15 +73,17 @@ class ModuleController extends Controller
      * @param  \App\Models\Module  $module
      * @return \Illuminate\Http\Response
      */
-    public function show(Module $module)
+    public function show(Request $request, Module $module)
     {
         $categories = Category::whereType("module")->get();
-        return view("dashboard.module.show",[ 'module' => $module, 'categories' => $categories]);
+        $files = $module->getMedia('files');
+        return view("dashboard.module.show",[ 
+            'module' => $module,
+            'categories' => $categories,
+            'files' => $files,
+        ]);
     }
 
-    function uploadFile(Module $module){
-        
-    }
 
     /**
      * Show the form for editing the specified resource.

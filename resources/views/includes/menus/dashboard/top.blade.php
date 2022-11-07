@@ -147,7 +147,7 @@
                                 class="img-responsive rounded-circle">
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="user-dropdown-toggle">
-                            <li><a class="dropdown-item" href="/profile">Account</a></li>
+                            <li><a class="dropdown-item" href="{{ route('dashboard.profile.index') }}">Account</a></li>
                             <li>
                                 <hr class="dropdown-divider">
                             </li>

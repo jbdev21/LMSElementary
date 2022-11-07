@@ -8,6 +8,7 @@ use App\Http\Controllers\Student\HomeController;
 use App\Http\Controllers\Dashboard\ModuleController;
 use App\Http\Controllers\Dashboard\CategoryController;
 use App\Http\Controllers\Dashboard\HomeController as DashboardHomeController;
+use App\Http\Controllers\Dashboard\ProfileController;
 use App\Http\Controllers\Dashboard\StudentController;
 
 Route::get('/', function () {
@@ -35,5 +36,7 @@ Route::group([
     Route::resource("category", CategoryController::class);
     Route::resource("module", ModuleController::class);
     Route::resource("student", StudentController::class);
+    Route::get('profile', [ProfileController::class, 'index'])->name("profile.index");
+    Route::put('profile', [ProfileController::class, 'update'])->name("profile.update");
     
 });

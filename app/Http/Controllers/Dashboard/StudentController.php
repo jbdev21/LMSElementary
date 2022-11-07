@@ -78,7 +78,9 @@ class StudentController extends Controller
      */
     public function show(Student $student)
     {
-        //
+        return view('dashboard.student.show', [
+            'student' => $student,
+        ]);
     }
 
     /**

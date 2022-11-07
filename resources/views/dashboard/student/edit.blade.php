@@ -59,8 +59,9 @@
                             </div>
                             <p>
                                 <button class="btn text-white btn-primary" type="submit"><i class="fa fa-save"></i>
-                                    Save Changes</button>
-                                <a href="{{ route('dashboard.student.index') }}" class="btn btn-white btn-warning">Cancel</a>
+                                    Save Changes
+                                </button>
+                                <a href="{{ route('dashboard.student.index') }}" class="btn text-white btn-warning"><i class="fa fa-ban"></i> Cancel</a>
                             </p>
                         </div>
                     </form>

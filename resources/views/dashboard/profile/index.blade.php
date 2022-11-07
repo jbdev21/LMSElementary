@@ -44,7 +44,7 @@
                     <div class="col-lg-7 col-sm-7">
                         <div class="app-card mb-4">
                             <div class="app-card-body p-4">
-                                <label> <h4>Account Detail</h4></label>
+                                <label> <h4 class="mb-4">Account Detail</h4></label>
                                 <div class="row">
                                     <div class="col-4 mb-3">
                                         <label for="">Last Name</label>

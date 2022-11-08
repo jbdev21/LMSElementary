@@ -49,4 +49,6 @@ Route::group([
     
     Route::post("file/upload", [FileController::class, 'upload'])->name("file.upload");
     Route::post("file/upload-module-file", [FileController::class, 'uploadModuleFile'])->name("file.upload.module.file");
+    Route::get("file/download/{id}", [FileController::class, 'download'])->name("file.download");
+    Route::delete("file/delete/{id}", [FileController::class, 'destroyMedia'])->name("file.destroy");
 });

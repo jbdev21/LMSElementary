@@ -133,16 +133,19 @@
                                     @forelse($files as $file)
                                         <tr>
                                             <td>{{ $file->file_name }}</td>
-                                            <td>{{ $file->mime_type }}</td>
+                                            <td>{{ ucfirst(basename($file->mime_type)) }}</td>
                                             <td>{{ $file->human_readable_size }}</td>
                                             <td>{{ $file->created_at }}</td>
                                             <td class="text-end">
-                                                <a href="#" class="btn btn-primary text-white py-1">
+                                                <a href="{{ route('dashboard.file.download', $file->id) }}" class="btn btn-primary text-white py-1">
                                                     <i class="fa fa-download"></i>
                                                 </a>
-                                                <a href="#" class="btn btn-danger text-white py-1">
+                                                <a onclick="if(confirm('Are you sure to delete?')){ document.getElementById('file-{{ $file->id }}').submit(); }" href="#" class="btn btn-danger text-white py-1">
                                                     <i class="fa fa-trash"></i>
                                                 </a>
+                                                <form id="file-{{ $file->id }}" action="{{ route('dashboard.file.destroy', $file->id) }}" method="POST">
+                                                    @csrf @method('DELETE')
+                                                </form>
                                             </td>
                                         </tr>
                                     @empty
@@ -158,6 +161,36 @@
         </div>
     </div>
 
+    <!-- Modal -->
+    <div class="modal fade" id="uploaderFormModal" tabindex="-1" aria-labelledby="studentFormModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="studentFormModalLabel">Attach Student</h5>
+                </div>
+                <form action="{{ route("dashboard.file.upload.module.file", $module->id) }}" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    <input type="hidden" name="module_id" value="{{ $module->id }}">
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label class="form-label">File *</label>
+                            <input type="file" required class="form-control" name="file">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Name</label>
+                            <input type="text" class="form-control" name="name">
+                            <div class="form-text">This is optional, filename will be use if not provided
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary text-white" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary text-white">Upload File</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
     <!-- Modal -->
     <div class="modal fade" data-bs-backdrop="false" data-bs-keyboard="false" data-bs-focus="true" id="studentFormModal" tabindex="-1" aria-labelledby="studentFormModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">

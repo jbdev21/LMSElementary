@@ -26,7 +26,7 @@
                         </div>
                         <div class="mb-3 mt-3">
                             <label for="exampleInputEmail1" class="form-label">Description:</label>
-                            <textarea class="form-control" rows="5" style="min-height: 200px">{{ $module->details }}</textarea>
+                            <textarea class="form-control" rows="5" style="min-height: 200px" readonly>{{ $module->details }}</textarea>
                         </div>
                     </div>
                     <div class="col-8">

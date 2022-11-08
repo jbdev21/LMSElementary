@@ -39,6 +39,7 @@ Route::group([
     Route::get("/home", [DashboardHomeController::class, 'index'])->name("dashboard");
     Route::resource("category", CategoryController::class);
     Route::post("module/{module}/upload-file", [ModuleController::class, 'uploadFile'])->name("module.upload-file");
+    Route::post("module/{module}/detach-user", [ModuleController::class, 'removeStudentFromModule'])->name("module.detach-user");
     Route::resource("module", ModuleController::class);
     Route::resource("student", StudentController::class);
     Route::resource("section", SectionController::class);

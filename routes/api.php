@@ -20,3 +20,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::get("student/search", [StudentAPIController::class, 'search']);
+Route::post("student/add-to-module", [StudentAPIController::class, 'addStudentToModule']);

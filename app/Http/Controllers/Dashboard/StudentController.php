@@ -17,13 +17,13 @@ class StudentController extends Controller
      */
     public function index(Request $request)
     {
-        $students = Student::query()
-                    ->when($request->q, function ($query) use ($request) {
-                        $query->where("last_name", "LIKE", $request->q . "%")
-                            ->orWhere("first_name", "LIKE", $request->q. "%")
-                            ->orWhere("address", "LIKE", $request->q . "%");
-                    })
-                    ->paginate();
+        if($request->q){
+            $students = Student::search($request->q)
+                        ->paginate();
+        }else{
+            $students = Student::query()
+                        ->paginate();
+        }
 
         return view("dashboard.student.index", [
             'students' => $students

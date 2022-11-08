@@ -7,6 +7,8 @@ use App\Models\Module;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\User;
+use Laravel\Ui\Presets\React;
 
 class ModuleController extends Controller
 {
@@ -89,6 +91,12 @@ class ModuleController extends Controller
         ]);
     }
 
+    function removeStudentFromModule(Request $request, Module $module){
+        $module->users()->detach($request->student);
+        flash()->success("Student had been dettached");
+        return back();
+    }
+
 
     /**
      * Show the form for editing the specified resource.
@@ -98,7 +106,7 @@ class ModuleController extends Controller
      */
     public function edit(Module $module)
     {
-        //
+       
     }
 
     /**
@@ -110,7 +118,17 @@ class ModuleController extends Controller
      */
     public function update(Request $request, Module $module)
     {
-        //
+        $this->validate($request, [
+            'name' => ['required'],
+        ]);
+
+        $module->name = $request->name;
+        $module->user_id = $request->user()->id;
+        $module->category_id = $request->category_id;
+        $module->save();
+
+        flash()->success("Module updated successfuly");
+        return back();
     }
 
     /**

@@ -18,29 +18,32 @@
                 <h3>{{ $module->name }}</h1>
                     <div class="row">
                         <div class="col-sm-4 p-5">
-                            <div class="mb-3">
-                                <label for="exampleInputEmail1" class="form-label">Module Name *</label>
-                                <input type="text" required class="form-control" name="name"
-                                    value="{{ $module->name }}">
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label">Category *</label>
-                                <select name="category_id" required class="form-select" required>
-                                    <option value=""> -select type-</option>
-                                    @foreach ($categories as $category)
-                                        <option @if ($module->category_id == $category->id) selected @endif
-                                            value="{{ $category->id }}">{{ ucfirst($category->name) }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="mb-3">
-                                <label class="form-label">Details</label>
-                                <textarea name="details" class="form-control" rows="5" style="min-height: 200px">{{ $module->details }}</textarea>
-                                <div id="emailHelp" class="form-text">This is optional, you can change it in the edit page.
+                            <form action="{{ route("dashboard.module.update", $module) }}" method="POST">
+                                @csrf @method('PUT')
+                                <div class="mb-3">
+                                    <label for="exampleInputEmail1" class="form-label">Module Name *</label>
+                                    <input type="text" required class="form-control" name="name"
+                                        value="{{ $module->name }}">
                                 </div>
-                            </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Category *</label>
+                                    <select name="category_id" required class="form-select" required>
+                                        <option value=""> -select type-</option>
+                                        @foreach ($categories as $category)
+                                            <option @if ($module->category_id == $category->id) selected @endif
+                                                value="{{ $category->id }}">{{ ucfirst($category->name) }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Details</label>
+                                    <textarea name="details" class="form-control" rows="5" style="min-height: 200px">{{ $module->details }}</textarea>
+                                    <div id="emailHelp" class="form-text">This is optional, you can change it in the edit page.
+                                    </div>
+                                </div>
 
-                            <button type="submit" class="btn btn-primary text-white">Update Module</button>
+                                <button type="submit" class="btn btn-primary text-white">Update Module</button>
+                            </form>
                         </div>
                         <div class="col-sm-8">
                             <div class="row">
@@ -77,8 +80,17 @@
                                             <td>{{ $user->first_name }}</td>
                                             <td>{{ $user->middle_name }}</td>
                                             <td>{{ optional($user->section)->name }}</td>
-                                            <td>{{ $user->pivot->created_at }}</td>
-                                            <td></td>
+                                            <td>{{ optional($user->pivot->created_at)->format("M d, Y") }}</td>
+                                            <td class="text-end">
+                                                <button 
+                                                        onclick="if(confirm('Are you sure to detach {{ $user->first_name }}?')){ document.getElementById('user-{{ $user->id }}').submit(); }" 
+                                                        class="btn btn-danger text-white py-1">
+                                                        <i class="fa fa-remove"></i> Remove
+                                                </button>
+                                                <form id="user-{{ $user->id }}" method="POST" action="{{ route('dashboard.module.detach-user', $module->id) }}">
+                                                    @csrf <input type="hidden" name="student" value="{{ $user->id }}">
+                                                </form>
+                                            </td>
                                         </tr>
                                     @empty
                                         <tr>
@@ -152,12 +164,9 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="studentFormModalLabel">Attach Student</h5>
-                    {{-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> --}}
                 </div>
                 <div class="modal-body">
-                    <module-student-selector-component></module-student-selector-component>
-                    {{-- <input type="search" placeholder="search student.." x-model="search" class="form-control">
-                    <input type="text" x-model="message"> --}}
+                    <module-student-selector-component module="{{ $module->id }}"></module-student-selector-component>
                 </div>
                 <div class="modal-footer">
                     <button type="button" onclick="window.location.reload()" class="btn btn-primary text-white">Done</button>

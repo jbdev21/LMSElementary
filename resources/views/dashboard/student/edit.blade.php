@@ -11,7 +11,7 @@
     <div class="card-body">
         <form action="{{ route('dashboard.student.update', $student->id) }}" method="post" enctype="multipart/form-data">
             @csrf @method('PUT')
-                <img src="{{ $student->getFirstMedia('thumbnail')->getUrl('thumbnail') }}"  class="img-thumbnail"/>
+                <img src="{{ $student->thumbnailUrl() }}"  class="img-thumbnail"/>
             <div class="row">
                 <div class="row">
                     <div class="col-4 mb-3">

@@ -6,6 +6,7 @@ use App\Models\Student;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Section;
+use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 
 class StudentController extends Controller
@@ -87,7 +88,7 @@ class StudentController extends Controller
      * @param  \App\Models\Student  $student
      * @return \Illuminate\Http\Response
      */
-    public function show(Student $student)
+    public function show(User $student)
     {
         return view('dashboard.student.show', [
             'student' => $student,
@@ -127,15 +128,16 @@ class StudentController extends Controller
         $student->gender = $request->gender;
         $student->username = $request->username;
         $student->section_id = $request->section_id;
-        
-        if($request->has('password')){
+
+        if ($request->password) {
             $student->password = Hash::make($request->password);
         }
         $student->save();
 
-        if($request->has('photo')){
+        if ($request->thumbnail) {
             $student->clearMediaCollection('thumbnail');
-            $student->addMediaFromRequest('photo')->toMediaCollection('thumbnail');
+            $student->addMediaFromRequest('thumbnail')
+            ->toMediaCollection('thumbnail');
         }
 
         flash()->success("Student information update successfuly");

@@ -51,5 +51,9 @@ class Student extends Model implements HasMedia
         return $this->belongsTo(Section::class);
     }
 
+    function modules()
+    {
+        return $this->belongsToMany(Module::class);
+    }
 
 }

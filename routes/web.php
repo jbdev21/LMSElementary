@@ -11,6 +11,7 @@ use App\Http\Controllers\Dashboard\HomeController as DashboardHomeController;
 use App\Http\Controllers\Dashboard\ProfileController;
 use App\Http\Controllers\Dashboard\SectionController;
 use App\Http\Controllers\Dashboard\StudentController;
+use App\Http\Controllers\Dashboard\UserController;
 use App\Http\Controllers\FileController;
 use App\Http\Controllers\Student\ModuleController as StudentModuleController;
 use App\Http\Controllers\Student\ProfileController as StudentProfileController;
@@ -28,6 +29,7 @@ Route::group(['prefix' => 'student', 'as' => 'student.', 'middleware' => ['auth'
 
     Route::get('profile', [StudentProfileController::class, 'index'])->name("profile.index");
     Route::put('profile', [StudentProfileController::class, 'update'])->name("profile.update");
+    Route::get("file/download/{id}", [FileController::class, 'download'])->name("file.download");
 });
 
 
@@ -47,6 +49,7 @@ Route::group([
     Route::resource("module", ModuleController::class);
     Route::resource("student", StudentController::class);
     Route::resource("section", SectionController::class);
+    Route::resource("user", UserController::class);
 
     Route::get('profile', [ProfileController::class, 'index'])->name("profile.index");
     Route::put('profile', [ProfileController::class, 'update'])->name("profile.update");

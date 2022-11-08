@@ -19,4 +19,8 @@ class Module extends Model implements HasMedia
     public function users(){
         return $this->belongsToMany(User::class)->withTimestamps();
     }
+
+    public function user(){
+        return $this->belongsTo(User::class);
+    }
 }

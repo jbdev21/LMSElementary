@@ -71,8 +71,17 @@
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td>
-                                        </td>
+                                        @foreach($student->modules as $module)
+                                            <td width="25%">
+                                                <a href="{{ route("dashboard.module.show", $module->id) }}">
+                                                    {{ $module->name }}
+                                                </a>
+                                            </td>
+                                            <td>{{ ucfirst(optional($module->category)->name) }}</td>
+                                            <td>
+                                                {{ $module->created_at->format("M d, Y") }}
+                                            </td>
+                                        @endforeach
                                     </tr>
                                 </tbody>
                             </table>   

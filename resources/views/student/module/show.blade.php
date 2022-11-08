@@ -18,6 +18,7 @@
                 <div class="row">
                     <div class="col-4 p-5">
                         <h4>{{ $module->name }}</h4>
+                        <label class="form-label">Uploaded By: {{ optional($module->user)->full_name }}</label>
                         <label class="form-label">Date Uploaded: {{ $module->created_at->format('M d, Y') }}</label>
                         <div class="mb-3 mt-3">
                             <label class="form-label">Category:</label>
@@ -49,12 +50,9 @@
                                         <td>{{ $file->human_readable_size }}</td>
                                         <td>{{ $file->created_at }}</td>
                                         <td class="text-end">
-                                            <a href="#" class="btn btn-primary text-white py-1">
-                                                <i class="fa fa-download"></i>
-                                            </a>
-                                            <a href="#" class="btn btn-danger text-white py-1">
-                                                <i class="fa fa-trash"></i>
-                                            </a>
+                                            <a href="{{ route('student.file.download', $file->id) }}" class="btn btn-primary text-white py-1">
+                                                    <i class="fa fa-download"></i>
+                                                </a>
                                         </td>
                                     </tr>
                                 @empty

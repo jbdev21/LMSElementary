@@ -74,8 +74,10 @@ class StudentController extends Controller
 
         $student->save();
 
-        //upload image using spatie media
-        $student->addMediaFromRequest('photo')->toMediaCollection('thumbnail');
+        if($request->has("photo")){
+            //upload image using spatie media
+            $student->addMediaFromRequest('photo')->toMediaCollection('thumbnail');
+        }
 
         flash()->success("New Student Added Successfuly");
 

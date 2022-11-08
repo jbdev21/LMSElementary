@@ -9,6 +9,7 @@ use App\Http\Controllers\Dashboard\ModuleController;
 use App\Http\Controllers\Dashboard\CategoryController;
 use App\Http\Controllers\Dashboard\HomeController as DashboardHomeController;
 use App\Http\Controllers\Dashboard\ProfileController;
+use App\Http\Controllers\Dashboard\QuarterController;
 use App\Http\Controllers\Dashboard\SectionController;
 use App\Http\Controllers\Dashboard\StudentController;
 use App\Http\Controllers\Dashboard\UserController;
@@ -48,6 +49,7 @@ Route::group([
     Route::post("module/{module}/detach-user", [ModuleController::class, 'removeStudentFromModule'])->name("module.detach-user");
     Route::resource("module", ModuleController::class);
     Route::resource("student", StudentController::class);
+    Route::resource("quarter", QuarterController::class);
     Route::resource("section", SectionController::class);
     Route::resource("user", UserController::class);
 

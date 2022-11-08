@@ -7,6 +7,7 @@ use App\Models\Module;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Quarter;
 use App\Models\User;
 use Laravel\Ui\Presets\React;
 
@@ -26,14 +27,19 @@ class ModuleController extends Controller
             ->when($request->category, function ($query) use ($request) {
                 $query->where("category_id", $request->category);
             })
+            ->when($request->quarter, function ($query) use ($request) {
+                $query->where("quarter_id", $request->quarter);
+            })
             ->withCount("users")
             ->paginate(25);
 
         $categories = Category::whereType("module")->get();
+        $quarters = Quarter::all();
 
         return view("dashboard.module.index", [
             'modules' => $modules,
-            'categories' => $categories
+            'categories' => $categories,
+            'quarters' => $quarters
         ]);
     }
 
@@ -63,6 +69,7 @@ class ModuleController extends Controller
         $module->name = $request->name;
         $module->user_id = $request->user()->id;
         $module->category_id = $request->category_id;
+        $module->quarter_id = $request->quarter_id;
         $module->save();
 
         flash()->success("Module added successfuly");
@@ -80,6 +87,7 @@ class ModuleController extends Controller
     {
         $module->load('users');
         $categories = Category::whereType("module")->get();
+        $quarters = Quarter::all();
         $files = $module->getMedia('files');
         $users = $module->users;
 
@@ -87,6 +95,7 @@ class ModuleController extends Controller
             'users' => $users,
             'module' => $module,
             'categories' => $categories,
+            'quarters' => $quarters,
             'files' => $files,
         ]);
     }
@@ -125,6 +134,7 @@ class ModuleController extends Controller
         $module->name = $request->name;
         $module->user_id = $request->user()->id;
         $module->category_id = $request->category_id;
+        $module->quarter_id = $request->quarter_id;
         $module->save();
 
         flash()->success("Module updated successfuly");

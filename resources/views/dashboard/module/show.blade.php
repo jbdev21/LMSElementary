@@ -26,6 +26,16 @@
                                         value="{{ $module->name }}">
                                 </div>
                                 <div class="mb-3">
+                                    <label class="form-label">Quarter *</label>
+                                    <select name="quarter_id" required class="form-select" required>
+                                        <option value=""> -select quarter-</option>
+                                        @foreach ($quarters as $quarter)
+                                            <option @if ($module->quarter_id == $quarter->id) selected @endif
+                                                value="{{ $quarter->id }}">{{ ucfirst($quarter->name) }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="mb-3">
                                     <label class="form-label">Category *</label>
                                     <select name="category_id" required class="form-select" required>
                                         <option value=""> -select type-</option>

@@ -20,6 +20,14 @@
                             </div>
                         </div>
                         <div class="col-3">
+                            <select name="quarter" onchange="this.form.submit()" required class="form-select" required>
+                                <option value=""> - all quarters -</option>
+                                @foreach ($quarters as $quarter)
+                                    <option @if(Request::get("quarter") == $quarter->id) selected @endif value="{{ $quarter->id }}">{{ ucfirst($quarter->name) }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="col-3">
                             <select name="category" onchange="this.form.submit()" required class="form-select" required>
                                 <option value=""> - all categories -</option>
                                 @foreach ($categories as $category)
@@ -27,7 +35,7 @@
                                 @endforeach
                             </select>
                         </div>
-                        <div class="col-6 text-end">
+                        <div class="col-3 text-end">
                             <button type="button" class="btn btn-primary text-white btn-lg" data-bs-toggle="modal" data-bs-target="#exampleModal">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg"
                                     viewBox="0 0 16 16">
@@ -44,6 +52,7 @@
                         <thead>
                             <tr>
                                 <th>Name</th>
+                                <th>Quarter</th>
                                 <th>Students</th>
                                 <th>Category</th>
                                 <th>Files</th>
@@ -58,6 +67,9 @@
                                         <a href="{{ route("dashboard.module.show", $module->id) }}">
                                             {{ $module->name }}
                                         </a>
+                                    </td>
+                                    <td>
+                                        {{ optional($module->quarter)->name }}
                                     </td>
                                     <td>
                                         {{ $module->users_count }}
@@ -109,6 +121,15 @@
                         <div class="mb-3">
                             <label for="exampleInputEmail1" class="form-label">Module Name *</label>
                             <input type="text" required class="form-control" name="name">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Quarter *</label>
+                            <select name="category_id" required class="form-select" required>
+                                <option value=""> -select quarter-</option>
+                                @foreach ($quarters as $quarter)
+                                    <option value="{{ $quarter->id }}">{{ ucfirst($quarter->name) }}</option>
+                                @endforeach
+                            </select>
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Category *</label>

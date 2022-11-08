@@ -21,7 +21,7 @@
     
     @stack("styles")
 </head>
-<body>
+<body style="background-image: url('/images/bg-image.jpg'); background-size: cover; background-position: center;">
     <div id="app">        
         <main >
             @yield('content')

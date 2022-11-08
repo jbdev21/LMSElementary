@@ -13,6 +13,7 @@ use App\Http\Controllers\Dashboard\SectionController;
 use App\Http\Controllers\Dashboard\StudentController;
 use App\Http\Controllers\FileController;
 use App\Http\Controllers\Student\ModuleController as StudentModuleController;
+use App\Http\Controllers\Student\ProfileController as StudentProfileController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -24,6 +25,9 @@ Auth::routes();
 Route::group(['prefix' => 'student', 'as' => 'student.', 'middleware' => ['auth']], function(){
     Route::get("/home", [HomeController::class, 'index'])->name("home");
     Route::resource("module", StudentModuleController::class);
+
+    Route::get('profile', [StudentProfileController::class, 'index'])->name("profile.index");
+    Route::put('profile', [StudentProfileController::class, 'update'])->name("profile.update");
 });
 
 

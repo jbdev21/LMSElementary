@@ -17,6 +17,12 @@
     </div>
     <ol>
         @forelse($questions as $question)
+         <a href="#"
+            onclick="if(confirm('Are you sure to delete?')){ document.getElementById('delete-{{ $question->id }}').submit() }"
+            class="text-white btn btn-sm btn-danger pull-right"><i class="fa fa-trash"></i></a>
+        <form id="delete-{{ $question->id }}"
+            action="{{ route('dashboard.question.destroy', $question->id) }}" method="POST">
+            @csrf @method('DELETE')</form>
             <li class="mb-4">
                 <h4>
                     {{ $question->body }}

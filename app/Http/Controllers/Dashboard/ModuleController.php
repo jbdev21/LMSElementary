@@ -100,7 +100,7 @@ class ModuleController extends Controller
                 break;
             case "pre-assessment":
                 $module->load('questions');
-                $questions = $module->questions()->orderBy("order")->get();
+                $questions = $module->questions()->whereType('pre')->orderBy("order")->get();
                 return view("dashboard.module.show.pre-assessment", [
                     'module' => $module,
                     'categories' => $categories,
@@ -109,7 +109,14 @@ class ModuleController extends Controller
                 ]);
                 break;
             case "post-assessment":
-                //
+                $module->load('questions');
+                $questions = $module->questions()->whereType('post')->orderBy("order")->get();
+                return view("dashboard.module.show.post-assessment", [
+                    'module' => $module,
+                    'categories' => $categories,
+                    'quarters' => $quarters,
+                    'questions' => $questions,
+                ]);
                 break;
 
             default:

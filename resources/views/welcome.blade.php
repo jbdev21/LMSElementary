@@ -7,7 +7,7 @@
             <div class="card">
                 <div class="card-body">
                     <div class="text-center">
-                          <img src="/images/logo.png" alt="logo" width="120" height="120">
+                          <img src="/images/logo.jpg" alt="logo" width="120" height="120">
                         <h4 class="logo-text text-success mt-3">WEB-BASED STUDENT LEARNING SYSTEM</h4>
                     </div>
 

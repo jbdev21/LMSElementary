@@ -30,6 +30,17 @@ class LoginController extends Controller
     protected $redirectTo = RouteServiceProvider::DASHBOARDHOME;
 
 
+
+    /**
+     * Show the application's login form.
+     *
+     * @return \Illuminate\View\View
+     */
+    public function showLoginForm()
+    {
+        return view('welcome');
+    }
+
        /**
      * Get the login username to be used by the controller.
      *

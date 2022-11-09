@@ -27,4 +27,8 @@ class Module extends Model implements HasMedia
     public function quarter(){
         return $this->belongsTo(Quarter::class);
     }
+
+    public function questions(){
+        return $this->hasMany(Question::class);
+    }
 }

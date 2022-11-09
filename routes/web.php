@@ -10,6 +10,7 @@ use App\Http\Controllers\Dashboard\CategoryController;
 use App\Http\Controllers\Dashboard\HomeController as DashboardHomeController;
 use App\Http\Controllers\Dashboard\ProfileController;
 use App\Http\Controllers\Dashboard\QuarterController;
+use App\Http\Controllers\Dashboard\QuestionController;
 use App\Http\Controllers\Dashboard\SectionController;
 use App\Http\Controllers\Dashboard\StudentController;
 use App\Http\Controllers\Dashboard\UserController;
@@ -48,6 +49,7 @@ Route::group([
     Route::post("module/{module}/upload-file", [ModuleController::class, 'uploadFile'])->name("module.upload-file");
     Route::post("module/{module}/detach-user", [ModuleController::class, 'removeStudentFromModule'])->name("module.detach-user");
     Route::resource("module", ModuleController::class);
+    Route::resource("question", QuestionController::class);
     Route::resource("student", StudentController::class);
     Route::resource("quarter", QuarterController::class);
     Route::resource("section", SectionController::class);

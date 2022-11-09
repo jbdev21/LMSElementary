@@ -56,6 +56,7 @@
                             </form>
                         </div>
                         <div class="col-sm-8">
+                            @include("dashboard.module.includes.tab")
                             <div class="row">
                                 <div class="col-6">
                                     <h4>Students</h4>

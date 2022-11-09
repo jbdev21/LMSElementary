@@ -85,22 +85,47 @@ class ModuleController extends Controller
      */
     public function show(Request $request, Module $module)
     {
-        $module->load('users');
         $categories = Category::whereType("module")->get();
         $quarters = Quarter::all();
-        $files = $module->getMedia('files');
-        $users = $module->users;
 
-        return view("dashboard.module.show",[ 
-            'users' => $users,
-            'module' => $module,
-            'categories' => $categories,
-            'quarters' => $quarters,
-            'files' => $files,
-        ]);
+        switch ($request->tab) {
+            case "files":
+                $files = $module->getMedia('files');
+                return view("dashboard.module.show.files", [
+                    'files' => $files,
+                    'module' => $module,
+                    'categories' => $categories,
+                    'quarters' => $quarters,
+                ]);
+                break;
+            case "pre-assessment":
+                $module->load('questions');
+                $questions = $module->questions()->orderBy("order")->get();
+                return view("dashboard.module.show.pre-assessment", [
+                    'module' => $module,
+                    'categories' => $categories,
+                    'quarters' => $quarters,
+                    'questions' => $questions,
+                ]);
+                break;
+            case "post-assessment":
+                //
+                break;
+
+            default:
+                $module->load('users');
+                $users = $module->users;
+                return view("dashboard.module.show.student", [
+                    'users' => $users,
+                    'module' => $module,
+                    'categories' => $categories,
+                    'quarters' => $quarters,
+                ]);
+        }
     }
 
-    function removeStudentFromModule(Request $request, Module $module){
+    function removeStudentFromModule(Request $request, Module $module)
+    {
         $module->users()->detach($request->student);
         flash()->success("Student had been dettached");
         return back();
@@ -115,7 +140,6 @@ class ModuleController extends Controller
      */
     public function edit(Module $module)
     {
-       
     }
 
     /**
@@ -135,6 +159,7 @@ class ModuleController extends Controller
         $module->user_id = $request->user()->id;
         $module->category_id = $request->category_id;
         $module->quarter_id = $request->quarter_id;
+        $module->details = $request->details;
         $module->save();
 
         flash()->success("Module updated successfuly");

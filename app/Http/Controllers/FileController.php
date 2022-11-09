@@ -13,6 +13,7 @@ class FileController extends Controller
         $module = Module::findOrFail($request->module_id);
         $item = $module->addMediaFromRequest('file')
                 ->toMediaCollection('files');
+                
         if($request->name) {
             $item->file_name = $request->name . '.' . $type;
             $item->save();

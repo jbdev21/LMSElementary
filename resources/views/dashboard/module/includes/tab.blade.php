@@ -6,9 +6,9 @@
       <a class="nav-link @if(Request::get("tab") == "files") active @endif" href="{{ route("dashboard.module.show", [$module->id, 'tab' => "files"]) }}">Files</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link @if(Request::get("tab") == "pre-assessment") active @endif" href="{{ route("dashboard.module.show", [$module->id, 'tab' => 'pre-assessment']) }}">Pre-assessment</a>
+      <a class="nav-link @if(Request::get("tab") == "lesson") active @endif" href="{{ route("dashboard.module.show", [$module->id, 'tab' => 'lesson']) }}">Lesson</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link @if(Request::get("tab") == "post-assessment") active @endif" href="{{ route("dashboard.module.show", [$module->id, 'tab' => 'post-assessment']) }}">Post-assessment</a>
+      <a class="nav-link @if(Request::get("tab") == "assessment") active @endif" href="{{ route("dashboard.module.show", [$module->id, 'tab' => 'assessment']) }}">Assesment</a>
     </li>
 </ul>

@@ -31,4 +31,8 @@ class Module extends Model implements HasMedia
     public function questions(){
         return $this->hasMany(Question::class);
     }
+
+    public function lessons(){
+        return $this->hasMany(Lesson::class);
+    }
 }

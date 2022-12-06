@@ -16,4 +16,10 @@ class Question extends Model
     function module(){
         return $this->belongsTo(Module::class);
     }
+
+    function lesson(){
+        return $this->belongsTo(Lesson::class);
+    }
+
+
 }

@@ -3,7 +3,7 @@
 @section('show-content')
     <div class="row">
         <div class="col-6">
-            <h4>Pre-assessment</h4>
+            <h4>Assessment</h4>
         </div>
         
     </div>

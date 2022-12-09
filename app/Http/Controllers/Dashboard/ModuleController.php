@@ -7,8 +7,10 @@ use App\Models\Module;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Lesson;
 use App\Models\Quarter;
 use App\Models\User;
+use Illuminate\Support\Facades\DB;
 use Laravel\Ui\Presets\React;
 
 class ModuleController extends Controller
@@ -98,7 +100,22 @@ class ModuleController extends Controller
                     'quarters' => $quarters,
                 ]);
                 break;
-            case "pre-assessment":
+            case "lesson":
+                $module->load('lessons');
+
+                $lessons = Lesson::query()
+                                    ->select("*")
+                                    ->withAlert()
+                                    ->where("module_id", $module->id)
+                                    ->get();
+                return view("dashboard.module.show.lesson", [
+                    'lessons' => $lessons,
+                    'module' => $module,
+                    'quarters' => $quarters,
+                    'categories' => $categories
+                ]);
+                break;
+            case "assessment":
                 $module->load('questions');
                 $questions = $module->questions()->orderBy("order")->get();
                 return view("dashboard.module.show.pre-assessment", [
@@ -107,9 +124,6 @@ class ModuleController extends Controller
                     'quarters' => $quarters,
                     'questions' => $questions,
                 ]);
-                break;
-            case "post-assessment":
-                //
                 break;
 
             default:

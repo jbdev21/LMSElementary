@@ -8,6 +8,7 @@ use App\Http\Controllers\Student\HomeController;
 use App\Http\Controllers\Dashboard\ModuleController;
 use App\Http\Controllers\Dashboard\CategoryController;
 use App\Http\Controllers\Dashboard\HomeController as DashboardHomeController;
+use App\Http\Controllers\Dashboard\LessonController;
 use App\Http\Controllers\Dashboard\ProfileController;
 use App\Http\Controllers\Dashboard\QuarterController;
 use App\Http\Controllers\Dashboard\QuestionController;
@@ -49,6 +50,7 @@ Route::group([
     Route::post("module/{module}/upload-file", [ModuleController::class, 'uploadFile'])->name("module.upload-file");
     Route::post("module/{module}/detach-user", [ModuleController::class, 'removeStudentFromModule'])->name("module.detach-user");
     Route::resource("module", ModuleController::class);
+    Route::resource("lesson", LessonController::class);
     Route::resource("question", QuestionController::class);
     Route::resource("student", StudentController::class);
     Route::resource("quarter", QuarterController::class);

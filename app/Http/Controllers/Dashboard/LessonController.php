@@ -3,11 +3,10 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
-use App\Models\Module;
-use App\Models\Question;
+use App\Models\Lesson;
 use Illuminate\Http\Request;
 
-class QuestionController extends Controller
+class LessonController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -37,34 +36,39 @@ class QuestionController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request,[
-            'module' => ['required', 'exists:modules,id'],
-            'body'  => ['required', 'string']
+        $this->validate($request, [
+            'module_id' => ['required', 'exists:modules,id'],
+            'name'  => ['required']
         ]);
-        
-        $question = new Question;
-        $question->module_id = $request->module;
-        $question->lesson_id = $request->lesson_id;
-        $question->body = $request->body;
-        $question->options = $request->options;
-        $question->answer = $request->options[$request->answer];
-        $question->type = $request->type;
 
-        $question->order = Module::find($request->module)->questions()->count() + 1;
+        $type =  $request->file('file')->getClientOriginalExtension();
 
-        $question->save();
+        $lesson = new Lesson();
+        $lesson->module_id = $request->module_id;
+        $lesson->name = $request->name;
+        $lesson->minimum_score = $request->minimum_score;
 
-        flash()->success("Question added");
+        $lesson->save();
+
+        $item = $lesson->addMediaFromRequest('file')
+                ->toMediaCollection('lesson');
+
+        if ($request->name) {
+            $item->file_name = $request->name . '.' . $type;
+            $item->save();
+        }
+
+        flash()->success("Lesson added");
         return back();
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Question  $question
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Question $question)
+    public function show($id)
     {
         //
     }
@@ -72,10 +76,10 @@ class QuestionController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Question  $question
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Question $question)
+    public function edit($id)
     {
         //
     }
@@ -84,10 +88,10 @@ class QuestionController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Question  $question
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Question $question)
+    public function update(Request $request, $id)
     {
         //
     }
@@ -95,11 +99,16 @@ class QuestionController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Question  $question
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Question $question)
+    public function destroy($id)
     {
-        //
+        $lesson = Lesson::findOrFail($id);
+
+        $lesson->delete();
+
+        flash()->success("Lesson deleted successfully");
+        return back();
     }
 }

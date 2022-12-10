@@ -13,6 +13,12 @@
                         </div>
                     </div>
                     <div class="col-sm-6">
+                        <div class="form-group mb-3">
+                            <label for="">Lesson</label>
+                            <select name="lesson" required class="form-control">
+                                <option v-for="lesson in lessons" :key="lesson.id" :value="lesson.id">{{ lesson.name }}</option>
+                            </select>
+                        </div>
                         <!-- <span class='mr-3'>
                             <input type="radio" id="multiple" v-model="currentForm" value="multiple" name="question_type"> <label for="multiple"> Multiple Choice</label>
                         </span>
@@ -29,7 +35,7 @@
 
             </div>
             <div class="panel-footer text-right p-2">
-                <button class="btn btn-warning btn-lg" :disabled="saving" type="submit" style="width:150px">
+                <button class="btn btn-success btn-lg text-white" :disabled="saving" type="submit" style="width:150px">
                     <span v-if="!saving">
                         <i class="fa fa-save"></i> Save
                     </span>
@@ -58,6 +64,7 @@ export default {
        return {
            currentForm: 'multiple',
            myFiles:[],
+           lessons: [],
            text: 'put your question here..',
            inputData: {},
            saving: false,
@@ -87,7 +94,19 @@ export default {
                 }
        }
     },
+    created(){
+        this.getLessons()
+    },
     methods:{
+        getLessons(){
+            axios.get("/api/lesson/list", {
+                params:{
+                    module: this.module
+                }
+            })
+            .then( response => this.lessons = response.data)
+            .catch( error => console.log(error))
+        },
         submit(){
             this.saving = true;
             this.$refs.form.submit();

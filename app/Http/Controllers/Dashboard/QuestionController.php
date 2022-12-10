@@ -39,12 +39,13 @@ class QuestionController extends Controller
     {
         $this->validate($request,[
             'module' => ['required', 'exists:modules,id'],
+            'lesson' => ['required', 'exists:lessons,id'],
             'body'  => ['required', 'string']
         ]);
         
         $question = new Question;
         $question->module_id = $request->module;
-        $question->lesson_id = $request->lesson_id;
+        $question->lesson_id = $request->lesson;
         $question->body = $request->body;
         $question->options = $request->options;
         $question->answer = $request->options[$request->answer];

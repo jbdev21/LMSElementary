@@ -79,12 +79,7 @@ class ModuleController extends Controller
         return redirect()->route("dashboard.module.show", $module->id);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Module  $module
-     * @return \Illuminate\Http\Response
-     */
+ 
     public function show(Request $request, Module $module)
     {
         $categories = Category::whereType("module")->get();
@@ -146,14 +141,16 @@ class ModuleController extends Controller
     }
 
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Module  $module
-     * @return \Illuminate\Http\Response
-     */
     public function edit(Module $module)
     {
+        $categories = Category::whereType("module")->get();
+        $quarters = Quarter::all();
+
+        return view("dashboard.module.edit", [
+            'module' => $module,
+            'categories' => $categories,
+            'quarters' => $quarters
+        ]);
     }
 
     /**
@@ -177,6 +174,11 @@ class ModuleController extends Controller
         $module->save();
 
         flash()->success("Module updated successfuly");
+
+        if($request->origin == "show"){
+            return redirect()->route('dashboard.module.show', $module->id);
+        }
+        
         return back();
     }
 

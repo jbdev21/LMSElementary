@@ -18,9 +18,9 @@
     <ol>
         @forelse($questions as $question)
             <li class="mb-4">
-                <h4>
+                <p>
                     {{ $question->body }}
-                </h4>
+                </p>
                 <ol type="a">
                     @foreach($question->options as $option)
                         <li @if($question->answer == $option) class="text-success" @endif>{{ $option }}</li>
@@ -35,3 +35,9 @@
     </ol>
 @endsection
 
+@push("scripts-header")
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async
+            src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+    </script>
+@endpush

@@ -41,22 +41,24 @@ class LessonController extends Controller
             'name'  => ['required']
         ]);
 
-        $type =  $request->file('file')->getClientOriginalExtension();
-
+        
         $lesson = new Lesson();
         $lesson->module_id = $request->module_id;
         $lesson->name = $request->name;
         $lesson->minimum_score = $request->minimum_score;
-
+        
         $lesson->save();
-
-        $item = $lesson->addMediaFromRequest('file')
-                ->toMediaCollection('lesson');
-
-        if ($request->name) {
-            $item->file_name = $request->name . '.' . $type;
-            $item->save();
+        
+        if($request->hasFile("file")){   
+            $item = $lesson->addMediaFromRequest('file')
+            ->toMediaCollection('lesson');
         }
+        
+        // if ($request->name) {
+        //     $type =  $request->file('file')->getClientOriginalExtension();
+        //     $item->file_name = $request->name . '.' . $type;
+        //     $item->save();
+        // }
 
         flash()->success("Lesson added");
         return back();

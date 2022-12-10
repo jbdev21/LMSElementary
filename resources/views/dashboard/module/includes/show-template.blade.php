@@ -15,18 +15,27 @@
                     </svg>
                     Back
                 </a>
-                <h3>{{ $module->name }}</h1>
-                <div class="row">
+                <div class="mb-5">
+                    <h3>{{ $module->name }}</h1>
+                    {{ $module->quarter->name }}, 
+                    {{ $module->category->name }}
+                    <p> 
+                        {{ $module->details }}
+                    </p>
+                    <a href="{{ route("dashboard.module.edit", [$module->id, 'origin' => 'show']) }}"><i class="fa fa-edit"></i> Edit Module</a>
+                </div>
+                
+                {{-- <div class="row">
                     <div class="col-sm-4 p-5">
                         @include("dashboard.module.includes.side")
                     </div>
-                    <div class="col-sm-8">
+                    <div class="col-sm-8"> --}}
                         @include("dashboard.module.includes.tab")
                         @yield("show-content")
                         <div class="py-5">
                         </div>
-                    </div>
-                </div>
+                    {{-- </div>
+                </div> --}}
             </div>
         </div>
     </div>

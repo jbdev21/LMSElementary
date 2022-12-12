@@ -32,6 +32,10 @@ class Module extends Model implements HasMedia
         return $this->hasMany(Question::class);
     }
 
+    public function getTypeAttribute(){
+        return 'multiple';
+    }
+
     public function lessons(){
         return $this->hasMany(Lesson::class);
     }

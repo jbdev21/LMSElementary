@@ -1,4 +1,4 @@
-@extends('includes.layouts.dashboard')
+@extends('includes.layouts.student')
 
 @section('module-name', 'Module')
 @section('page-title', 'Modules')

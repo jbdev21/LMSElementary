@@ -16,6 +16,7 @@ use App\Http\Controllers\Dashboard\SectionController;
 use App\Http\Controllers\Dashboard\StudentController;
 use App\Http\Controllers\Dashboard\UserController;
 use App\Http\Controllers\FileController;
+use App\Http\Controllers\Student\AssessmentController;
 use App\Http\Controllers\Student\ModuleController as StudentModuleController;
 use App\Http\Controllers\Student\ProfileController as StudentProfileController;
 
@@ -29,6 +30,13 @@ Auth::routes();
 Route::group(['prefix' => 'student', 'as' => 'student.', 'middleware' => ['auth']], function(){
     Route::get("/home", [HomeController::class, 'index'])->name("home");
     Route::resource("module", StudentModuleController::class);
+
+     // Essay
+     Route::post('/assessment/{code}/stop', [AssessmentController::class, 'stop'])->name('assessment.stop');
+     Route::get('/assessment/{code}/result',[ AssessmentController::class, 'result'])->name('assessment.result');
+     Route::get('/assessment/{code}/question', [AssessmentController::class, 'question'])->name('assessment.question');
+     Route::post('/assessment/question/answer', [AssessmentController::class, 'answerQuestion'])->name('assessment.question.answer');
+     Route::resource('/assessment', AssessmentController::class);
 
     Route::get('profile', [StudentProfileController::class, 'index'])->name("profile.index");
     Route::put('profile', [StudentProfileController::class, 'update'])->name("profile.update");

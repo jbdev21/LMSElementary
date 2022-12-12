@@ -20,39 +20,46 @@
     "src": "node_modules/font-awesome/fonts/fontawesome-webfont.svg"
   },
   "resources/js/app.js": {
-    "file": "assets/app.50196712.js",
+    "file": "assets/app.31cdbe33.js",
     "src": "resources/js/app.js",
     "isEntry": true,
     "imports": [
-      "_bootstrap.2e1f021a.js"
+      "__plugin-vue_export-helper.3cd70bcb.js"
+    ],
+    "css": [
+      "assets/app.5e3f6c9c.css"
     ]
   },
   "resources/js/dashboard.js": {
-    "file": "assets/dashboard.619388d0.js",
+    "file": "assets/dashboard.01316342.js",
     "src": "resources/js/dashboard.js",
     "isEntry": true,
     "imports": [
-      "_bootstrap.2e1f021a.js"
+      "__plugin-vue_export-helper.3cd70bcb.js"
     ],
     "css": [
       "assets/dashboard.58038a43.css"
     ]
   },
-  "_bootstrap.2e1f021a.js": {
-    "file": "assets/bootstrap.2e1f021a.js"
+  "__plugin-vue_export-helper.3cd70bcb.js": {
+    "file": "assets/_plugin-vue_export-helper.3cd70bcb.js"
   },
   "resources/js/dashboard.css": {
     "file": "assets/dashboard.58038a43.css",
     "src": "resources/js/dashboard.css"
   },
-  "resources/sass/app.scss": {
-    "file": "assets/app.525f5899.css",
-    "src": "resources/sass/app.scss",
-    "isEntry": true
+  "resources/js/app.css": {
+    "file": "assets/app.5e3f6c9c.css",
+    "src": "resources/js/app.css"
   },
   "resources/sass/dashboard.scss": {
     "file": "assets/dashboard.c92f864f.css",
     "src": "resources/sass/dashboard.scss",
+    "isEntry": true
+  },
+  "resources/sass/app.scss": {
+    "file": "assets/app.c92f864f.css",
+    "src": "resources/sass/app.scss",
     "isEntry": true
   }
 }

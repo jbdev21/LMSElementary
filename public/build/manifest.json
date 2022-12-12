@@ -1,0 +1,58 @@
+{
+  "node_modules/font-awesome/fonts/fontawesome-webfont.eot": {
+    "file": "assets/fontawesome-webfont.7bfcab6d.eot",
+    "src": "node_modules/font-awesome/fonts/fontawesome-webfont.eot"
+  },
+  "node_modules/font-awesome/fonts/fontawesome-webfont.woff2": {
+    "file": "assets/fontawesome-webfont.2adefcbc.woff2",
+    "src": "node_modules/font-awesome/fonts/fontawesome-webfont.woff2"
+  },
+  "node_modules/font-awesome/fonts/fontawesome-webfont.woff": {
+    "file": "assets/fontawesome-webfont.ba0c59de.woff",
+    "src": "node_modules/font-awesome/fonts/fontawesome-webfont.woff"
+  },
+  "node_modules/font-awesome/fonts/fontawesome-webfont.ttf": {
+    "file": "assets/fontawesome-webfont.aa58f33f.ttf",
+    "src": "node_modules/font-awesome/fonts/fontawesome-webfont.ttf"
+  },
+  "node_modules/font-awesome/fonts/fontawesome-webfont.svg": {
+    "file": "assets/fontawesome-webfont.ad615792.svg",
+    "src": "node_modules/font-awesome/fonts/fontawesome-webfont.svg"
+  },
+  "resources/js/app.js": {
+    "file": "assets/app.50196712.js",
+    "src": "resources/js/app.js",
+    "isEntry": true,
+    "imports": [
+      "_bootstrap.2e1f021a.js"
+    ]
+  },
+  "resources/js/dashboard.js": {
+    "file": "assets/dashboard.619388d0.js",
+    "src": "resources/js/dashboard.js",
+    "isEntry": true,
+    "imports": [
+      "_bootstrap.2e1f021a.js"
+    ],
+    "css": [
+      "assets/dashboard.58038a43.css"
+    ]
+  },
+  "_bootstrap.2e1f021a.js": {
+    "file": "assets/bootstrap.2e1f021a.js"
+  },
+  "resources/js/dashboard.css": {
+    "file": "assets/dashboard.58038a43.css",
+    "src": "resources/js/dashboard.css"
+  },
+  "resources/sass/app.scss": {
+    "file": "assets/app.525f5899.css",
+    "src": "resources/sass/app.scss",
+    "isEntry": true
+  },
+  "resources/sass/dashboard.scss": {
+    "file": "assets/dashboard.c92f864f.css",
+    "src": "resources/sass/dashboard.scss",
+    "isEntry": true
+  }
+}

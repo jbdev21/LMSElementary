@@ -46,12 +46,13 @@
                 <tbody>
                     @forelse($lessons as $lesson)
                         <tr>
-                            <td>{{ $lesson->name }}
-                            @if($lesson->alert)
-                                <span class="text-danger">fwefe</span>
-                            @endif
+                            <td>{{ $lesson->name }} </td>
+                            <td>
+                                {{ $lesson->minimum_score }}
+                                @if($lesson->alert)
+                                    <small class="text-danger" title="Please add questions equal or more than {{ $lesson->minimum_score }}"><i class="fa fa-ban"></i></small>
+                                @endif
                             </td>
-                            <td>{{ $lesson->minimum_score }}</td>
                             <td>{{ $lesson->created_at->format('M d, Y h:ia') }}</td>
                             <td class="text-end">
                                 <a href="{{ route('dashboard.file.download', $lesson->id) }}" class="btn btn-primary text-white py-1">

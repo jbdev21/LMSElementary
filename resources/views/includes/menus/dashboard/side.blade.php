@@ -5,7 +5,7 @@
         <div class="app-branding ">
             <a class="app-logo" href="{{ route('student.home')}}">
                 <img class="me-3" src="/images/logo.jpg" alt="logo" width="45" height="45">
-                <span class="logo-text text-success">BUGTOG - LMS</span>
+                <span class="logo-text text-success">BUNTOG - LS</span>
             </a>
         </div>
         <br>

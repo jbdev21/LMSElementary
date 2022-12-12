@@ -124,7 +124,7 @@
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Quarter *</label>
-                            <select name="category_id" required class="form-select" required>
+                            <select name="quarter_id" required class="form-select" required>
                                 <option value=""> -select quarter-</option>
                                 @foreach ($quarters as $quarter)
                                     <option value="{{ $quarter->id }}">{{ ucfirst($quarter->name) }}</option>

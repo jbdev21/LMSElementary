@@ -15,7 +15,10 @@ class ModuleController extends Controller
     public function index(Request $request)
     {
         //auth user module
-        $modules = Auth::user()->modules()->paginate();
+        // $modules = Auth::user()->modules()->paginate();
+        $modules = Module::withCount(['questions', 'lessons'])  
+                    ->orderBy("name")
+                    ->paginate(25);
 
         return view("student.module.index", [
             'modules' => $modules

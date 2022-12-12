@@ -60,7 +60,7 @@
     
 @endsection
 
-@section("modal-content ")
+@section("modal-content")
     <!-- Modal -->
     <div class="modal fade" id="uploaderFormModal" tabindex="-1" aria-labelledby="studentFormModalLabel"
         aria-hidden="true">

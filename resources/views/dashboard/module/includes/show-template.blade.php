@@ -17,8 +17,8 @@
                 </a>
                 <div class="mb-5">
                     <h3>{{ $module->name }}</h1>
-                    {{ $module->quarter->name }}, 
-                    {{ $module->category->name }}
+                    {{ optional($module->quarter)->name }}, 
+                    {{ optional($module->category)->name }}
                     <p> 
                         {{ $module->details }}
                     </p>

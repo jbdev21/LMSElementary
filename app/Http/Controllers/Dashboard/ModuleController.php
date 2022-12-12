@@ -65,6 +65,7 @@ class ModuleController extends Controller
     {
         $this->validate($request, [
             'name' => ['required'],
+            'quarter_id' => ['required']
         ]);
 
         $module = new Module;
@@ -112,12 +113,19 @@ class ModuleController extends Controller
                 break;
             case "assessment":
                 $module->load('questions');
-                $questions = $module->questions()->orderBy("order")->get();
+                $questions = $module->questions()
+                                ->when($request->lesson, function($q) use ($request) {
+                                    $q->where("lesson_id", $request->lesson);
+                                })
+                                ->with("lesson")
+                                ->orderBy("order")->get();
+                                
                 return view("dashboard.module.show.pre-assessment", [
                     'module' => $module,
                     'categories' => $categories,
                     'quarters' => $quarters,
                     'questions' => $questions,
+                    'lessons' => Lesson::where("module_id", $module->id)->orderBy('name')->get(),
                 ]);
                 break;
 

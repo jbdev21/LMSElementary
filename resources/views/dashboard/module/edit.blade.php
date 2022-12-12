@@ -41,7 +41,6 @@
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Details</label>
-                            {!! $module->details !!}
                             <textarea name="details" class="form-control" rows="5" style="min-height: 200px">{{ $module->details }}</textarea>
                             <div id="emailHelp" class="form-text">This is optional, you can change it in the edit page.
                             </div>

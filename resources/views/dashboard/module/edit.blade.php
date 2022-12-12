@@ -1,7 +1,7 @@
 @extends('includes.layouts.dashboard')
 
-@section('module-name', 'Category')
-@section('page-title', 'Categories')
+@section('module-name', 'Edit Module')
+@section('page-title', 'Module')
 
 @section('content')
     <div class="row">
@@ -38,6 +38,10 @@
                                         value="{{ $category->id }}">{{ ucfirst($category->name) }}</option>
                                 @endforeach
                             </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Assessment Passing Score *</label>
+                            <input name="assesstment_passing_score" value="{{ $module->assesstment_passing_score }}" type="number" step=".05" min=".05" class="form-select" required>
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Details</label>

@@ -45,13 +45,13 @@
                         </div>
 
                         <div class="mb-0 d-grid">
-                            <button type="submit" class="btn btn-success">
+                            <button type="submit" class="text-white btn btn-success">
                                 {{ __('Login') }}
                             </button>
-                            <a class="btn btn-primary mt-2" href="{{ route('register') }}">Register</a>
+                            <a class="text-white btn btn-primary mt-2" href="{{ route('register') }}">Register</a>
                         </div>
                         @if (Route::has('password.request'))
-                                <a class="btn btn-link" href="{{ route('password.request') }}">
+                                <a class=" btn btn-link mt-3" href="{{ route('password.request') }}">
                                     {{ __('Forgot Your Password?') }}
                                 </a>
                             @endif

@@ -4,6 +4,6 @@ import { createApp } from 'vue'
 
 const vueApp = createApp({
   components: { 
-    QuestionComponent
+    QuestionComponent,
    }
 }).mount('#app')

@@ -58,6 +58,8 @@ Route::group([
     Route::post("module/{module}/upload-file", [ModuleController::class, 'uploadFile'])->name("module.upload-file");
     Route::post("module/{module}/detach-user", [ModuleController::class, 'removeStudentFromModule'])->name("module.detach-user");
     Route::resource("module", ModuleController::class);
+    Route::post("lesson/{lesson}/add-file", [LessonController::class, 'addFile'])->name("lesson.file.addfile");
+    Route::delete("lesson/{id}/delete-file", [LessonController::class, 'deleteFile'])->name("lesson.file.deletefile");
     Route::resource("lesson", LessonController::class);
     Route::resource("question", QuestionController::class);
     Route::resource("student", StudentController::class);

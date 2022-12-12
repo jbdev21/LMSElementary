@@ -73,6 +73,7 @@ class ModuleController extends Controller
         $module->user_id = $request->user()->id;
         $module->category_id = $request->category_id;
         $module->quarter_id = $request->quarter_id;
+        $module->assesstment_passing_score = $request->assesstment_passing_score;
         $module->save();
 
         flash()->success("Module added successfuly");
@@ -99,7 +100,8 @@ class ModuleController extends Controller
             case "lesson":
                 $module->load('lessons');
 
-                $lessons = Lesson::query()
+                $lessons = Lesson::query() 
+                                    ->with("media")
                                     ->select("*")
                                     ->withAlert()
                                     ->where("module_id", $module->id)
@@ -178,6 +180,7 @@ class ModuleController extends Controller
         $module->user_id = $request->user()->id;
         $module->category_id = $request->category_id;
         $module->quarter_id = $request->quarter_id;
+        $module->assesstment_passing_score = $request->assesstment_passing_score;
         $module->details = $request->details;
         $module->save();
 

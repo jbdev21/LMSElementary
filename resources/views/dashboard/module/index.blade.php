@@ -141,6 +141,10 @@
                             </select>
                         </div>
                         <div class="mb-3">
+                            <label class="form-label">Assessment Passing Score *</label>
+                            <input name="assesstment_passing_score" type="number" step=".05" min=".05" class="form-select" required>
+                        </div>
+                        <div class="mb-3">
                             <label class="form-label">Details</label>
                             <textarea name="details" class="form-control" rows="5"  style="min-height: 200px"></textarea>
                             <div id="emailHelp" class="form-text">This is optional, you can change it in the edit page.

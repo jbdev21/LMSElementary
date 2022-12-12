@@ -30,7 +30,7 @@
     <ol>
         @forelse($questions as $question)
             <li class="mb-4">
-                <p class="mb-0  ">
+                <p class="mb-0">
                     {{ $question->body }}
                 </p>
                 Lesson: {{ optional($question->lesson)->name }}

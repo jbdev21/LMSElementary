@@ -20,7 +20,9 @@
                         <div class="question-box">
                             <div class="question-text" >
                                 <img style="width:30%;" :src="'/' + picture.source"  v-for="picture in question.images" :key="picture.id" alt="">
-                                <h3 v-html="question.body"></h3>
+                                <h3>
+                                    <math-jax :latex="question.body" />
+                                </h3>
                             </div>
                                 <div class="p-3" style="padding:15px;">
                                     <div class="quiz-choices"  v-if="question.type =='multiple'"  v-for="(option, index) in question.options" :key="index">
@@ -53,8 +55,13 @@
 </template>
 
 <script>
+// import { VueMathjax } from 'vue-mathjax'
+import { initMathJax, renderByMathjax, MathJax } from 'mathjax-vue3'
 export default {
     props: ['geturl', 'sendanswerurl'],
+    components: {
+        MathJax
+    },
     data(){
         return {
             question: {},
@@ -68,6 +75,11 @@ export default {
     },
 
     created(){
+        // initMathJax({
+        //     tex: {
+        //         inlineMath: [['$', '$'], ['\\(', '\\)']]
+        //     }
+        // })
         if(this.answered = 0){
             this.playStarSound()
         }
@@ -76,6 +88,7 @@ export default {
     },
 
     methods:{
+        
         playClick(){
             this.click.pause();
             this.click.currentTime = 0;

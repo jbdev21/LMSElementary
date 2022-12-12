@@ -94,7 +94,6 @@ class AssessmentController extends Controller
 
 
     function question(Request $request, $code){
-        
         $module = Module::whereId($code)->firstOrFail();
         if($module->questions()->count() < 1){
             flash()->warning('No question on that assessment');
@@ -105,6 +104,7 @@ class AssessmentController extends Controller
         if(Session::has('examination')){
             $examination = Examination::find(Session::get('examination'));
         }else{
+            Examination::where("module_id", $module->id)->where("user_id", $request->user()->id)->delete();
             $examination = $this->generateExamination($module);
         }
 
@@ -196,6 +196,8 @@ class AssessmentController extends Controller
         $examination = Examination::find($code);
         $module = $examination->module;
         $questions = $examination->module->questions;
+        $examination->is_passed = $examination->moduleScore("correct") >= $module->assesstment_passing_score;
+        $examination->save();
         return view('student.assessment.result', compact('module', 'questions', 'examination'));
     }
 

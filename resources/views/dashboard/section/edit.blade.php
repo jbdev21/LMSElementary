@@ -1,7 +1,7 @@
 @extends('includes.layouts.dashboard')
 
 @section('module-name', 'Section')
-@section('page-title', 'Sections')
+@section('page-title', 'Edit Section')
 
 @section('content')
     <div class="row">

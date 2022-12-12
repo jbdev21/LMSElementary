@@ -37,7 +37,6 @@ class QuestionController extends Controller
      */
     public function store(Request $request)
     {
-
         $this->validate($request,[
             'module' => ['required', 'exists:modules,id'],
             'lesson' => ['required', 'exists:lessons,id'],
@@ -50,12 +49,10 @@ class QuestionController extends Controller
         $question->body = $request->body;
         $question->options = $request->options;
         $question->answer = $request->options[$request->answer];
-        $question->type = $request->type;
 
         $question->order = Module::find($request->module)->questions()->count() + 1;
 
         $question->save();
-
         flash()->success("Question added");
         return back();
     }

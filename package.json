@@ -20,6 +20,7 @@
         "alpinejs": "^3.10.5",
         "animate.css": "^4.1.1",
         "font-awesome": "^4.7.0",
+        "mathjax-vue3": "^1.0.1",
         "vue": "^3.2.41",
         "vue-loader": "^17.0.1",
         "vue-template-compiler": "^2.7.13"

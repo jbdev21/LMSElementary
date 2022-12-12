@@ -41,7 +41,7 @@
                         </div>
 
                         <div class="mb-0 d-grid">
-                            <button type="submit" class="btn btn-primary">
+                            <button type="submit" class="btn btn-primary text-white">
                                 {{ __('Login') }}
                             </button>
 

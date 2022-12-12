@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Dashboard;
 use App\Http\Controllers\Controller;
 use App\Models\Lesson;
 use Illuminate\Http\Request;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class LessonController extends Controller
 {
@@ -51,7 +52,7 @@ class LessonController extends Controller
         
         if($request->hasFile("file")){   
             $item = $lesson->addMediaFromRequest('file')
-            ->toMediaCollection('lesson');
+                ->toMediaCollection('lesson');
         }
         
         // if ($request->name) {
@@ -64,6 +65,19 @@ class LessonController extends Controller
         return back();
     }
 
+    function addFile(Lesson $lesson){
+        $lesson->addMediaFromRequest('file')
+                ->toMediaCollection('lesson');
+
+        flash()->success("File Added");
+        return back();
+    }
+
+    function deleteFile($id){
+        Media::find($id)->delete();
+        flash()->success("File deleted!");
+        return back();
+    }
     /**
      * Display the specified resource.
      *

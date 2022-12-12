@@ -1,7 +1,7 @@
 @extends('includes.layouts.dashboard')
 
 @section('section-name', 'section')
-@section('page-title', 'sections')
+@section('page-title', 'Sections')
 
 @section('content')
 <div class="app-card shadow-sm mb-4">

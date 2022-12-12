@@ -4,8 +4,8 @@
         <a href="#" id="sidepanel-close" class="sidepanel-close d-xl-none">&times;</a>
         <div class="app-branding ">
             <a class="app-logo" href="{{ route('student.home')}}">
-                <img class="me-3" src="/images/logo.png" alt="logo" width="45" height="45">
-                <span class="logo-text text-success">DAYAO - LMS</span>
+                <img class="me-3" src="/images/logo.jpg" alt="logo" width="45" height="45">
+                <span class="logo-text text-success">BUGTOG - LMS</span>
             </a>
         </div>
         <br>

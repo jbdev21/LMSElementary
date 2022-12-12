@@ -6,7 +6,7 @@
         <div class="col-md-4 col-sm-6">
             <div class="card">
                 <div class="card-body">
-                    <img src="/images/golden-logo.png" class="mw-100 mb-4 rounded" alt="">
+                    <img src="/images/logo.jpg" class="mw-100 mb-4 rounded" alt="">
                     <form method="POST" action="{{ route('login') }}">
                         @csrf
 
@@ -45,11 +45,11 @@
                                 {{ __('Login') }}
                             </button>
 
-                            {{-- @if (Route::has('password.request'))
+                            @if (Route::has('password.request'))
                                 <a class="btn btn-link" href="{{ route('password.request') }}">
                                     {{ __('Forgot Your Password?') }}
                                 </a>
-                            @endif --}}
+                            @endif
                         </div>
                     </form>
                 </div>

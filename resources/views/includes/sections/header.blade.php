@@ -4,7 +4,6 @@
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <link rel="icon" href="/images/logo.png">
 
     <title>@yield('page-title', 'Dashboard') - {{ config('app.name', 'LMS') }}</title>
     @vite(['resources/sass/dashboard.scss', 'resources/js/dashboard.js'])

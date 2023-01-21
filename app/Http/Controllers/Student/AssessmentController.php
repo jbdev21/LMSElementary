@@ -51,7 +51,8 @@ class AssessmentController extends Controller
      */
     public function show($id)
     {
-        //
+        $module = Module::find($id);
+        return view("student.question.index", compact("module"));
     }
 
    

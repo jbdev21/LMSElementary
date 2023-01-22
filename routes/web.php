@@ -30,8 +30,10 @@ Auth::routes();
 Route::group(['prefix' => 'student', 'as' => 'student.', 'middleware' => ['auth']], function(){
     Route::get("/home", [HomeController::class, 'index'])->name("home");
     Route::resource("module", StudentModuleController::class);
-
-     // Essay
+    
+    // Essay
+    Route::get("assessment/{module}/passed", [AssessmentController::class, 'passedAssessment'])->name("assessment.passed");
+    Route::get("assessment/{module}/failed", [AssessmentController::class, 'failedAssessment'])->name("assessment.failed");
      Route::post('/assessment/{code}/stop', [AssessmentController::class, 'stop'])->name('assessment.stop');
      Route::get('/assessment/{code}/result',[ AssessmentController::class, 'result'])->name('assessment.result');
      Route::get('/assessment/{code}/question', [AssessmentController::class, 'question'])->name('assessment.question');

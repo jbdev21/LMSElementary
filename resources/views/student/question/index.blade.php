@@ -12,7 +12,7 @@
     {{-- <link href='https://api.mapbox.com/mapbox-gl-js/v2.9.1/mapbox-gl.css' rel='stylesheet' /> --}}
 
 
-    {{-- @vite(['resources/sass/app.scss', 'resources/js/app.js']) --}}
+    @vite(['resources/sass/app.scss', 'resources/js/app.js'])
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -33,40 +33,55 @@
     <div id="app">
         <div class="container">
             <div class="card rounded-0">
-                <div class="card-body px-0 px-sm-3 px-md-5">
+                <div class="card-body px-4 px-sm-3 px-md-5">
                     <div class="py-3">
-                        <a href="#" class=""><i class="fa fa-arrow-left"></i> Back</a>
+                        <a href="{{ route("student.module.index") }}" class=""><i class="fa fa-arrow-left"></i> Back</a>
                     </div>
                     <h3 class="mb-4">
                         {{ $module->name }}
                     </h3>
+                    <p>
+                        {{ $module->details }}
+                    </p>
 
-                    <ol>
-                        @foreach ($module->questions as $question)
-                            <li class="mb-3">
-                                <div>
-                                   ${{ $question->body }}$
-                                </div>
-                                <ol class="text" type="a">
-                                    @foreach ($question->options as $index => $option)
-                                        <li>
-                                            <div class="form-check">
-                                                <input 
-                                                    class="form-check-input" 
-                                                    type="radio"
-                                                    name="answer-{{ $question->id }}"
-                                                    id="{{ $question->id }}-{{ $index }}">
-                                                <label class="form-check-label"
-                                                    for="{{ $question->id }}-{{ $index }}">
-                                                    {{ $option }}
-                                                </label>
-                                            </div>
-                                        </li>
-                                    @endforeach
-                                </ol>
-                            </li>
-                        @endforeach
-                    </ol>
+                    @if(!count($module->questions))
+                    <h3 class="text-center text-muted py-5">No Questions</h3>
+                    @endif
+                    <form action="{{ route("student.assessment.store") }}" method="POST">
+                        @csrf
+                        <input type="hidden" name="module_id" value="{{ $module->id }}">
+                        <ol>
+                            @foreach ($questions as $question)
+                                <li class="mb-3">
+                                    <input type="hidden" name="question_id[]" value="{{ $question->id }}">
+                                    <div>
+                                    {{ $question->body }}
+                                    </div>
+                                    <ol class="text" type="a">
+                                        @foreach ($question->options as $index => $option)
+                                            <li>
+                                                <div class="form-check">
+                                                    <input 
+                                                        class="form-check-input" 
+                                                        type="radio"
+                                                        name="answer-{{ $question->id }}"
+                                                        value="{{ $index }}"
+                                                        id="{{ $question->id }}-{{ $index }}">
+                                                    <label class="form-check-label"
+                                                        for="{{ $question->id }}-{{ $index }}">
+                                                        {{ $option }}
+                                                    </label>
+                                                </div>
+                                            </li>
+                                        @endforeach
+                                    </ol>
+                                </li>
+                            @endforeach
+                        </ol>
+                        @if(count($module->questions))
+                            <button class="btn btn-success text-white  btn-lg">Submit</button>
+                        @endif
+                    </form>
                 </div>
             </div>
         </div>

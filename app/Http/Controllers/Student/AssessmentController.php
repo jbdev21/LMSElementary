@@ -8,6 +8,7 @@ use App\Models\Examination;
 use App\Models\Module;
 use App\Models\Question;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 
 class AssessmentController extends Controller
@@ -40,7 +41,66 @@ class AssessmentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $correctAnswer = [];
+        $wrongs = [];
+        $module = Module::find($request->module_id);
+        $questions = Question::find($request->question_id);
+
+        //clear the prev examination
+        $existingExam = Examination::where("module_id", $module->id)->where("user_id", $request->user()->id)->first();
+        if($existingExam){
+            Answer::where("examination_id", $existingExam->id)->delete();
+            $existingExam->delete();
+        }
+        
+        
+        //generate Examination
+        $examination =  Examination::create([
+            'user_id' => request()->user()->id,
+            'module_id'   => $module->id,
+        ]);
+
+        $correct = 0;
+        foreach($questions as $question){
+            // return $question->options[request('answer-' . $question->id)];
+            // checking for correct answer
+            if($question->answer == $question->options[request('answer-' . $question->id)]){
+                array_push($correctAnswer, $question);
+                $correct = 1;
+            }else{
+                array_push($wrongs, $question);
+            }
+
+            Answer::create([
+                'user_id' => Auth::user()->id,
+                'examination_id' => $examination->id,
+                'question_id' => $question->id,
+                'answer' => request('answer-' . $question->id),
+                'correct' => $correct
+            ]);
+        }
+
+        $examination->score = count($correctAnswer);
+
+        if(count($correctAnswer) >= $module->assesstment_passing_score){
+            $examination->is_passed = 1;
+            $examination->save();
+            return redirect()->route("student.assessment.passed", $module);
+        }else{
+            $examination->is_passed = 0;
+            $examination->save();
+            return redirect()->route("student.assessment.failed", $module);
+        }
+        
+    }
+
+    function passedAssessment(Request $request, Module $module){
+        return view("student.assessment.passed", compact("module"));
+    }
+
+    function failedAssessment(Request $request, Module $module){
+        $files = $module->getMedia('files');
+        return view("student.assessment.failed", compact("module", 'files'));
     }
 
     /**
@@ -49,10 +109,13 @@ class AssessmentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Request $request, $id)
     {
-        $module = Module::find($id);
-        return view("student.question.index", compact("module"));
+        $module = Module::with('questions')->find($id);
+        $questions = $module->questions()->when($request->type == "retake", function($q){
+            $q->inRandomOrder();
+        })->get();
+        return view("student.question.index", compact("module", "questions"));
     }
 
    

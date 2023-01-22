@@ -21,28 +21,34 @@
                     </div>
                 </form>
                 <ol class="list-group list-group-numbered">
-                    @php $passed = true @endphp
+                    @php 
+                        $passed = true;
+                        $first = true;
+                    @endphp
                     @forelse ($modules as $module)
-
+                        @php
+                            if($module->is_passed != 1){
+                                $passed = false;
+                            }  
+                        @endphp
                         <li class="list-group-item d-flex justify-content-between align-items-start">
-
                             <div class="ms-2 me-auto pb-3">
                                 <div class="fw-bold">
-                                    @if ($module->is_passed != 1 && $passed == false)
+                                    {{-- @if ($module->is_passed != 1 && $passed == false)
                                         {{ $module->name }}
-                                    @else
+                                    @else --}}
                                         <a href="{{ route('student.module.show', $module->id) }}">
                                             {{ $module->name }}
                                         </a>
-                                    @endif
+                                    {{-- @endif --}}
                                 </div>
                                 <p>
                                     {{ $module->details }}
                                 </p>
 
-                                @if ($module->is_passed != 1)
+                                @if ($passed != 1)
                                     <a href="{{ route('student.assessment.show', $module->id) }}"
-                                        class="btn btn-danger text-white @if ($module->questions_count < 1) disabled @endif @if ($passed == false && $module->is_passed != 1) disabled @endif">
+                                        class="btn btn-danger text-white @if(!$first) disabled @endif ">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                             fill="currentColor" class="bi bi-card-checklist" viewBox="0 0 16 16">
                                             <path
@@ -73,7 +79,7 @@
                                 @endif
                             </div>
 
-                            @if ($module->is_passed)
+                            {{-- @if ($module->is_passed)
                                 <span class="badge bg-primary rounded-pill">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                         fill="currentColor" class="bi bi-check-lg" viewBox="0 0 16 16">
@@ -81,9 +87,14 @@
                                             d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z" />
                                     </svg>
                                 </span>
-                            @endif
+                            @endif --}}
                         </li>
-                        @php $passed = $module->is_passed ? true : false @endphp
+                        {{-- @php $passed = $module->is_passed ? true : false @endphp --}}
+                        @php
+                            if($module->is_passed != 1){
+                                $first = false;
+                            }  
+                        @endphp
                     @endforeach
                 </ol>
 

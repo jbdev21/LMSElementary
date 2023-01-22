@@ -22,7 +22,7 @@ class ModuleController extends Controller
                     ->addSelect(DB::raw('
                        (SELECT examinations.is_passed FROM examinations 
                         WHERE examinations.module_id = modules.id 
-                        AND user_id = ' . $request->user()->id .') as is_passed 
+                        AND user_id = ' . $request->user()->id .' LIMIT 1) as is_passed 
                     '))  
                     ->orderBy("name")
                     ->paginate(25);

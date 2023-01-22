@@ -37,6 +37,7 @@ class QuestionController extends Controller
      */
     public function store(Request $request)
     {
+
         $this->validate($request,[
             'module' => ['required', 'exists:modules,id'],
             'lesson' => ['required', 'exists:lessons,id'],

@@ -61,7 +61,7 @@
                                         @foreach ($question->options as $index => $option)
                                             <li>
                                                 <div class="form-check">
-                                                    <input 
+                                                    <input required
                                                         class="form-check-input" 
                                                         type="radio"
                                                         name="answer-{{ $question->id }}"

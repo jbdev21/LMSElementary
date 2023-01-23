@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Student;
 use App\Http\Controllers\Controller;
 use App\Models\Answer;
 use App\Models\Examination;
+use App\Models\Lesson;
 use App\Models\Module;
 use App\Models\Question;
 use Illuminate\Http\Request;
@@ -41,8 +42,7 @@ class AssessmentController extends Controller
      */
     public function store(Request $request)
     {
-        $correctAnswer = [];
-        $wrongs = [];
+        
         $module = Module::find($request->module_id);
         $questions = Question::find($request->question_id);
 
@@ -53,7 +53,6 @@ class AssessmentController extends Controller
             $existingExam->delete();
         }
         
-        
         //generate Examination
         $examination =  Examination::create([
             'user_id' => request()->user()->id,
@@ -61,14 +60,16 @@ class AssessmentController extends Controller
         ]);
 
         $correct = 0;
+        $correctAnswer = [];
+        $wrongQuestionIDs = [];
+
         foreach($questions as $question){
-            // return $question->options[request('answer-' . $question->id)];
             // checking for correct answer
             if($question->answer == $question->options[request('answer-' . $question->id)]){
                 array_push($correctAnswer, $question);
                 $correct = 1;
             }else{
-                array_push($wrongs, $question);
+                array_push($wrongQuestionIDs, $question->id);
             }
 
             Answer::create([
@@ -87,9 +88,20 @@ class AssessmentController extends Controller
             $examination->save();
             return redirect()->route("student.assessment.passed", $module);
         }else{
+            // Get all lessons in wrong answered questions
+            $lessonsPlucked = Lesson::find(Question::find($wrongQuestionIDs)->pluck('lesson_id'));
+
+            //get lesson that is weak
+            $weakLessonIds = [];
+            foreach($lessonsPlucked as $lesson){
+                if(Question::whereIn("id", $wrongQuestionIDs)->where("lesson_id", $lesson->id)->count() >= $lesson->minimum_score){
+                    array_push($weakLessonIds, $lesson->id);
+                }
+            }
+
             $examination->is_passed = 0;
             $examination->save();
-            return redirect()->route("student.assessment.failed", $module);
+            return redirect()->route("student.assessment.failed",  [$module, 'ref' => json_encode($weakLessonIds)]);
         }
         
     }
@@ -99,8 +111,9 @@ class AssessmentController extends Controller
     }
 
     function failedAssessment(Request $request, Module $module){
+        $lessons = Lesson::whereIn("id", json_decode($request->ref))->get();
         $files = $module->getMedia('files');
-        return view("student.assessment.failed", compact("module", 'files'));
+        return view("student.assessment.failed", compact("module", 'files', 'lessons'));
     }
 
     /**

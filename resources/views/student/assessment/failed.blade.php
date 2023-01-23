@@ -19,14 +19,15 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap" rel="stylesheet">
     <script>
         MathJax = {
-          tex: {
-            inlineMath: [['$', '$'], ['\\(', '\\)']]
-          }
+            tex: {
+                inlineMath: [
+                    ['$', '$'],
+                    ['\\(', '\\)']
+                ]
+            }
         };
-        </script>
-        <script id="MathJax-script" async
-          src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
-        </script>
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
 </head>
 
 <body>
@@ -35,56 +36,30 @@
             <div class="card rounded-0">
                 <div class="card-body px-4 px-sm-3 px-md-5">
                     <div class="py-3">
-                        <a href="{{ route("student.module.index") }}" class=""><i class="fa fa-arrow-left"></i> Back</a>
+                        <a href="{{ route('student.module.index') }}" class=""><i class="fa fa-arrow-left"></i>
+                            Back</a>
                     </div>
 
                     <div class="alert alert-danger" role="alert">
                         We are really sorry but you did not pass in assessment!.
                     </div>
                     <p>
-                        Please see these reference
+                        Please see these reference of each lesson:
                     </p>
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th>File Name</th>
-                                <th>Type</th>
-                                <th>Size</th>
-                                <th>Uploaded </th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @forelse($files as $file)
-                                <tr>
-                                    <td>{{ $file->file_name }}</td>
-                                    <td>{{ ucfirst(basename($file->mime_type)) }}</td>
-                                    <td>{{ $file->human_readable_size }}</td>
-                                    <td>{{ $file->created_at }}</td>
-                                    <td class="text-end">
-                                        <a href="{{ route('dashboard.file.download', $file->id) }}" class="btn btn-primary text-white py-1">
-                                            <i class="fa fa-download"></i>
-                                        </a>
-                                        <a onclick="if(confirm('Are you sure to delete?')){ document.getElementById('file-{{ $file->id }}').submit(); }"
-                                            href="#" class="btn btn-danger text-white py-1">
-                                            <i class="fa fa-trash"></i>
-                                        </a>
-                                        <form id="file-{{ $file->id }}" action="{{ route('dashboard.file.destroy', $file->id) }}"
-                                            method="POST">
-                                            @csrf @method('DELETE')
-                                        </form>
-                                    </td>
-                                </tr>
-                            @empty
-                                <tr>
-                                    <td colspan="5" class="text-center">No Files Uploaded</td>
-                                </tr>
-                            @endforelse
-                        </tbody>
-                    </table>
+                    @foreach ($lessons as $lesson)
+                        <div class="mb-4">
+                            <label>{{ $lesson->name }}</label>
+                            @foreach ($lesson->media as $file)
+                                <div>
+                                    <a target="_blank" href="{{ $file->getUrl() }}">{{ $file->file_name }}</a>
+                                </div>
+                            @endforeach
+                        </div>
+                    @endforeach
 
 
-                    <a href="{{ route('student.assessment.show', [$module->id, 'type' => 'retake']) }}" class="btn btn-primary text-white">Retake Assessment</a>
+                    <a href="{{ route('student.assessment.show', [$module->id, 'type' => 'retake']) }}"
+                        class="btn btn-primary text-white">Retake Assessment</a>
                 </div>
             </div>
         </div>

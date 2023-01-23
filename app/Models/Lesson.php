@@ -22,7 +22,7 @@ class Lesson extends Model implements HasMedia
     {
         return $query->addSelect(DB::raw('
                                         CASE
-                                            WHEN minimum_score > (SELECT COUNT(*) FROM questions WHERE lesson_id = id) 
+                                            WHEN minimum_score > (SELECT COUNT(*) FROM questions WHERE questions.lesson_id = lessons.id) 
                                             THEN 1 
                                             ELSE 0 
                                         END

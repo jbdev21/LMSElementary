@@ -27,7 +27,7 @@
                     @endphp
                     @forelse ($modules as $module)
                         @php
-                            if($module->is_passed != 1){
+                            if($module->is_passed == 0){
                                 $passed = false;
                             }  
                         @endphp
@@ -91,7 +91,7 @@
                         </li>
                         {{-- @php $passed = $module->is_passed ? true : false @endphp --}}
                         @php
-                            if($module->is_passed != 1){
+                            if($module->is_passed == 0){
                                 $first = false;
                             }  
                         @endphp

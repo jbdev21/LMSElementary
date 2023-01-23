@@ -42,17 +42,17 @@ class AssessmentController extends Controller
      */
     public function store(Request $request)
     {
-        
+
         $module = Module::find($request->module_id);
         $questions = Question::find($request->question_id);
 
         //clear the prev examination
-        $existingExam = Examination::where("module_id", $module->id)->where("user_id", $request->user()->id)->first();
-        if($existingExam){
-            Answer::where("examination_id", $existingExam->id)->delete();
-            $existingExam->delete();
-        }
-        
+        // $existingExam = Examination::where("module_id", $module->id)->where("user_id", $request->user()->id)->first();
+        // if ($existingExam) {
+        //     Answer::where("examination_id", $existingExam->id)->delete();
+        //     $existingExam->delete();
+        // }
+
         //generate Examination
         $examination =  Examination::create([
             'user_id' => request()->user()->id,
@@ -63,12 +63,12 @@ class AssessmentController extends Controller
         $correctAnswer = [];
         $wrongQuestionIDs = [];
 
-        foreach($questions as $question){
+        foreach ($questions as $question) {
             // checking for correct answer
-            if($question->answer == $question->options[request('answer-' . $question->id)]){
+            if ($question->answer == $question->options[request('answer-' . $question->id)]) {
                 array_push($correctAnswer, $question);
                 $correct = 1;
-            }else{
+            } else {
                 array_push($wrongQuestionIDs, $question->id);
             }
 
@@ -83,34 +83,42 @@ class AssessmentController extends Controller
 
         $examination->score = count($correctAnswer);
 
-        if(count($correctAnswer) >= $module->assesstment_passing_score){
+        if (count($correctAnswer) >= $module->assesstment_passing_score) {
             $examination->is_passed = 1;
             $examination->save();
             return redirect()->route("student.assessment.passed", $module);
-        }else{
+        } else {
             // Get all lessons in wrong answered questions
             $lessonsPlucked = Lesson::find(Question::find($wrongQuestionIDs)->pluck('lesson_id'));
 
             //get lesson that is weak
             $weakLessonIds = [];
-            foreach($lessonsPlucked as $lesson){
-                if(Question::whereIn("id", $wrongQuestionIDs)->where("lesson_id", $lesson->id)->count() >= $lesson->minimum_score){
+            foreach ($lessonsPlucked as $lesson) {
+                if (Question::whereIn("id", $wrongQuestionIDs)->where("lesson_id", $lesson->id)->count() >= $lesson->minimum_score) {
                     array_push($weakLessonIds, $lesson->id);
                 }
             }
+
+
+
+            $weakLessonIds = Lesson::whereIn('id', Question::whereIn("id", $wrongQuestionIDs)->pluck('lesson_id'))
+                ->whereRaw('(SELECT COUNT(*) FROM questions WHERE questions.lesson_id = lessons.id AND questions.id IN (' . implode(",", $wrongQuestionIDs) . ')) >= minimum_score')
+                ->pluck('id')
+                ->toArray();
 
             $examination->is_passed = 0;
             $examination->save();
             return redirect()->route("student.assessment.failed",  [$module, 'ref' => json_encode($weakLessonIds)]);
         }
-        
     }
 
-    function passedAssessment(Request $request, Module $module){
+    function passedAssessment(Request $request, Module $module)
+    {
         return view("student.assessment.passed", compact("module"));
     }
 
-    function failedAssessment(Request $request, Module $module){
+    function failedAssessment(Request $request, Module $module)
+    {
         $lessons = Lesson::whereIn("id", json_decode($request->ref))->get();
         $files = $module->getMedia('files');
         return view("student.assessment.failed", compact("module", 'files', 'lessons'));
@@ -125,13 +133,13 @@ class AssessmentController extends Controller
     public function show(Request $request, $id)
     {
         $module = Module::with('questions')->find($id);
-        $questions = $module->questions()->when($request->type == "retake", function($q){
+        $questions = $module->questions()->when($request->type == "retake", function ($q) {
             $q->inRandomOrder();
         })->get();
         return view("student.question.index", compact("module", "questions"));
     }
 
-   
+
     /**
      * Show the form for editing the specified resource.
      *
@@ -170,17 +178,18 @@ class AssessmentController extends Controller
 
 
 
-    function question(Request $request, $code){
+    function question(Request $request, $code)
+    {
         $module = Module::whereId($code)->firstOrFail();
-        if($module->questions()->count() < 1){
+        if ($module->questions()->count() < 1) {
             flash()->warning('No question on that assessment');
             return back();
         }
         Session::forget('time');
 
-        if(Session::has('examination')){
+        if (Session::has('examination')) {
             $examination = Examination::find(Session::get('examination'));
-        }else{
+        } else {
             Examination::where("module_id", $module->id)->where("user_id", $request->user()->id)->delete();
             $examination = $this->generateExamination($module);
         }
@@ -189,44 +198,44 @@ class AssessmentController extends Controller
 
         $count = $module->questions()->count();
 
-        if(!$examination->moduleCompleted($module->id)){
+        if (!$examination->moduleCompleted($module->id)) {
             $question = $module->questions()->whereNotIn('id', $answered->pluck('question_id'))
-                    ->inRandomOrder()
-                    ->first();
+                ->inRandomOrder()
+                ->first();
         }
 
-        if($request->ajax()){
-            if(!$examination->moduleCompleted($module->id)){
+        if ($request->ajax()) {
+            if (!$examination->moduleCompleted($module->id)) {
                 return array(
                     'question' =>  [
-                            'answer' => $question->answer,
-                            'body' => $question->body,
-                            'created_at' => $question->created_at,
-                            'id' => $question->id,
-                            'lesson_id' => $question->lesson_id,
-                            'module_id' => $question->module_id,
-                            'options' => $question->options,
-                            'order' => $question->order,
-                            'type' => 'multiple'
+                        'answer' => $question->answer,
+                        'body' => $question->body,
+                        'created_at' => $question->created_at,
+                        'id' => $question->id,
+                        'lesson_id' => $question->lesson_id,
+                        'module_id' => $question->module_id,
+                        'options' => $question->options,
+                        'order' => $question->order,
+                        'type' => 'multiple'
                     ],
                     'questions_count' => $module->questions()->count(),
                     'answered' => $answered->count() + 1,
                 );
-            }else{
+            } else {
                 return response()->json(['message' => 'answer saved', 'status' => 'done', 'body' => ''], 200);
             }
-        }else{
-            if($examination->moduleCompleted($module->id)){
+        } else {
+            if ($examination->moduleCompleted($module->id)) {
                 $id = Session::pull('examination');
                 Session::forget('time');
                 return redirect()->route('student.assessment.result', $id);
             }
         }
 
-        if(Session::get('time')){
+        if (Session::get('time')) {
             $time = Session::get('time.0');
-        }else{
-            $time =  date('Y-m-d H:i:s', strtotime( date('Y-m-d H:i:s') . '+' . $module->duration . 'minutes'));
+        } else {
+            $time =  date('Y-m-d H:i:s', strtotime(date('Y-m-d H:i:s') . '+' . $module->duration . 'minutes'));
             Session::push('time', $time);
         }
 
@@ -234,7 +243,8 @@ class AssessmentController extends Controller
     }
 
 
-    function generateExamination(Module $module){
+    function generateExamination(Module $module)
+    {
         $examination =  Examination::create([
             'user_id' => request()->user()->id,
             'module_id'   => $module->id,
@@ -246,7 +256,8 @@ class AssessmentController extends Controller
     }
 
 
-    function answerQuestion(Request $request){
+    function answerQuestion(Request $request)
+    {
 
         $question = Question::find($request->question_id);
 
@@ -261,14 +272,15 @@ class AssessmentController extends Controller
         $result->correct = $correct;
         $result->save();
 
-        if($request->ajax()){
+        if ($request->ajax()) {
             return $result;
-        }else{
+        } else {
             return back();
         }
     }
 
-    public function result($code){
+    public function result($code)
+    {
         Session::forget('examination');
         $examination = Examination::find($code);
         $module = $examination->module;
@@ -278,20 +290,21 @@ class AssessmentController extends Controller
         return view('student.assessment.result', compact('module', 'questions', 'examination'));
     }
 
-    public function stop(Request $request, $code){
+    public function stop(Request $request, $code)
+    {
         $examination = Examination::find(Session::pull('examination'));
         Session::forget('time');
         $module = Module::whereId($code)->firstOrFail();
 
-        $answered = $examination->answers()->whereHas('question', function($q) use ($module){
-                        $q->whereQuizId($module->id);
-                   })->get();
+        $answered = $examination->answers()->whereHas('question', function ($q) use ($module) {
+            $q->whereQuizId($module->id);
+        })->get();
 
-        if(!$examination->moduleCompleted($module->id)){
+        if (!$examination->moduleCompleted($module->id)) {
             $questions = $module->questions()->whereNotIn('id', $answered->pluck('question_id'))->get();
         }
 
-        foreach($questions as $question){
+        foreach ($questions as $question) {
             $result = new Answer;
             $result->user_id = $request->user()->id;
             $result->question_id = $question->id;

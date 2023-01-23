@@ -20,9 +20,10 @@ class ModuleController extends Controller
         // $modules = Auth::user()->modules()->paginate();
         $modules = Module::withCount(['questions', 'lessons'])
                     ->addSelect(DB::raw('
-                       (SELECT examinations.is_passed FROM examinations 
+                       (SELECT COUNT(*) FROM examinations 
                         WHERE examinations.module_id = modules.id 
-                        AND user_id = ' . $request->user()->id .' LIMIT 1) as is_passed 
+                        AND examinations.is_passed = 1
+                        AND user_id = ' . $request->user()->id .') as is_passed 
                     '))  
                     ->orderBy("name")
                     ->paginate(25);

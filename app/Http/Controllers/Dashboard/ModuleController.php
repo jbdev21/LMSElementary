@@ -133,7 +133,13 @@ class ModuleController extends Controller
 
             default:
                 $module->load('users');
-                $users = $module->users;
+                $users = User::select('users.*')
+                                    ->addSelect(DB::raw("(SELECT COUNT(*) FROM examinations WHERE examinations.module_id = $module->id AND examinations.user_id=users.id AND is_passed = 1) as passedItems"))
+                                    ->addSelect(DB::raw("(SELECT COUNT(*) FROM examinations WHERE examinations.module_id = $module->id AND examinations.user_id=users.id AND is_passed = 0) as failedItems"))
+                                    ->addSelect(DB::raw("(SELECT examinations.created_at FROM examinations WHERE examinations.module_id = $module->id AND examinations.user_id=users.id AND is_passed = 0 ORDER BY created_at DESC LIMIT 1) as last_taken_date"))
+                                    ->whereRelation("examinations", 'module_id', $module->id)
+                                    ->orderByRaw("last_taken_date DESC")
+                                    ->get();
                 return view("dashboard.module.show.student", [
                     'users' => $users,
                     'module' => $module,

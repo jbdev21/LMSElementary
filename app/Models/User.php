@@ -66,6 +66,7 @@ class User extends Authenticatable implements HasMedia
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'last_taken_date' => 'datetime',
     ];
 
 
@@ -75,5 +76,9 @@ class User extends Authenticatable implements HasMedia
 
     function section(){
         return $this->belongsTo(Section::class);
+    }
+
+    function examinations(){
+        return $this->hasMany(Examination::class);
     }
 }

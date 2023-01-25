@@ -84,9 +84,11 @@ class AssessmentController extends Controller
         $examination->score = count($correctAnswer);
 
         if (count($correctAnswer) >= $module->assesstment_passing_score) {
+
             $examination->is_passed = 1;
             $examination->save();
             return redirect()->route("student.assessment.passed", $module);
+            
         } else {
             // Get all lessons in wrong answered questions
             $lessonsPlucked = Lesson::find(Question::find($wrongQuestionIDs)->pluck('lesson_id'));
@@ -98,8 +100,6 @@ class AssessmentController extends Controller
                     array_push($weakLessonIds, $lesson->id);
                 }
             }
-
-
 
             $weakLessonIds = Lesson::whereIn('id', Question::whereIn("id", $wrongQuestionIDs)->pluck('lesson_id'))
                 ->whereRaw('(SELECT COUNT(*) FROM questions WHERE questions.lesson_id = lessons.id AND questions.id IN (' . implode(",", $wrongQuestionIDs) . ')) >= minimum_score')

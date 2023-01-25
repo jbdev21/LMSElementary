@@ -49,17 +49,19 @@ class ModuleController extends Controller
     {
         $examinationResult = Examination::where("module_id", $module->id)
                         ->where("user_id", $request->user()->id)
+                        ->where("is_passed", 1)
                         ->first();
 
-        if($examinationResult){
-            if(!$examinationResult->is_passed){
+        if(!$examinationResult){
+            // if(!$examinationResult->is_passed){
                 flash()->warning("Please take assessment first before you can access the module. Thanks");
                 return back();
-            }
-        }else{
-            flash()->warning("Please take assessment first before you can access the module. Thanks");
-            return back();
+            // }
         }
+        // else{
+        //     flash()->warning("Please take assessment first before you can access the module. Thanks");
+        //     return back();
+        // }
         $files = $module->getMedia('files');
 
 

@@ -46,12 +46,14 @@
                                 </div>
                               </div>
                            </div>
-                           <canvas  id="chartContainer" ></canvas>
+                           
                             <div class="alert alert-success" role="alert">
                                 Greate Job! You passed in the assessment
                             </div>
+                            <div class="pb-5">
+                              <canvas  id="chartContainer" ></canvas>
+                            </div>
                             <a class="btn btn-success text-white btn-lg" href="{{  route("student.module.show", $module->id) }}">Proceed</a>
-                            
                         </div>
                     </div>
                 </div>

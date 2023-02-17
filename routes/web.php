@@ -33,7 +33,7 @@ Route::group(['prefix' => 'student', 'as' => 'student.', 'middleware' => ['auth'
     
     // Essay
     Route::get("assessment/{module}/passed/{examination}", [AssessmentController::class, 'passedAssessment'])->name("assessment.passed");
-    Route::get("assessment/{module}/failed", [AssessmentController::class, 'failedAssessment'])->name("assessment.failed");
+    Route::get("assessment/{module}/failed/{examination}", [AssessmentController::class, 'failedAssessment'])->name("assessment.failed");
      Route::post('/assessment/{code}/stop', [AssessmentController::class, 'stop'])->name('assessment.stop');
      Route::get('/assessment/{code}/result',[ AssessmentController::class, 'result'])->name('assessment.result');
      Route::get('/assessment/{code}/question', [AssessmentController::class, 'question'])->name('assessment.question');

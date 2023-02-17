@@ -11,6 +11,7 @@ use App\Models\Question;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
+use Mockery\CountValidator\Exact;
 
 class AssessmentController extends Controller
 {
@@ -70,6 +71,7 @@ class AssessmentController extends Controller
                 $correct = 1;
             } else {
                 array_push($wrongQuestionIDs, $question->id);
+                $correct = 0;
             }
 
             Answer::create([
@@ -87,7 +89,7 @@ class AssessmentController extends Controller
 
             $examination->is_passed = 1;
             $examination->save();
-            return redirect()->route("student.assessment.passed", $module);
+            return redirect()->route("student.assessment.passed", [$module, $examination]);
             
         } else {
             // Get all lessons in wrong answered questions
@@ -101,14 +103,14 @@ class AssessmentController extends Controller
                 }
             }
 
-            $weakLessonIds = Lesson::whereIn('id', Question::whereIn("id", $wrongQuestionIDs)->pluck('lesson_id'))
-                ->whereRaw('(SELECT COUNT(*) FROM questions WHERE questions.lesson_id = lessons.id AND questions.id IN (' . implode(",", $wrongQuestionIDs) . ')) >= minimum_score')
-                ->pluck('id')
-                ->toArray();
+            // $weakLessonIds = Lesson::whereIn('id', Question::whereIn("id", $wrongQuestionIDs)->pluck('lesson_id'))
+            //     ->whereRaw('(SELECT COUNT(*) FROM questions WHERE questions.lesson_id = lessons.id AND questions.id IN (' . implode(",", $wrongQuestionIDs) . ')) >= minimum_score')
+            //     ->pluck('id')
+            //     ->toArray();
 
             $examination->is_passed = 0;
             $examination->save();
-            return redirect()->route("student.assessment.failed",  [$module, 'ref' => json_encode($weakLessonIds)]);
+            return redirect()->route("student.assessment.failed",  [$module, $examination, 'ref' => json_encode($weakLessonIds)]);
         }
     }
 
@@ -117,11 +119,11 @@ class AssessmentController extends Controller
         return view("student.assessment.passed", compact("module", "examination"));
     }
 
-    function failedAssessment(Request $request, Module $module)
+    function failedAssessment(Request $request, Module $module, Examination $examination)
     {
         $lessons = Lesson::whereIn("id", json_decode($request->ref))->with(['links'])->get();
         $files = $module->getMedia('files');
-        return view("student.assessment.failed", compact("module", 'files', 'lessons'));
+        return view("student.assessment.failed", compact("module", 'files', 'lessons', 'examination'));
     }
 
     /**

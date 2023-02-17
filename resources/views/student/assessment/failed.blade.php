@@ -43,30 +43,70 @@
                     <div class="alert alert-danger" role="alert">
                         We are really sorry but you did not pass in assessment!.
                     </div>
-                    <p>
-                        Please see these reference of each lesson:
-                    </p>
-                    @foreach ($lessons as $lesson)
-                        <div class="mb-4">
-                            <label>{{ $lesson->name }}</label>
-                            @foreach ($lesson->media as $file)
-                                <div>
-                                    <a target="_blank" href="{{ $file->getFullUrl() }}">{{ $file->file_name }}</a>
+
+                    <div class="row">
+                        <div class="col-sm-7">
+                            <p>
+                                Please see these reference of each lesson:
+                            </p>
+                            @foreach ($lessons as $lesson)
+                                <div class="mb-4">
+                                    <label>{{ $lesson->name }}</label>
+                                    @foreach ($lesson->media as $file)
+                                        <div>
+                                            <a target="_blank" href="{{ $file->getFullUrl() }}">{{ $file->file_name }}</a>
+                                        </div>
+                                    @endforeach
+                                    @foreach ($lesson->links as $link)
+                                        <div>
+                                            <a target="_blank" href="{{ $link->url }}">{{ $link->url }}</a>
+                                        </div>
+                                    @endforeach
                                 </div>
                             @endforeach
-                            @foreach ($lesson->links as $link)
-                                <div>
-                                    <a target="_blank" href="{{ $link->url }}">{{ $link->url }}</a>
-                                </div>
-                            @endforeach
+        
+        
+                            <a href="{{ route('student.assessment.show', [$module->id, 'type' => 'retake']) }}"
+                                class="btn btn-primary text-white">Retake Assessment</a>
                         </div>
-                    @endforeach
-
-
-                    <a href="{{ route('student.assessment.show', [$module->id, 'type' => 'retake']) }}"
-                        class="btn btn-primary text-white">Retake Assessment</a>
+                        <div class="col-sm-5">
+                            <canvas  id="chartContainer" ></canvas>
+                        </div>
+                    </div>
+                    
                 </div>
             </div>
         </div>
     </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js" integrity="sha512-d9xgZrVZpmmQlfonhQUvTR7lMPtO7NkZMkA0ABN3PHCbKA5nqylQ/yWlFAyY6hYgdF1Qh6nYiuADWwKB4C2WSw==" crossorigin="anonymous"></script>
+    <script type="text/javascript">
+        var config = {
+          type: 'pie',
+          data: {
+            datasets: [{
+              data: [
+                            {{  $examination->moduleScore('correct')  }}, {{  $examination->moduleScore('correct') - $module->questions()->count()  }}
+              ],
+              backgroundColor: [
+                'rgb(54, 162, 235)',
+                'rgb(255, 99, 132)'
+              ],
+              label: 'Result'
+            }],
+            labels: [
+                        'Correct',
+                        'Wrong'
+            ]
+          },
+          options: {
+            responsive: true
+          }
+        };
+
+        window.onload = function() {
+          var ctx = document.getElementById('chartContainer').getContext('2d');
+          window.myPie = new Chart(ctx, config);
+        };
+    </script>
 </body>
+</html>

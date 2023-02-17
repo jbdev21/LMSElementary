@@ -19,6 +19,8 @@ use App\Http\Controllers\FileController;
 use App\Http\Controllers\Student\AssessmentController;
 use App\Http\Controllers\Student\ModuleController as StudentModuleController;
 use App\Http\Controllers\Student\ProfileController as StudentProfileController;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Response;
 
 Route::get('/', function () {
     return view('welcome');
@@ -78,4 +80,21 @@ Route::group([
     Route::post("file/upload-module-file", [FileController::class, 'uploadModuleFile'])->name("file.upload.module.file");
     Route::get("file/download/{id}", [FileController::class, 'download'])->name("file.download");
     Route::delete("file/delete/{id}", [FileController::class, 'destroyMedia'])->name("file.destroy");
+});
+
+
+Route::get("media/{number}/{file}", function($number, $file){
+    $path = public_path("media/$number/$file");
+
+    if (!File::exists($path)) {
+        abort(404);
+    }
+
+    $file = File::get($path);
+    $type = File::mimeType($path);
+
+    $response = Response::make($file, 200);
+    $response->header("Content-Type", $type);
+
+    return $response;
 });

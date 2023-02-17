@@ -55,4 +55,17 @@
     </ol>
 @endsection
 
+@push("scripts-header")
+    <script src="https://cdn.tiny.cloud/1/3etjjswjc4u1mtvnr70q7p3ahavix9rhnp8puim5vad1kjt7/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+@endpush
+@push("scripts")
+<script>
+    tinymce.init({
+      selector: 'textarea',
+      plugins: 'image media',
+      toolbar: 'image media',
+    });
+  </script>
+@endpush
+
 

@@ -51,7 +51,7 @@
                             <label>{{ $lesson->name }}</label>
                             @foreach ($lesson->media as $file)
                                 <div>
-                                    <a target="_blank" href="{{ $file->getUrl() }}">{{ $file->file_name }}</a>
+                                    <a target="_blank" href="{{ $file->getFullUrl() }}">{{ $file->file_name }}</a>
                                 </div>
                             @endforeach
                             @foreach ($lesson->links as $link)

@@ -70,7 +70,7 @@
                                 class="btn btn-primary text-white">Retake Assessment</a>
                         </div>
                         <div class="col-sm-5">
-                            <canvas  id="chartContainer" ></canvas>
+                            {{-- <canvas  id="chartContainer" ></canvas> --}}
                         </div>
                     </div>
                     
@@ -78,7 +78,7 @@
             </div>
         </div>
     </div>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js" integrity="sha512-d9xgZrVZpmmQlfonhQUvTR7lMPtO7NkZMkA0ABN3PHCbKA5nqylQ/yWlFAyY6hYgdF1Qh6nYiuADWwKB4C2WSw==" crossorigin="anonymous"></script>
+    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js" integrity="sha512-d9xgZrVZpmmQlfonhQUvTR7lMPtO7NkZMkA0ABN3PHCbKA5nqylQ/yWlFAyY6hYgdF1Qh6nYiuADWwKB4C2WSw==" crossorigin="anonymous"></script>
     <script type="text/javascript">
         var config = {
           type: 'pie',
@@ -107,6 +107,6 @@
           var ctx = document.getElementById('chartContainer').getContext('2d');
           window.myPie = new Chart(ctx, config);
         };
-    </script>
+    </script> --}}
 </body>
 </html>

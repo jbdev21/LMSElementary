@@ -123,7 +123,7 @@ class AssessmentController extends Controller
     {
         $lessons = Lesson::whereIn("id", json_decode($request->ref))->with(['links'])->get();
         $files = $module->getMedia('lesson');
-        return view("student.assessment.failed", compact("module", 'files', 'lessons', 'examination'));
+        return view("student.assessment.failed", compact("module", 'files', 'lessons'));
     }
 
     /**

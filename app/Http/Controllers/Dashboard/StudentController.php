@@ -90,7 +90,7 @@ class StudentController extends Controller
      * @param  \App\Models\Student  $student
      * @return \Illuminate\Http\Response
      */
-    public function show(User $student)
+    public function show(Student $student)
     {
         return view('dashboard.student.show', [
             'student' => $student,

@@ -35,6 +35,11 @@ class Lesson extends Model implements HasMedia
         return $this->hasMany(Question::class);
     }
 
+    public function links()
+    {
+        return $this->morphMany(Link::class, 'linkable');
+    }
+
     public function questionareDeficit()
     {
         return $this->minimum_score > $this->questions()->count();

@@ -33,7 +33,6 @@
                 <p class="mb-0">
                     {{ $question->body }}
                 </p>
-                Lesson: {{ optional($question->lesson)->name }}
                 <ol type="a">
                     @foreach($question->options as $option)
                         <li @if($question->answer == $option) class="text-success" @endif>{{ $option }}</li>

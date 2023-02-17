@@ -32,7 +32,7 @@ Route::group(['prefix' => 'student', 'as' => 'student.', 'middleware' => ['auth'
     Route::resource("module", StudentModuleController::class);
     
     // Essay
-    Route::get("assessment/{module}/passed", [AssessmentController::class, 'passedAssessment'])->name("assessment.passed");
+    Route::get("assessment/{module}/passed/{examination}", [AssessmentController::class, 'passedAssessment'])->name("assessment.passed");
     Route::get("assessment/{module}/failed", [AssessmentController::class, 'failedAssessment'])->name("assessment.failed");
      Route::post('/assessment/{code}/stop', [AssessmentController::class, 'stop'])->name('assessment.stop');
      Route::get('/assessment/{code}/result',[ AssessmentController::class, 'result'])->name('assessment.result');
@@ -62,6 +62,8 @@ Route::group([
     Route::resource("module", ModuleController::class);
     Route::post("lesson/{lesson}/add-file", [LessonController::class, 'addFile'])->name("lesson.file.addfile");
     Route::delete("lesson/{id}/delete-file", [LessonController::class, 'deleteFile'])->name("lesson.file.deletefile");
+    Route::post("lesson/{lesson}/add-link", [LessonController::class, 'addLink'])->name("lesson.addlink");
+    Route::delete("lesson/{id}/delete-link", [LessonController::class, 'deleteLink'])->name("lesson.deletelink");
     Route::resource("lesson", LessonController::class);
     Route::resource("question", QuestionController::class);
     Route::resource("student", StudentController::class);

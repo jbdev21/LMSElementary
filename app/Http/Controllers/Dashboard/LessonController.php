@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
 use App\Models\Lesson;
+use App\Models\Link;
 use Illuminate\Http\Request;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
@@ -73,9 +74,23 @@ class LessonController extends Controller
         return back();
     }
 
+    function addLink(Request $request, Lesson $lesson){
+        $link = new Link();
+        $link->url = $request->url;
+        $lesson->links()->save($link);
+        flash()->success("Link Added");
+        return back();
+    }
+
     function deleteFile($id){
         Media::find($id)->delete();
         flash()->success("File deleted!");
+        return back();
+    }
+
+    function deleteLink($id){
+        Link::findOrFail($id)->delete();
+        flash()->success("Link deleted!");
         return back();
     }
     /**

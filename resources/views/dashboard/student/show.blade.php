@@ -40,51 +40,8 @@
                                     <ul><strong>Email Address:</strong> {{ $student->email }}</ul>
                                     <ul><strong>Contact Number:</strong> {{ $student->contact_number }}</ul>
 
-                                    <hr/>
-                                    <h5 class="mb-3">Latest Assessment Score</h5>
-                                    <ul>
-                                        <strong>Module Name</strong>
-                                        <span class="fa fa-star"></span>
-                                        <span class="fa fa-star"></span>
-                                        <span class="fa fa-star"></span>
-                                        <span class="fa fa-star-o"></span>
-                                        <span class="fa fa-star-o"></span>
-                                    </ul>
                                        
                                 </div>
-                        </div>
-                    </div>
-                </div>
-                <!--// new col-->
-                <div class="col-lg-8 col-sm-7">
-                    <div class="app-card mb-4">
-                        <div class="app-card-body p-4">
-                            <label class="mb-4"><h4>Student Modules</h4></label>
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th>Name</th>
-                                        <th>Category</th>
-                                        <th>Uploaded</th>
-                                        <th></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        @foreach($student->modules as $module)
-                                            <td width="25%">
-                                                <a href="{{ route("dashboard.module.show", $module->id) }}">
-                                                    {{ $module->name }}
-                                                </a>
-                                            </td>
-                                            <td>{{ ucfirst(optional($module->category)->name) }}</td>
-                                            <td>
-                                                {{ $module->created_at->format("M d, Y") }}
-                                            </td>
-                                        @endforeach
-                                    </tr>
-                                </tbody>
-                            </table>   
                         </div>
                     </div>
                 </div>

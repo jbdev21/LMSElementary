@@ -16,7 +16,7 @@
                 <div class="row">
                     <div class="col-4 mb-3">
                         <label>Student Thumbnail</label>
-                        <input type="file" name="photo" spellcheck="true" class="form-control">
+                        <input type="file" name="thumbnail" spellcheck="true" class="form-control">
                     </div>
                     <div class="col-8 mb-8">
                         <label>Student ID</label>

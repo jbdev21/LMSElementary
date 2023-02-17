@@ -1,6 +1,5 @@
 @extends('includes.layouts.student')
 @section('content')
- 
         <div class="card mb-5">
             <div class="card-body">
                 <div class="row">

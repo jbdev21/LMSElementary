@@ -38,9 +38,9 @@ class User extends Authenticatable implements HasMedia
         'remember_token',
     ];
 
-    function accesses(){
-        return $this->hasMany(Access::class);
-    }
+    // function accesses(){
+    //     return $this->hasMany(Access::class);
+    // }
 
     function getFullNameAttribute(){
         return $this->last_name . "," . $this->first_name . " " . $this->middle_name;

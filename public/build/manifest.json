@@ -52,14 +52,14 @@
     "file": "assets/dashboard.58038a43.css",
     "src": "resources/js/dashboard.css"
   },
-  "resources/sass/app.scss": {
-    "file": "assets/app.3a0099e7.css",
-    "src": "resources/sass/app.scss",
-    "isEntry": true
-  },
   "resources/sass/dashboard.scss": {
     "file": "assets/dashboard.c92f864f.css",
     "src": "resources/sass/dashboard.scss",
+    "isEntry": true
+  },
+  "resources/sass/app.scss": {
+    "file": "assets/app.3a0099e7.css",
+    "src": "resources/sass/app.scss",
     "isEntry": true
   }
 }

@@ -26,6 +26,7 @@
                     <thead>
                         <tr>
                             <th>Thumbnail</th>
+                            <th>ID</th>
                             <th>Full Name</th>
                             <th>Address</th>
                             <th>Contact</th>
@@ -40,6 +41,7 @@
                                 <td>
                                     <img src="{{ $student->thumbnailUrl() }}"/>
                                 </td>
+                                <td>{{ $student->username }}</td>
                                 <td>{{ $student->full_name }}</td>
                                 <td>{{ $student->address }}</td>
                                 <td>{{ $student->contact_number }}</td>

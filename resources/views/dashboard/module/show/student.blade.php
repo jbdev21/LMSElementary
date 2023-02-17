@@ -24,7 +24,8 @@
                 <th>First Name</th>
                 <th>Middle Name</th>
                 <th>Section</th>
-                <th>Results</th>
+                <th>Overall Results</th>
+                <th>Recent Score</th>
                 <th>Recent Take</th>
                 <th></th>
             </tr>
@@ -38,6 +39,9 @@
                     <td>{{ optional($user->section)->name }}</td>
                     <td>
                         {{ $user->passedItems }} Passed / {{ $user->failedItems }} Failed
+                    </td>
+                    <td>
+                        {{ $user->last_taken_score }}/{{ $user->questions_count }}
                     </td>
                     <td>{{ optional($user->last_taken_date)->format('M d, Y h:iA') }}</td>
                     <td class="text-end">

@@ -112,9 +112,9 @@ class AssessmentController extends Controller
         }
     }
 
-    function passedAssessment(Request $request, Module $module)
+    function passedAssessment(Request $request, Module $module, Examination $examination)
     {
-        return view("student.assessment.passed", compact("module"));
+        return view("student.assessment.passed", compact("module", "examination"));
     }
 
     function failedAssessment(Request $request, Module $module)

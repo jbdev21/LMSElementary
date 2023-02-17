@@ -101,7 +101,7 @@ class ModuleController extends Controller
                 $module->load('lessons');
 
                 $lessons = Lesson::query() 
-                                    ->with("media")
+                                    ->with(["media", 'links'])
                                     ->select("*")
                                     ->withAlert()
                                     ->where("module_id", $module->id)
@@ -136,7 +136,9 @@ class ModuleController extends Controller
                 $users = User::select('users.*')
                                     ->addSelect(DB::raw("(SELECT COUNT(*) FROM examinations WHERE examinations.module_id = $module->id AND examinations.user_id=users.id AND is_passed = 1) as passedItems"))
                                     ->addSelect(DB::raw("(SELECT COUNT(*) FROM examinations WHERE examinations.module_id = $module->id AND examinations.user_id=users.id AND is_passed = 0) as failedItems"))
-                                    ->addSelect(DB::raw("(SELECT examinations.created_at FROM examinations WHERE examinations.module_id = $module->id AND examinations.user_id=users.id AND is_passed = 0 ORDER BY created_at DESC LIMIT 1) as last_taken_date"))
+                                    ->addSelect(DB::raw("(SELECT examinations.created_at FROM examinations WHERE examinations.module_id = $module->id AND examinations.user_id=users.id ORDER BY created_at DESC LIMIT 1) as last_taken_date"))
+                                    ->addSelect(DB::raw("(SELECT examinations.score FROM examinations WHERE examinations.module_id = $module->id AND examinations.user_id=users.id ORDER BY created_at DESC LIMIT 1) as last_taken_score"))
+                                    ->addSelect(DB::raw("(SELECT COUNT(*) FROM questions WHERE module_id = $module->id) as questions_count"))
                                     ->whereRelation("examinations", 'module_id', $module->id)
                                     ->orderByRaw("last_taken_date DESC")
                                     ->get();

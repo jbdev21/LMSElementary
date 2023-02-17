@@ -46,7 +46,7 @@
                                 </div>
                               </div>
                            </div>
-        
+                           <canvas  id="chartContainer" ></canvas>
                             <div class="alert alert-success" role="alert">
                                 Greate Job! You passed in the assessment
                             </div>
@@ -59,4 +59,35 @@
             
         </div>
     </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js" integrity="sha512-d9xgZrVZpmmQlfonhQUvTR7lMPtO7NkZMkA0ABN3PHCbKA5nqylQ/yWlFAyY6hYgdF1Qh6nYiuADWwKB4C2WSw==" crossorigin="anonymous"></script>
+    <script type="text/javascript">
+        var config = {
+          type: 'pie',
+          data: {
+            datasets: [{
+              data: [
+                            {{  $examination->moduleScore('correct')  }}, {{  $examination->moduleScore('correct') - $module->questions()->count()  }}
+              ],
+              backgroundColor: [
+                'rgb(54, 162, 235)',
+                'rgb(255, 99, 132)'
+              ],
+              label: 'Result'
+            }],
+            labels: [
+                        'Correct',
+                        'Wrong'
+            ]
+          },
+          options: {
+            responsive: true
+          }
+        };
+
+        window.onload = function() {
+          var ctx = document.getElementById('chartContainer').getContext('2d');
+          window.myPie = new Chart(ctx, config);
+        };
+    </script>
 </body>
+</html>

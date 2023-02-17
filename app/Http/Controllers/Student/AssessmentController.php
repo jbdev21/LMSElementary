@@ -122,7 +122,7 @@ class AssessmentController extends Controller
     function failedAssessment(Request $request, Module $module, Examination $examination)
     {
         $lessons = Lesson::whereIn("id", json_decode($request->ref))->with(['links'])->get();
-        $files = $module->getMedia('files');
+        $files = $module->getMedia('lesson');
         return view("student.assessment.failed", compact("module", 'files', 'lessons', 'examination'));
     }
 

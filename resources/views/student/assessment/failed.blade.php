@@ -54,6 +54,11 @@
                                     <a target="_blank" href="{{ $file->getUrl() }}">{{ $file->file_name }}</a>
                                 </div>
                             @endforeach
+                            @foreach ($lesson->links as $link)
+                                <div>
+                                    <a target="_blank" href="{{ $link->url }}">{{ $link->url }}</a>
+                                </div>
+                            @endforeach
                         </div>
                     @endforeach
 

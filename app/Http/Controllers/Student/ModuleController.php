@@ -63,9 +63,14 @@ class ModuleController extends Controller
         //     return back();
         // }
         $files = $module->getMedia('files');
-
+        $assessments = Examination::where("module_id", $module->id)
+                        ->select("*")
+                        ->addSelect(DB::raw("(SELECT COUNT(*) FROM questions WHERE questions.module_id = examinations.module_id) as questions_count"))
+                        ->latest()
+                        ->get();
 
         return view('student.module.show', [
+            'assessments' => $assessments,
             'module' => $module,
             'files' => $files
         ]);

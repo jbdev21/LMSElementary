@@ -13,7 +13,7 @@
                 <li class="breadcrumb-item active" aria-current="page">Accounts</li>
             </ol>
             </nav>
-             <form action="{{ route('dashboard.profile.update', $user->id) }}" method="POST" enctype="multipart/form-data">
+             <form action="{{ route('student.profile.update', $user->id) }}" method="POST" enctype="multipart/form-data">
                 @csrf @method('PUT')
                 <div class="row gx-5 gy-4">
                     <div class="col-lg-3 col-md-4 col-sm-5 col-12">

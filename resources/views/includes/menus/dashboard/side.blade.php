@@ -2,14 +2,28 @@
     <div id="sidepanel-drop" class="sidepanel-drop"></div>
     <div class="sidepanel-inner d-flex flex-column">
         <a href="#" id="sidepanel-close" class="sidepanel-close d-xl-none">&times;</a>
-        <div class="app-branding ">
-            <a class="app-logo" href="{{ route('student.home')}}">
-                <img class="me-3" src="/images/logo.jpg" alt="logo" width="45" height="45">
-                <span class="logo-text text-success">BUNTOG - LS</span>
+        <div class=" text-center p-2 border-bottom ">
+            <a href="{{ route('student.home')}}">
+                <img  src="/images/logo.jpg" alt="logo" width="64" height="64">
+                <div>BUNTOG ELEMENTARY SCHOOL LEARNING SYSTEM</div>
             </a>
         </div>
-        <br>
         <nav id="app-nav-main" class="app-nav app-nav-main flex-grow-1">
+            <div class="text-center">
+                <div class="border-bottom">
+                    <div class="row g-0">
+                      <div class="col-3 p-1">
+                        <img src="{{ Auth::user()->thumbnailUrl() }}" class="img-fluid" alt="...">
+                      </div>
+                      <div class="col-9 text-start p-1">
+                        <div>
+                            <div>{{ Auth::user()->full_name }}</div>
+                        </div>
+                        <div>{{ Auth::user()->username }}</div>
+                      </div>
+                    </div>
+                </div>    
+            </div>
             <ul class="app-menu list-unstyled accordion" id="menu-accordion">
                  @if(Auth::user()->type == "student") 
                         @foreach(config('menu.student-menu') as $menu)

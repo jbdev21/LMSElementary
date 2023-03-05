@@ -76,6 +76,7 @@ Route::group([
     Route::get('profile', [ProfileController::class, 'index'])->name("profile.index");
     Route::put('profile', [ProfileController::class, 'update'])->name("profile.update");
     
+    
     Route::post("file/upload", [FileController::class, 'upload'])->name("file.upload");
     Route::post("file/upload-module-file", [FileController::class, 'uploadModuleFile'])->name("file.upload.module.file");
     Route::get("file/download/{id}", [FileController::class, 'download'])->name("file.download");
@@ -83,6 +84,7 @@ Route::group([
 });
 
 
+Route::post("file/upload-tiny-mce", [FileController::class, 'tinyMCEUpload'])->name("file.upload.tiny.mce");
 Route::get("media/{number}/{file}", function($number, $file){
     $path = public_path("media/$number/$file");
 

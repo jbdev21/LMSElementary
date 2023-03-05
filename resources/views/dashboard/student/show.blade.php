@@ -38,11 +38,44 @@
                                     <hr/>
                                     <h5 class="mb-3">Contact Information</h5>
                                     <ul><strong>Email Address:</strong> {{ $student->email }}</ul>
-                                    <ul><strong>Contact Number:</strong> {{ $student->contact_number }}</ul>
-
-                                       
+                                    <ul><strong>Contact Number:</strong> {{ $student->contact_number }}</ul>                                       
                                 </div>
                         </div>
+                    </div>
+                </div>
+                <div class="col-lg-8">
+                    <h4>Assessments</h4>
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Module</th>
+                                    <th>Last Name</th>
+                                    <th>First Name</th>
+                                    <th>Middle Name</th>
+                                    <th>Section</th>
+                                    <th>Results</th>
+                                    <th>Date/Time Taken</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @forelse($assessments as $assessment)
+                                    <tr>
+                                        <td>{{ $assessment->module->name }}</td>
+                                        <td>{{ $assessment->user->last_name }}</td>
+                                        <td>{{ $assessment->user->first_name }}</td>
+                                        <td>{{ $assessment->user->middle_name }}</td>
+                                        <td>{{ $assessment->user?->section?->name }}</td>
+                                        <td>{{ $assessment->score }} / {{ $assessment->questions_count }}</td>
+                                        <td>{{ $assessment->created_at->format('M d, Y h:iA') }}</td>
+                                    </tr>
+                                @empty
+                                    <tr>
+                                        <td colspan="2" class="text-center">No assessment yet</td>
+                                    </tr>
+                                @endforelse
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>

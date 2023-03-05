@@ -25,6 +25,15 @@ class HomeController extends Controller
                                     ->latest()
                                     ->limit(15)
                                     ->get();
-        return view('dashboard.index', compact("studentsCount", 'modulesCount', 'examinationCounts', 'users'));
+
+       $assessments = Examination::query()
+                        ->select("*")
+                        ->addSelect(DB::raw("(SELECT COUNT(*) FROM questions WHERE questions.module_id = examinations.module_id) as questions_count"))
+                        ->with(['user', 'module'])
+                        ->has("user")
+                        ->latest()
+                        ->limit(15)
+                        ->get();
+        return view('dashboard.index', compact("studentsCount", 'modulesCount', 'examinationCounts', 'users', 'assessments'));
     }
 }

@@ -5,8 +5,10 @@ namespace App\Http\Controllers\Dashboard;
 use App\Models\Student;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Examination;
 use App\Models\Section;
 use App\Models\User;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 class StudentController extends Controller
@@ -92,8 +94,17 @@ class StudentController extends Controller
      */
     public function show(Student $student)
     {
+        $assessments = Examination::where("user_id", $student->id)
+                        ->select("*")
+                        ->addSelect(DB::raw("(SELECT COUNT(*) FROM questions WHERE questions.module_id = examinations.module_id) as questions_count"))
+                        ->with(['user', 'module'])
+                        ->has("user")
+                        ->latest()
+                        ->get();
+
         return view('dashboard.student.show', [
             'student' => $student,
+            'assessments' => $assessments,
         ]);
     }
 

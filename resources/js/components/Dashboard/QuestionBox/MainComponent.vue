@@ -9,7 +9,7 @@
                 <div class="row">
                     <div class="col-sm-6">
                         <div class="mb-2">
-                            <textarea name="body" style="min-height: 250px;" class="form-control" v-model="text" cols="30" rows="10"></textarea>
+                            <textarea name="body" id="maineditor" style="min-height: 250px;" class="form-control" v-model="text" cols="30" rows="10"></textarea>
                         </div>
                     </div>
                     <div class="col-sm-6">

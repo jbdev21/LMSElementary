@@ -26,6 +26,7 @@
                                         <label for="thumbnail" class="d-block mb-2">
                                             <img src="{{ $user->thumbnailUrl() }}"  alt="user profile" class="rounded-circle mw-100" alt="">
                                         </label>
+                                        <label for="">Change</label>
                                     </div>
                                     <input type="file" class="form-control" name="thumbnail">
                                 </div>

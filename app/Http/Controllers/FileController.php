@@ -35,4 +35,13 @@ class FileController extends Controller
         flash()->success("File deleted!");
         return back();
     }
+
+    function tinyMCEUpload(Request $request){
+        $fileName = $request->file('file')->getClientOriginalName();
+        $path = $request->file('file')->storeAs('uploads', $fileName, 'public');
+        return response()->json(['location'=>"/storage/$path"]); 
+        
+        /*$imgpath = request()->file('file')->store('uploads', 'public'); 
+        return response()->json(['location' => "/storage/$imgpath"]);*/
+    }
 }

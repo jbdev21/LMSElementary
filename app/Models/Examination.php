@@ -39,7 +39,6 @@ class Examination extends Model
     }
 
     function moduleScore($itemized = null){
-
         $moduleQuestions = $this->module->questions()->count();
         $module = $this->module;
 
@@ -48,8 +47,8 @@ class Examination extends Model
         }
 
         $correct = $this->answers()->whereHas('question', function($q) use ($module){
-                $q->whereModuleId($module->id)->where('correct', 1);
-        })->count();
+                        $q->whereModuleId($module->id)->where('correct', 1);
+                    })->count();
 
         if($itemized){
             if($itemized == "correct"){

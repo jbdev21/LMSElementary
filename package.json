@@ -15,7 +15,7 @@
         "vite": "^3.0.0"
     },
     "dependencies": {
-        "@tinymce/tinymce-vue": "^5.0.0",
+        "@tinymce/tinymce-vue": "^4.0.7",
         "@vitejs/plugin-vue": "^3.2.0",
         "alpinejs": "^3.10.5",
         "animate.css": "^4.1.1",

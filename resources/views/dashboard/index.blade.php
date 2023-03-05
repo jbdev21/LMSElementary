@@ -45,6 +45,7 @@
                 <table class="table">
                     <thead>
                         <tr>
+                            <th>Module</th>
                             <th>Last Name</th>
                             <th>First Name</th>
                             <th>Middle Name</th>
@@ -54,16 +55,23 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @forelse($users as $user)
+                        @forelse($assessments as $assessment)
                             <tr>
-                                <td>{{ $user->last_name }}</td>
-                                <td>{{ $user->first_name }}</td>
-                                <td>{{ $user->middle_name }}</td>
-                                <td>{{ optional($user->section)->name }}</td>
                                 <td>
-                                    {{ $user->passedItems }} Passed / {{ $user->failedItems }} Failed
+                                    <a href="{{ route("dashboard.module.show", $assessment->module_id) }}">
+                                        {{ $assessment->module->name }}
+                                    </a>
                                 </td>
-                                <td>{{ optional($user->last_taken_date)->format('M d, Y h:iA') }}</td>
+                                <td>
+                                    <a href="{{ route("dashboard.student.show", $assessment->user_id) }}">
+                                    {{ $assessment->user->last_name }}
+                                    </a>
+                                </td>
+                                <td>{{ $assessment->user->first_name }}</td>
+                                <td>{{ $assessment->user->middle_name }}</td>
+                                <td>{{ $assessment->user?->section->name }}</td>
+                                <td>{{ $assessment->score }} / {{ $assessment->questions_count }}</td>
+                                <td>{{ $assessment->created_at->format('M d, Y h:iA') }}</td>
                             </tr>
                         @empty
                             <tr>

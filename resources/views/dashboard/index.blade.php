@@ -59,7 +59,7 @@
                             <tr>
                                 <td>
                                     <a href="{{ route("dashboard.module.show", $assessment->module_id) }}">
-                                        {{ $assessment->module->name }}
+                                        {{ $assessment->module?->name }}
                                     </a>
                                 </td>
                                 <td>
@@ -69,7 +69,7 @@
                                 </td>
                                 <td>{{ $assessment->user->first_name }}</td>
                                 <td>{{ $assessment->user->middle_name }}</td>
-                                <td>{{ $assessment->user?->section->name }}</td>
+                                <td>{{ $assessment->user?->section?->name }}</td>
                                 <td>{{ $assessment->score }} / {{ $assessment->questions_count }}</td>
                                 <td>{{ $assessment->created_at->format('M d, Y h:iA') }}</td>
                             </tr>

@@ -55,7 +55,7 @@
                                 <li class="mb-3">
                                     <input type="hidden" name="question_id[]" value="{{ $question->id }}">
                                     <div>
-                                    {{ $question->body }}
+                                    {!! $question->body !!}
                                     </div>
                                     <ol class="text" type="a">
                                         @foreach ($question->options as $index => $option)
@@ -69,7 +69,7 @@
                                                         id="{{ $question->id }}-{{ $index }}">
                                                     <label class="form-check-label"
                                                         for="{{ $question->id }}-{{ $index }}">
-                                                        {{ $option }}
+                                                        {!! $option !!}
                                                     </label>
                                                 </div>
                                             </li>

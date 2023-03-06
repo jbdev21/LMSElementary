@@ -23,7 +23,7 @@
                                 <div class="mb-4">
                                     <label for="">Profile</label>
                                     <div class="text-center">
-                                        <label for="thumbnail" class="d-block mb-2">
+                                        <label for="thumbnail" class=" mb-2">
                                             <img src="{{ $user->thumbnailUrl() }}"  alt="user profile" class="rounded-circle mw-100" alt="">
                                         </label>
                                     </div>

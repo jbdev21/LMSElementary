@@ -21,10 +21,10 @@ class StudentController extends Controller
     public function index(Request $request)
     {
         if($request->q){
-            $students = Student::search($request->q)
+            $students = User::search($request->q)
                         ->paginate();
         }else{
-            $students = Student::query()
+            $students = User::query()
                         ->paginate();
         }
 
@@ -76,9 +76,9 @@ class StudentController extends Controller
 
         $student->save();
 
-        if($request->has("photo")){
+        if($request->has("thumbnail")){
             //upload image using spatie media
-            $student->addMediaFromRequest('photo')->toMediaCollection('thumbnail');
+            $student->addMediaFromRequest('thumbnail')->toMediaCollection('thumbnail');
         }
 
         flash()->success("New Student Added Successfuly");
@@ -115,7 +115,7 @@ class StudentController extends Controller
      * @param  \App\Models\Student  $student
      * @return \Illuminate\Http\Response
      */
-    public function edit(Student $student)
+    public function edit(User $student)
     {
         $sections = Section::all();
         return view("dashboard.student.edit", [
@@ -131,7 +131,7 @@ class StudentController extends Controller
      * @param  \App\Models\sections  $student
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Student $student)
+    public function update(Request $request, User $student)
     {
         $student->last_name = $request->last_name;
         $student->first_name = $request->first_name;

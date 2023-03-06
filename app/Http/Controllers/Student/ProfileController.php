@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Student;
 
 use App\Http\Controllers\Controller;
+use App\Models\Student;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -21,7 +22,7 @@ class ProfileController extends Controller
 
     public function update(Request $request)
     {
-        $user = User::find(Auth::user()->id);
+        $user = Auth::user();
         $user->username = $request->username;
         $user->email = $request->email;
         $user->last_name = $request->last_name;
@@ -36,6 +37,7 @@ class ProfileController extends Controller
         }
         $user->save();
 
+      
         if ($request->thumbnail) {
             $user->clearMediaCollection('thumbnail');
             $user->addMediaFromRequest('thumbnail')

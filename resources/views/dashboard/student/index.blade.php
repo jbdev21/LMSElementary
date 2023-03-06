@@ -26,7 +26,7 @@
                     <thead>
                         <tr>
                             <th>Thumbnail</th>
-                            <th>ID</th>
+                            <th>LRN</th>
                             <th>Full Name</th>
                             <th>Address</th>
                             <th>Contact</th>

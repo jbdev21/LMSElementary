@@ -17,7 +17,7 @@
                         <input type="file" name="photo" spellcheck="true" class="form-control" required>
                     </div>
                     <div class="col-8 mb-8">
-                        <label>Student ID</label>
+                        <label>LRN</label>
                         <input type="text" name="username" spellcheck="true" class="form-control" required>
                     </div>
                 </div>

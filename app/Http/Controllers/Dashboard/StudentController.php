@@ -99,6 +99,7 @@ class StudentController extends Controller
                         ->addSelect(DB::raw("(SELECT COUNT(*) FROM questions WHERE questions.module_id = examinations.module_id) as questions_count"))
                         ->with(['user', 'module'])
                         ->has("user")
+                        ->has("module")
                         ->latest()
                         ->get();
 

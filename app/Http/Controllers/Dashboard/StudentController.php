@@ -21,11 +21,14 @@ class StudentController extends Controller
     public function index(Request $request)
     {
         if($request->q){
-            $students = User::search($request->q)
-                        ->whereType('student')
+            $students = Student::where(function($q) use ($request){
+                            $q->where("first_name", "LIKE", '%'. $request->q . '%')
+                                ->orWhere("middle_name", "LIKE", '%'. $request->q . '%')
+                                ->orWhere("last_name", "LIKE", '%'. $request->q . '%');
+                        })
                         ->paginate();
         }else{
-            $students = User::query()
+            $students = Student::query()
                         ->paginate();
         }
 

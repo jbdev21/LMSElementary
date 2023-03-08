@@ -24,7 +24,8 @@ class StudentController extends Controller
             $students = User::where(function($q) use ($request){
                             $q->where("first_name", "LIKE", '%'. $request->q . '%')
                                 ->orWhere("middle_name", "LIKE", '%'. $request->q . '%')
-                                ->orWhere("last_name", "LIKE", '%'. $request->q . '%');
+                                ->orWhere("last_name", "LIKE", '%'. $request->q . '%')
+                                ->orWhere("username", "LIKE", '%'. $request->q . '%');
                         })
                         ->where("type", 'student')
                         ->paginate();
@@ -79,6 +80,7 @@ class StudentController extends Controller
         $student->section_id = $request->section_id;
         $student->username = $request->username;
         $student->password = Hash::make($request->password);
+        $student->type = "student";
 
         $student->save();
 

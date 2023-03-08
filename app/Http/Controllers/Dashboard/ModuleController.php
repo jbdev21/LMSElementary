@@ -23,6 +23,8 @@ class ModuleController extends Controller
     public function index(Request $request)
     {
         $modules = Module::query()
+            ->select("*")
+            ->addSelect(DB::raw("(SELECT COUNT(*) FROM examinations WHERE examinations.module_id = modules.id GROUP BY examinations.user_id LIMIT 1) as students_count"))
             ->when($request->q, function ($query) use ($request) {
                 $query->where("name", "LIKE", $request->q . "%");
             })
@@ -32,7 +34,6 @@ class ModuleController extends Controller
             ->when($request->quarter, function ($query) use ($request) {
                 $query->where("quarter_id", $request->quarter);
             })
-            ->withCount("users")
             ->paginate(25);
 
         $categories = Category::whereType("module")->get();

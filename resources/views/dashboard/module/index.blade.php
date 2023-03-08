@@ -55,7 +55,6 @@
                                 <th>Quarter</th>
                                 <th>Students</th>
                                 <th>Category</th>
-                                <th>Files</th>
                                 <th>Created </th>
                                 <th></th>
                             </tr>
@@ -72,12 +71,9 @@
                                         {{ optional($module->quarter)->name }}
                                     </td>
                                     <td>
-                                        {{ $module->users_count }}
+                                        {{ $module->students_count ?? 0 }}
                                     </td>
                                     <td>{{ ucfirst(optional($module->category)->name) }}</td>
-                                    <td>
-                                        
-                                    </td>
                                     <td>
                                         {{ $module->created_at->format("M d, Y") }}
                                     </td>

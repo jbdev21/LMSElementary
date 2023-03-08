@@ -16,6 +16,7 @@
                         <div class="form-group mb-3">
                             <label for="">Lesson</label>
                             <select name="lesson" required class="form-control">
+                                <option value="">-Select Lesson-</option>
                                 <option v-for="lesson in lessons" :key="lesson.id" :value="lesson.id">{{ lesson.name }}</option>
                             </select>
                         </div>

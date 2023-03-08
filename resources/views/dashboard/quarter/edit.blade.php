@@ -11,7 +11,7 @@
                     Edit Section
                 </div>
                 <div class="card-body">
-                    <form action="{{ route('dashboard.section.update', $section->id) }}" method="post">
+                    <form action="{{ route('dashboard.quarter.update', $section->id) }}" method="post">
                         @csrf @method('PUT')
                         <p>
                             Name
@@ -20,7 +20,7 @@
                         </p>
                         <p>
                             Year
-                            <input value="{{ old('year') }}" type="text" required name="year" spellcheck="true"
+                            <input value="{{ $section->year }}" type="text" required name="year" spellcheck="true"
                                 class="form-control">
                         </p>
                         <p>

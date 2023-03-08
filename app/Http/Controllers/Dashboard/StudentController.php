@@ -22,6 +22,7 @@ class StudentController extends Controller
     {
         if($request->q){
             $students = User::search($request->q)
+                        ->whereType('student')
                         ->paginate();
         }else{
             $students = User::query()
@@ -167,6 +168,7 @@ class StudentController extends Controller
      */
     public function destroy(Student $student)
     {
+        $student->examninations()->delete();
         $student->delete();
 
         flash()->error("Student deleted successfully");

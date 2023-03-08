@@ -68,7 +68,7 @@ class StudentController extends Controller
             'middle_name' => 'required',
         ]);
 
-        $student = new Student;
+        $student = new User;
         $student->last_name = $request->last_name;
         $student->first_name = $request->first_name;
         $student->middle_name = $request->middle_name;

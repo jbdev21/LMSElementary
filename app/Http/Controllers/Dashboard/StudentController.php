@@ -28,10 +28,12 @@ class StudentController extends Controller
                                 ->orWhere("username", "LIKE", '%'. $request->q . '%');
                         })
                         ->where("type", 'student')
+                        ->latest()
                         ->paginate();
         }else{
             $students = User::query()
                         ->where("type", 'student')
+                        ->latest()
                         ->paginate();
         }
 

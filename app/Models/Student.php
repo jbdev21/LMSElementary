@@ -34,7 +34,6 @@ class Student extends Model implements HasMedia
     }
 
     function thumbnailUrl(){
-        return $this->getFirstMediaUrl('thumbnail', 'thumbnail') ?? url("/images/avatar.png");
         return optional($this->getFirstMedia('thumbnail'))->getUrl("thumbnail")
                 ?? asset("/images/placeholder.png");
                 // return $this->getFirstMediaUrl('profiles', 'thumb') ?? url("/images/avatar.png");

@@ -62,4 +62,9 @@ class Student extends Model implements HasMedia
         return $this->belongsToMany(Module::class);
     }
 
+    function examninations() 
+    {
+        return $this->hasMany(Examination::class, 'user_id');
+    }
+
 }

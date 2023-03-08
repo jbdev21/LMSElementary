@@ -31,14 +31,14 @@
     ]
   },
   "resources/js/dashboard.js": {
-    "file": "assets/dashboard.00f2eebf.js",
+    "file": "assets/dashboard.b0493f48.js",
     "src": "resources/js/dashboard.js",
     "isEntry": true,
     "imports": [
       "__plugin-vue_export-helper.dd813d7b.js"
     ],
     "css": [
-      "assets/dashboard.fadfa32d.css"
+      "assets/dashboard.1c0c6e11.css"
     ]
   },
   "__plugin-vue_export-helper.dd813d7b.js": {
@@ -49,7 +49,7 @@
     "src": "resources/js/app.css"
   },
   "resources/js/dashboard.css": {
-    "file": "assets/dashboard.fadfa32d.css",
+    "file": "assets/dashboard.1c0c6e11.css",
     "src": "resources/js/dashboard.css"
   },
   "resources/sass/dashboard.scss": {

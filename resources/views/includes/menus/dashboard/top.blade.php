@@ -2,9 +2,8 @@
     <div class="container-fluid py-2">
         <div class="app-header-content">
             <div class="row justify-content-between align-items-center">
-
                 <div class="col-auto">
-                    <a id="sidepanel-toggler" class="sidepanel-toggler d-inline-block d-xl-none" href="#">
+                    <a id="sidepanel-toggler" href="#" class="sidepanel-toggler d-inline-block d-xl-none">
                         <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30"
                             role="img">
                             <title>Menu</title>
@@ -13,8 +12,6 @@
                         </svg>
                     </a>
                 </div>
-                <!--//col-->
-
 
                 <div class="app-utilities col-auto">
                     {{-- <div class="app-utility-item app-notifications-dropdown dropdown">

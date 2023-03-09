@@ -24,7 +24,8 @@ class ModuleController extends Controller
                         WHERE examinations.module_id = modules.id 
                         AND examinations.is_passed = 1
                         AND user_id = ' . $request->user()->id .') as is_passed 
-                    '))  
+                    '))
+                    ->latest()  
                     ->paginate(25);
 
         return view("student.module.index", [

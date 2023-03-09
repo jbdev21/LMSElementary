@@ -14,7 +14,8 @@ class HomeController extends Controller
     public function index(){
         $studentsCount = User::whereType("student")->count();
         $modulesCount = Module::count();
-        $examinationCounts = Examination::count();
+        $examinationCounts = Examination::has("module")
+        ->has("user")->count();
 
         $users = User::select('users.*')
                                     ->addSelect(DB::raw("(SELECT COUNT(*) FROM examinations WHERE examinations.user_id=users.id AND is_passed = 1) as passedItems"))
@@ -30,6 +31,7 @@ class HomeController extends Controller
                         ->select("*")
                         ->addSelect(DB::raw("(SELECT COUNT(*) FROM questions WHERE questions.module_id = examinations.module_id) as questions_count"))
                         ->with(['user', 'module'])
+                        ->has("module")
                         ->has("user")
                         ->latest()
                         ->limit(15)

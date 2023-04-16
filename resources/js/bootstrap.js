@@ -1,7 +1,8 @@
 import _ from 'lodash';
 window._ = _;
 
-import 'bootstrap';
+// Import all of Bootstrap's JS
+import * as bootstrap from 'bootstrap'
 
 import axios from 'axios';
 
@@ -18,6 +19,11 @@ window.addEventListener('load', () => {
 	window.addEventListener('load', function () {
 		responsiveSidePanel();
 	});
+
+	var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+	var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+	return new bootstrap.Tooltip(tooltipTriggerEl)
+	})
 
 	window.addEventListener('resize', function () {
 		responsiveSidePanel();

@@ -40,6 +40,10 @@ class Module extends Model implements HasMedia
         return 'multiple';
     }
 
+    public function students(){
+        return $this->hasManyThrough(User::class, Examination::class, "module_id", "id", "id", "user_id");
+    }
+
     public function lessons(){
         return $this->hasMany(Lesson::class);
     }

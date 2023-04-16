@@ -12,19 +12,16 @@ use App\Models\Quarter;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use Laravel\Ui\Presets\React;
+use Rap2hpoutre\FastExcel\FastExcel;
 
 class ModuleController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+   
     public function index(Request $request)
     {
         $modules = Module::query()
             ->select("*")
-            ->addSelect(DB::raw("(SELECT COUNT(*) FROM examinations WHERE examinations.module_id = modules.id GROUP BY examinations.user_id LIMIT 1) as students_count"))
+            // ->addSelect(DB::raw("(SELECT COUNT(*) FROM users WHERE examinations.module_id = modules.id GROUP BY examinations.user_id LIMIT 1) as students_count"))
             ->when($request->q, function ($query) use ($request) {
                 $query->where("name", "LIKE", $request->q . "%");
             })
@@ -34,6 +31,7 @@ class ModuleController extends Controller
             ->when($request->quarter, function ($query) use ($request) {
                 $query->where("quarter_id", $request->quarter);
             })
+            ->withCount(['students'])
             ->paginate(25);
 
         $categories = Category::whereType("module")->get();
@@ -46,6 +44,7 @@ class ModuleController extends Controller
         ]);
     }
 
+    
     /**
      * Show the form for creating a new resource.
      *
@@ -134,15 +133,17 @@ class ModuleController extends Controller
 
             default:
                 $module->load('users');
-                $users = User::select('users.*')
-                                    ->addSelect(DB::raw("(SELECT COUNT(*) FROM examinations WHERE examinations.module_id = $module->id AND examinations.user_id=users.id AND is_passed = 1) as passedItems"))
-                                    ->addSelect(DB::raw("(SELECT COUNT(*) FROM examinations WHERE examinations.module_id = $module->id AND examinations.user_id=users.id AND is_passed = 0) as failedItems"))
-                                    ->addSelect(DB::raw("(SELECT examinations.created_at FROM examinations WHERE examinations.module_id = $module->id AND examinations.user_id=users.id ORDER BY created_at DESC LIMIT 1) as last_taken_date"))
-                                    ->addSelect(DB::raw("(SELECT examinations.score FROM examinations WHERE examinations.module_id = $module->id AND examinations.user_id=users.id ORDER BY created_at DESC LIMIT 1) as last_taken_score"))
-                                    ->addSelect(DB::raw("(SELECT COUNT(*) FROM questions WHERE module_id = $module->id) as questions_count"))
-                                    ->whereRelation("examinations", 'module_id', $module->id)
-                                    ->orderByRaw("last_taken_date DESC")
-                                    ->get();
+                $users = $module->students()
+                            ->addselect('users.*')
+                            ->addSelect(DB::raw("(SELECT COUNT(*) FROM examinations WHERE examinations.module_id = $module->id AND examinations.user_id=users.id AND is_passed = 1) as passedItems"))
+                            ->addSelect(DB::raw("(SELECT COUNT(*) FROM examinations WHERE examinations.module_id = $module->id AND examinations.user_id=users.id AND is_passed = 0) as failedItems"))
+                            ->addSelect(DB::raw("(SELECT examinations.created_at FROM examinations WHERE examinations.module_id = $module->id AND examinations.user_id=users.id ORDER BY created_at DESC LIMIT 1) as last_taken_date"))
+                            ->addSelect(DB::raw("(SELECT examinations.score FROM examinations WHERE examinations.module_id = $module->id AND examinations.user_id=users.id ORDER BY created_at DESC LIMIT 1) as last_taken_score"))
+                            ->addSelect(DB::raw("(SELECT COUNT(*) FROM questions WHERE module_id = $module->id) as questions_count"))
+                            ->orderByRaw("last_taken_date DESC")
+                            ->get(2);
+
+
                 return view("dashboard.module.show.student", [
                     'users' => $users,
                     'module' => $module,
@@ -151,6 +152,34 @@ class ModuleController extends Controller
                 ]);
         }
     }
+
+
+    public function exportCsv(Module $module){
+        $module->load('users');
+        $users = User::select('users.*')
+                    ->addSelect(DB::raw("(SELECT COUNT(*) FROM examinations WHERE examinations.module_id = $module->id AND examinations.user_id=users.id AND is_passed = 1) as passedItems"))
+                    ->addSelect(DB::raw("(SELECT COUNT(*) FROM examinations WHERE examinations.module_id = $module->id AND examinations.user_id=users.id AND is_passed = 0) as failedItems"))
+                    ->addSelect(DB::raw("(SELECT examinations.created_at FROM examinations WHERE examinations.module_id = $module->id AND examinations.user_id=users.id ORDER BY created_at DESC LIMIT 1) as last_taken_date"))
+                    ->addSelect(DB::raw("(SELECT examinations.score FROM examinations WHERE examinations.module_id = $module->id AND examinations.user_id=users.id ORDER BY created_at DESC LIMIT 1) as last_taken_score"))
+                    ->addSelect(DB::raw("(SELECT COUNT(*) FROM questions WHERE module_id = $module->id) as questions_count"))
+                    ->whereRelation("examinations", 'module_id', $module->id)
+                    ->orderByRaw("last_taken_date DESC")
+                    ->get();
+        
+        return (new FastExcel($users))->download($module->name . '-students.csv', function ($user) {
+            return [
+                "LRN" => $user->username,
+                "Last Name" => $user->last_name,
+                "First Name" => $user->first_name,
+                "Middle Name" => $user->middle_name,
+                "Section" => optional($user->section)->name,
+                "Overall Results" => $user->passedItems . " Passed / " . $user->failedItems . " Failed",
+                "Recent Score" => $user->last_taken_score . "/" . $user->questions_count,
+                "Recent Take" => optional($user->last_taken_date)->format('M d, Y h:iA')
+            ];
+        });
+    }
+
 
     function removeStudentFromModule(Request $request, Module $module)
     {

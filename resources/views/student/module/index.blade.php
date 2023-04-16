@@ -20,10 +20,11 @@
                         </div>
                     </div>
                 </form>
-                <ol class="list-group list-group-numbered">
+                <ol class="list-group list-group-numbered" data-bs-offset="10"  data-bs-spy="scroll" data-bs-target="#app-nav-main" data-bs-offset="0" class="scrollspy-example" tabindex="0">
                     @php 
                         $passed = true;
                         $first = true;
+                        $quarterId = 0;
                     @endphp
                     @forelse ($modules as $module)
                         @php
@@ -31,7 +32,7 @@
                                 $passed = false;
                             }  
                         @endphp
-                        <li class="list-group-item d-flex justify-content-between align-items-start">
+                        <li @if($quarterId != $module->quarter_id) id="module-{{ $module->quarter_id }}" @endif class="list-group-item d-flex justify-content-between align-items-start">
                             <div class="ms-2 me-auto pb-3">
                                 <div class="fw-bold">
                                     {{-- @if ($module->is_passed != 1 && $passed == false)
@@ -91,16 +92,19 @@
                         </li>
                         {{-- @php $passed = $module->is_passed ? true : false @endphp --}}
                         @php
+                            $quarterId = $module->quarter_id;
                             if($module->is_passed == 0){
                                 $first = false;
                             }  
                         @endphp
-                    @endforeach
+                    @empty
+                            <h3 class="text-center text-muted">No module found</h3>
+                    @endforelse
                 </ol>
 
-                {{ $modules->appends([
+                {{-- {{ $modules->appends([
                         'q' => request()->q,
-                    ])->links() }}
+                    ])->links() }} --}}
             </div>
         </div>
     </div>

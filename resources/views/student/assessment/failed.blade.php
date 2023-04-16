@@ -39,40 +39,52 @@
                         <a href="{{ route('student.module.index') }}" class=""><i class="fa fa-arrow-left"></i>
                             Back</a>
                     </div>
+                    
 
-                    <div class="alert alert-danger" role="alert">
-                        We are really sorry but you did not pass in assessment!.
-                    </div>
-
+                    
                     <div class="row">
-                        <div class="col-sm-7">
-                            <p>
-                                Please see these reference of each lesson:
-                            </p>
-                            @foreach ($lessons as $lesson)
-                                <div class="mb-4">
-                                    <label>{{ $lesson->name }}</label>
-                                    @foreach ($lesson->media as $file)
-                                        <div>
-                                            <a target="_blank" href="{{ $file->getFullUrl() }}">{{ $file->file_name }}</a>
-                                        </div>
-                                    @endforeach
-                                    @foreach ($lesson->links as $link)
-                                        <div>
-                                            <a target="_blank" href="{{ $link->url }}">{{ $link->url }}</a>
-                                        </div>
-                                    @endforeach
-                                </div>
-                            @endforeach
-        
-        
-                            <a href="{{ route('student.assessment.show', [$module->id, 'type' => 'retake']) }}"
-                                class="btn btn-primary text-white">Retake Assessment</a>
+                        <div class="col-sm-4">
+                            <div class="text-center">
+                                <img src="/images/keep-up.jpg" class="mw-100" alt="">
+                            </div>
                         </div>
-                        <div class="col-sm-5">
-                            {{-- <canvas  id="chartContainer" ></canvas> --}}
+                        <div class="col-sm-8">
+                            <div class="alert alert-warning" role="alert">
+                                You almost got it. You did not pass but you can retake it. Dont give up, you can do this!.
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-7">
+                                    <p>
+                                        Please see these reference of each lesson:
+                                    </p>
+                                    @foreach ($lessons as $lesson)
+                                        <div class="mb-4">
+                                            <label>{{ $lesson->name }}</label>
+                                            @foreach ($lesson->media as $file)
+                                                <div>
+                                                    <a target="_blank" href="{{ $file->getFullUrl() }}">{{ $file->file_name }}</a>
+                                                </div>
+                                            @endforeach
+                                            @foreach ($lesson->links as $link)
+                                                <div>
+                                                    <a target="_blank" href="{{ $link->url }}">{{ $link->url }}</a>
+                                                </div>
+                                            @endforeach
+                                        </div>
+                                    @endforeach
+                
+                
+                                    <a href="{{ route('student.assessment.show', [$module->id, 'type' => 'retake']) }}"
+                                        class="btn btn-primary text-white">Retake Assessment</a>
+                                </div>
+                                <div class="col-sm-5">
+                                    {{-- <canvas  id="chartContainer" ></canvas> --}}
+                                </div>
+                            </div>
                         </div>
                     </div>
+
+                  
                     
                 </div>
             </div>

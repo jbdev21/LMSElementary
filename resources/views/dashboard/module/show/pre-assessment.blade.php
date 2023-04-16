@@ -30,22 +30,27 @@
     <ol>
         @forelse($questions as $question)
             <li class="mb-4">
-                <p class="mb-0">
-                    {!! $question->body !!}
-                </p>
-                <ol type="a">
-                    @foreach($question->options as $option)
-                        <li @if($question->answer == $option) class="text-success" @endif>{!! $option !!}</li>
-                    @endforeach
-                </ol>
-                <div class="p-3">
-                    <form id="question-id-{{ $question->id }}" action="{{ route('dashboard.question.destroy', $question->id) }}" method="POST">
-                        @csrf @method("DELETE")
-                    </form>
-                    <button onclick="if(confirm('Are you sure to delete?')){ document.getElementById('question-id-{{ $question->id }}').submit() }" class="btn btn-danger text-white">
-                        <i class="fa fa-trash"></i> Delete
-                    </button>
+                <div class="card">
+                    <div class="card-body">
+                        <p class="mb-0">
+                            {!! $question->body !!}
+                        </p>
+                        <ol type="a">
+                            @foreach($question->options as $option)
+                                <li @if($question->answer == $option) class="text-success" @endif>{!! $option !!}</li>
+                            @endforeach
+                        </ol>
+                        <div class="p-3">
+                            <form id="question-id-{{ $question->id }}" action="{{ route('dashboard.question.destroy', $question->id) }}" method="POST">
+                                @csrf @method("DELETE")
+                            </form>
+                            <button onclick="if(confirm('Are you sure to delete?')){ document.getElementById('question-id-{{ $question->id }}').submit() }" class="btn btn-danger text-white">
+                                <i class="fa fa-trash"></i> Delete
+                            </button>
+                        </div>
+                    </div>
                 </div>
+                
             </li>
         @empty
             <div class="text-center py-5">

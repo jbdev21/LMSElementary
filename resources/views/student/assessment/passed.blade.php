@@ -37,18 +37,11 @@
                     <div class="card rounded-0  mt-3 p-5 text-center">
                         <div class="card-body px-4 px-sm-3 px-md-5">
                            <div class="text-center">
-                            <div class="success-checkmark">
-                                <div class="check-icon">
-                                  <span class="icon-line line-tip"></span>
-                                  <span class="icon-line line-long"></span>
-                                  <div class="icon-circle"></div>
-                                  <div class="icon-fix"></div>
-                                </div>
-                              </div>
+                              <img src="/images/pass.jpg" class="mw-100" alt="">
                            </div>
                            
                             <div class="alert alert-success" role="alert">
-                                Greate Job! You passed in the assessment
+                                Greate Job! You passedthe assessment
                             </div>
                             <div class="pb-5">
                               <canvas  id="chartContainer" ></canvas>

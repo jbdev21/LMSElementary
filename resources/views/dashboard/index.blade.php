@@ -4,7 +4,7 @@
 @section('page-title', 'Dashboard')
 
 @section('content')
-    <h1 class='mb-3'> WELCOME </h1>
+    <h1 class='mb-3'> Welcome to {{ config("app.name") }}</h1>
     <div class="row">
         <div class="col-4">
             <div class="card rounded-0 border-0 bg-warning text-white">

@@ -41,7 +41,7 @@ class Module extends Model implements HasMedia
     }
 
     public function students(){
-        return $this->hasManyThrough(User::class, Examination::class, "module_id", "id", "id", "user_id");
+        return $this->hasManyThrough(User::class, Examination::class, "module_id", "id", "id", "user_id")->groupBy("users.id");
     }
 
     public function lessons(){

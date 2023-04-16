@@ -71,7 +71,7 @@
                                         {{ optional($module->quarter)->name }}
                                     </td>
                                     <td>
-                                        {{ $module->students_count ?? 0 }}
+                                        {{ count($module->students) ?? 0 }}
                                     </td>
                                     <td>{{ ucfirst(optional($module->category)->name) }}</td>
                                     <td>

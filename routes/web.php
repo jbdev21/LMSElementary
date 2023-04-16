@@ -26,6 +26,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/failed', function () {
+    return view("student.assessment.passed");
+});
+
 Auth::routes();
 
 

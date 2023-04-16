@@ -26,7 +26,8 @@
             </div>
             <ul class="app-menu list-unstyled accordion" id="menu-accordion">
                  @if(Auth::user()->type == "student") 
-                        @foreach(config('menu.student-menu') as $menu)
+                        <x-quarter-side-menu />
+                        {{-- @foreach(config('menu.student-menu') as $menu)
                             <li class="nav-item @if (count($menu['sub-links']['items'])) has-submenu @endif">
                                 @if (count($menu['sub-links']['items']))
                                     <a class="nav-link submenu-toggle collapsed {{ activeMainMenu($menu['active-segments'], 'active') }}"
@@ -66,7 +67,7 @@
                                     </div>
                                 @endif
                             </li>
-                        @endforeach
+                        @endforeach --}}
                 @else
                     @foreach(config('menu.main-menu') as $menu)
                         <li class="nav-item @if (count($menu['sub-links']['items'])) has-submenu @endif">

@@ -7,6 +7,7 @@ use App\Models\Module;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Examination;
+use App\Models\Quarter;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -16,8 +17,7 @@ class ModuleController extends Controller
   
     public function index(Request $request)
     {
-        //auth user module
-        // $modules = Auth::user()->modules()->paginate();
+
         $modules = Module::withCount(['questions', 'lessons'])
                     ->addSelect(DB::raw('
                        (SELECT COUNT(*) FROM examinations 
@@ -25,8 +25,9 @@ class ModuleController extends Controller
                         AND examinations.is_passed = 1
                         AND user_id = ' . $request->user()->id .') as is_passed 
                     '))
+                    ->orderBy("quarter_id")
                     ->latest()  
-                    ->paginate(25);
+                    ->get();
 
         return view("student.module.index", [
             'modules' => $modules
@@ -63,10 +64,12 @@ class ModuleController extends Controller
         //     return back();
         // }
         $files = $module->getMedia('files');
-        $assessments = Examination::where("module_id", $module->id)
-                        ->select("*")
+        $assessments = Examination::select("*")
+                        ->where("module_id", $module->id)
+                        ->where("user_id", $request->user()->id)
                         ->addSelect(DB::raw("(SELECT COUNT(*) FROM questions WHERE questions.module_id = examinations.module_id) as questions_count"))
                         ->latest()
+                        
                         ->get();
 
         return view('student.module.show', [

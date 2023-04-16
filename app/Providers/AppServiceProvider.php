@@ -4,10 +4,12 @@ namespace App\Providers;
 
 use App\Models\Module;
 use App\Observers\ModuleObserver;
+use App\View\Components\StudentSideMenuQuarter;
 use Spatie\Flash\Flash;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\Blade;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -40,5 +42,7 @@ class AppServiceProvider extends ServiceProvider
 
         //observers
         Module::observe(ModuleObserver::class);
+
+        Blade::component('quarter-side-menu', StudentSideMenuQuarter::class);
     }
 }

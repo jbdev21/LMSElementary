@@ -53,28 +53,33 @@
                         <ol>
                             @foreach ($questions as $question)
                                 <li class="mb-3">
-                                    <input type="hidden" name="question_id[]" value="{{ $question->id }}">
-                                    <div>
-                                    {!! $question->body !!}
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <input type="hidden" name="question_id[]" value="{{ $question->id }}">
+                                            <div>
+                                                {!! $question->body !!}
+                                            </div>
+                                            <ol class="text" type="a">
+                                                @foreach ($question->options as $index => $option)
+                                                    <li>
+                                                        <div class="form-check">
+                                                            <input required
+                                                                class="form-check-input" 
+                                                                type="radio"
+                                                                name="answer-{{ $question->id }}"
+                                                                value="{{ $index }}"
+                                                                id="{{ $question->id }}-{{ $index }}">
+                                                            <label class="form-check-label"
+                                                                for="{{ $question->id }}-{{ $index }}">
+                                                                {!! $option !!}
+                                                            </label>
+                                                        </div>
+                                                    </li>
+                                                @endforeach
+                                            </ol>
+                                        </div>
                                     </div>
-                                    <ol class="text" type="a">
-                                        @foreach ($question->options as $index => $option)
-                                            <li>
-                                                <div class="form-check">
-                                                    <input required
-                                                        class="form-check-input" 
-                                                        type="radio"
-                                                        name="answer-{{ $question->id }}"
-                                                        value="{{ $index }}"
-                                                        id="{{ $question->id }}-{{ $index }}">
-                                                    <label class="form-check-label"
-                                                        for="{{ $question->id }}-{{ $index }}">
-                                                        {!! $option !!}
-                                                    </label>
-                                                </div>
-                                            </li>
-                                        @endforeach
-                                    </ol>
+                                   
                                 </li>
                             @endforeach
                         </ol>

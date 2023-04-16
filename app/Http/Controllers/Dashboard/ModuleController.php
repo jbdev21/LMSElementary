@@ -21,7 +21,7 @@ class ModuleController extends Controller
     {
         $modules = Module::query()
             ->select("*")
-            ->addSelect(DB::raw("(SELECT COUNT(*) FROM examinations WHERE examinations.module_id = modules.id GROUP BY examinations.user_id LIMIT 1) as students_count"))
+            // ->addSelect(DB::raw("(SELECT COUNT(*) FROM users WHERE examinations.module_id = modules.id GROUP BY examinations.user_id LIMIT 1) as students_count"))
             ->when($request->q, function ($query) use ($request) {
                 $query->where("name", "LIKE", $request->q . "%");
             })
@@ -31,6 +31,7 @@ class ModuleController extends Controller
             ->when($request->quarter, function ($query) use ($request) {
                 $query->where("quarter_id", $request->quarter);
             })
+            ->withCount(['students'])
             ->paginate(25);
 
         $categories = Category::whereType("module")->get();
@@ -132,15 +133,16 @@ class ModuleController extends Controller
 
             default:
                 $module->load('users');
-                $users = User::select('users.*')
+                $users = $module->students()
+                            ->addselect('users.*')
                             ->addSelect(DB::raw("(SELECT COUNT(*) FROM examinations WHERE examinations.module_id = $module->id AND examinations.user_id=users.id AND is_passed = 1) as passedItems"))
                             ->addSelect(DB::raw("(SELECT COUNT(*) FROM examinations WHERE examinations.module_id = $module->id AND examinations.user_id=users.id AND is_passed = 0) as failedItems"))
                             ->addSelect(DB::raw("(SELECT examinations.created_at FROM examinations WHERE examinations.module_id = $module->id AND examinations.user_id=users.id ORDER BY created_at DESC LIMIT 1) as last_taken_date"))
                             ->addSelect(DB::raw("(SELECT examinations.score FROM examinations WHERE examinations.module_id = $module->id AND examinations.user_id=users.id ORDER BY created_at DESC LIMIT 1) as last_taken_score"))
                             ->addSelect(DB::raw("(SELECT COUNT(*) FROM questions WHERE module_id = $module->id) as questions_count"))
-                            ->whereRelation("examinations", 'module_id', $module->id)
                             ->orderByRaw("last_taken_date DESC")
-                            ->get();
+                            ->get(2);
+
 
                 return view("dashboard.module.show.student", [
                     'users' => $users,

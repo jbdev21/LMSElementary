@@ -141,7 +141,7 @@ class ModuleController extends Controller
                             ->addSelect(DB::raw("(SELECT examinations.score FROM examinations WHERE examinations.module_id = $module->id AND examinations.user_id=users.id ORDER BY created_at DESC LIMIT 1) as last_taken_score"))
                             ->addSelect(DB::raw("(SELECT COUNT(*) FROM questions WHERE module_id = $module->id) as questions_count"))
                             ->orderByRaw("last_taken_date DESC")
-                            ->get(2);
+                            ->get();
 
 
                 return view("dashboard.module.show.student", [

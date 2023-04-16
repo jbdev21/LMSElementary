@@ -9,7 +9,7 @@
                     <img src="/images/logo.jpg" class="mw-100 mb-4 rounded" alt="">
                     <form method="POST" action="{{ route('login') }}">
                         @csrf
-                       
+                        
                         <div class="mb-3">
                             
                             <label for="email" class="text-md-end">{{ __('Username') }}</label>

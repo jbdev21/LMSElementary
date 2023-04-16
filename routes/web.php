@@ -61,6 +61,7 @@ Route::group([
     Route::resource("category", CategoryController::class);
     Route::post("module/{module}/upload-file", [ModuleController::class, 'uploadFile'])->name("module.upload-file");
     Route::post("module/{module}/detach-user", [ModuleController::class, 'removeStudentFromModule'])->name("module.detach-user");
+    Route::get("module/{module}/export-students", [ModuleController::class, 'exportCsv'])->name("module.export.student.csv");
     Route::resource("module", ModuleController::class);
     Route::post("lesson/{lesson}/add-file", [LessonController::class, 'addFile'])->name("lesson.file.addfile");
     Route::delete("lesson/{id}/delete-file", [LessonController::class, 'deleteFile'])->name("lesson.file.deletefile");

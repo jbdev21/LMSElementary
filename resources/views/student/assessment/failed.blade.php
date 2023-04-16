@@ -39,9 +39,12 @@
                         <a href="{{ route('student.module.index') }}" class=""><i class="fa fa-arrow-left"></i>
                             Back</a>
                     </div>
+                    <div class="text-center">
+                        <img src="/images/keep-up.jpg" class="mw-100" alt="">
+                    </div>
 
-                    <div class="alert alert-danger" role="alert">
-                        We are really sorry but you did not pass in assessment!.
+                    <div class="alert alert-warning" role="alert">
+                        You almost got it. You did not pass but you can retake it. Dont give up, you can do this!.
                     </div>
 
                     <div class="row">

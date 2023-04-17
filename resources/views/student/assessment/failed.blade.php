@@ -41,7 +41,7 @@
                     </div>
                     
 
-                    <div class="text-center">
+                    <div class="text-center mb-2">
                         <img src="/images/keep-up.jpg" class="mw-100" alt="">
                     </div>
                     <div class="alert alert-warning" role="alert">

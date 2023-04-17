@@ -25,8 +25,11 @@ class ModuleController extends Controller
                         AND examinations.is_passed = 1
                         AND user_id = ' . $request->user()->id .') as is_passed 
                     '))
-                    ->orderBy("quarter_id")
-                    ->latest()  
+                    ->when($request->quarter, function($q) use ($request){
+                        $q->where("quarter_id", $request->quarter);
+                    })
+                    ->orderBy("name")
+                    // ->latest()  
                     ->get();
 
         return view("student.module.index", [
